@@ -312,6 +312,79 @@ pre:focus-visible{outline-offset:-3px}
 .copy-status{color:var(--pass);font-weight:600;margin-left:.5rem}
 .linkbtn svg{width:1rem;height:1rem;vertical-align:-.15em;margin-right:.25rem}
 @media (max-width:900px){.audit{grid-template-columns:minmax(0,1fr)}.a-toc{position:static}}
+/* landing */
+.land{padding:3rem 0 2rem}
+.land h1{font-size:clamp(2.8rem,7vw,5rem);font-weight:800;letter-spacing:-.035em;line-height:.95}
+.land .tag{font-size:clamp(1.2rem,2.2vw,1.5rem);font-weight:600;margin:1rem 0 2rem;max-width:36ch;line-height:1.3}
+.picks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.5rem;max-width:56rem}
+.pick{position:relative;display:flex;flex-direction:column;gap:.35rem;min-height:15rem;padding:1.5rem 1.6rem;border-radius:20px;text-decoration:none;color:#1C2421;border:1px solid rgba(0,0,0,.14);box-shadow:0 14px 30px -20px rgba(0,0,0,.55);transition:transform .2s ease}
+.pick:hover,.pick:focus-visible{transform:translateY(-4px)}
+.pick:focus-visible{outline:3px solid var(--focus);outline-offset:4px}
+.pick-wcag{background:#E8C35A}
+.pick-apg{background:#9EC4B3}
+.pick .chip{width:3rem;height:2.2rem;border-radius:6px;background:linear-gradient(135deg,#D9D2B8,#B9AE88);border:1px solid rgba(0,0,0,.2);margin-bottom:.75rem}
+.pick-k{font-weight:800;font-size:2rem;letter-spacing:-.02em;line-height:1}
+.pick-t{font-weight:700;font-size:1.15rem}
+.pick-d{font-size:.98rem;margin-top:auto;max-width:40ch}
+.pick:hover .pick-t{text-decoration:underline;text-underline-offset:.18em}
+.land-more{margin-top:2rem;font-size:1.05rem}
+.subnav ul{list-style:none;display:flex;flex-wrap:wrap;gap:.4rem;margin:.9rem 0 0;padding:0}
+.subnav a{display:inline-block;padding:.3rem .8rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text);font-weight:600;font-size:.93rem;background:var(--surface)}
+.subnav a:hover{background:var(--surface-2)}
+.subnav a[aria-current="page"]{background:var(--leather-2);color:#fff;border-color:var(--leather-2)}
+/* APG */
+.apg-intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1.25rem;align-items:start}
+.ci-h{font-size:1.1rem;display:flex;align-items:center;gap:.5rem;margin-bottom:.4rem}
+.ci-h svg{width:1.15rem;height:1.15rem;flex:none}
+.mini-steps{margin:0;padding-left:1.2rem}
+.mini-steps li{margin:.3rem 0}
+.pat-grid{list-style:none;padding:0;margin:1rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1rem}
+.pat{display:flex;flex-direction:column;gap:.35rem;height:100%;padding:1.1rem 1.2rem;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--leather-2);border-radius:12px;text-decoration:none;color:var(--text)}
+.pat:hover .pat-n{text-decoration:underline;text-underline-offset:.18em}
+.pat-n{font-weight:700;font-size:1.15rem;color:var(--link)}
+.pat-s{color:var(--muted);font-size:.95rem}
+.soon-grid{list-style:none;padding:0;margin:1rem 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.5rem 1rem}
+.soon-grid li{padding:.35rem 0;border-bottom:1px solid var(--line)}
+.sub-h{font-size:1.05rem;margin:1.2rem 0 .5rem}
+.demo{border:2px dashed var(--leather-2);border-radius:14px;padding:1.25rem;background:var(--surface)}
+.demo-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:.6rem 0}
+.dbtn{background:var(--leather-2);color:#fff;border:2px solid var(--leather-2);border-radius:10px;padding:.55rem 1rem;font-weight:700;cursor:pointer}
+.dbtn:hover{background:var(--leather)}
+.dbtn[aria-disabled="true"]{background:var(--surface-2);color:var(--muted);border-color:var(--line);cursor:not-allowed}
+.dbtn.danger{background:var(--fail-bg);color:var(--fail);border-color:var(--fail)}
+.demo-alert{margin-top:.75rem;min-height:1.5rem}
+.demo-alert:not(:empty){padding:.7rem 1rem;border-radius:8px;border-left:5px solid var(--link);background:var(--surface-2)}
+.demo-alert.is-warn:not(:empty){border-left-color:var(--brass);background:var(--tip-bg)}
+.demo-alert.is-err:not(:empty){border-left-color:var(--fail);background:var(--fail-bg)}
+.demo-acc-h{margin:0;border-bottom:1px solid var(--line)}
+.demo-acc-b{all:unset;box-sizing:border-box;display:flex;justify-content:space-between;align-items:center;gap:1rem;width:100%;padding:.8rem .5rem;font-weight:700;font-size:1.05rem;cursor:pointer}
+.demo-acc-b:focus-visible{outline:3px solid var(--focus);outline-offset:-2px;border-radius:6px}
+.demo-acc-b[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.demo-acc-p{padding:.25rem .5rem .75rem;color:var(--muted)}
+.demo-acc-p p{margin:0}
+.demo-notes textarea{display:block;width:100%;margin-top:.35rem;font:inherit;padding:.6rem .75rem;border:2px solid var(--muted);border-radius:8px;background:var(--bg);color:var(--text)}
+.demo-ad{max-width:26rem;padding:1.25rem 1.4rem}
+.demo-ad h3{font-size:1.2rem;margin-bottom:.4rem}
+.demo-ad::backdrop{background:rgba(16,23,19,.6)}
+.fails-list{list-style:none;padding:0 !important}
+.fails-list li{border-left:3px solid var(--fail);padding:.45rem 0 .45rem .8rem;background:var(--fail-bg);border-radius:0 8px 8px 0;margin:.5rem 0}
+.fails-list strong{color:var(--fail)}
+.wcag-rel{list-style:none;padding:0 !important}
+.wcag-rel li{display:grid;grid-template-columns:minmax(12rem,16rem) 1fr;gap:.25rem 1rem;padding:.6rem 0;border-bottom:1px solid var(--line)}
+@media (max-width:640px){.wcag-rel li{grid-template-columns:1fr}.apg-intro{grid-template-columns:1fr}}
+.quiz{border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem;margin:0 0 1rem;background:var(--surface)}
+.quiz legend{font-weight:700;padding:0 .3rem}
+.quiz-o{display:flex;gap:.6rem;align-items:flex-start;padding:.3rem 0;cursor:pointer}
+.quiz-o input{width:1.15rem;height:1.15rem;margin-top:.25rem;accent-color:var(--leather-2)}
+.quiz .linkbtn{margin-top:.5rem}
+.quiz-fb{margin:.6rem 0 0;font-weight:600}
+.quiz-fb.is-ok{color:var(--pass)}
+.quiz-fb.is-no{color:var(--fail)}
+.checkref{padding-left:1.25rem}
+.checkref li{margin:.4rem 0}
+.qa{margin:0}
+.qa dt{font-weight:700;margin-top:1rem}
+.qa dd{margin:.3rem 0 0;padding:.6rem .9rem;border-left:3px solid var(--leather-2);background:var(--surface);border-radius:0 8px 8px 0}
 /* coming soon principle */
 .soon-list{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.75rem}
 .soon-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
@@ -345,11 +418,11 @@ footer p{max-width:70ch}
       <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="6" y="16" width="52" height="38" rx="8" fill="#23443A"/><rect x="12" y="6" width="26" height="22" rx="4" fill="#E8C35A" transform="rotate(-10 25 17)"/><rect x="26" y="8" width="26" height="22" rx="4" fill="#9EC4B3" transform="rotate(8 39 19)"/><rect x="6" y="28" width="52" height="26" rx="8" fill="#2F5A4D"/><rect x="11" y="33" width="42" height="16" rx="5" fill="none" stroke="#C8A04A" stroke-width="2" stroke-dasharray="3 3"/></svg>
       <span>a11ywallet</span>
     </a>
-    <nav class="mainnav" aria-label="Principles"><ul id="navlist"></ul></nav>
+    <nav class="mainnav" aria-label="Main"><ul id="navlist"></ul></nav>
     <div class="tools">
       <button class="iconbtn" id="search-open" type="button" aria-haspopup="dialog" aria-keyshortcuts="/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <span class="lbl">Search criteria</span>
+        <span class="lbl">Search</span>
       </button>
       <button class="iconbtn" id="theme-toggle" type="button" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
@@ -365,23 +438,23 @@ footer p{max-width:70ch}
 
 <footer>
   <div class="wrap">
-    <p>a11ywallet is a personal study companion. The notes paraphrase and explain the <a href="https://www.w3.org/TR/WCAG22/">W3C Web Content Accessibility Guidelines (WCAG) 2.2</a> and the linked Understanding and Techniques documents. The W3C documents are the normative source, so check them before you file a conformance decision.</p>
-    <p>Progress (learned criteria and ticked checks) is saved in this browser only.</p>
+    <p>a11ywallet is a personal study companion. The notes paraphrase and explain the <a href="https://www.w3.org/TR/WCAG22/">W3C Web Content Accessibility Guidelines (WCAG) 2.2</a> and the linked Understanding and Techniques documents, and the <a href="https://www.w3.org/WAI/ARIA/apg/">W3C ARIA Authoring Practices Guide (APG)</a>. The W3C documents are the normative source, so check them before you file a conformance decision.</p>
+    <p>A reference collection for study. Nothing is tracked or scored.</p>
   </div>
 </footer>
 
 <dialog id="search-dialog" aria-labelledby="search-title">
   <div class="dlg-h">
-    <h2 id="search-title">Find a success criterion</h2>
+    <h2 id="search-title">Search a11ywallet</h2>
     <button class="iconbtn" type="button" id="search-close">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
       <span>Close</span>
     </button>
   </div>
   <div class="dlg-b">
-    <label for="search-input">Number, name or keyword</label>
+    <label for="search-input">Criterion number, name, keyword or pattern</label>
     <input id="search-input" type="search" autocomplete="off" aria-describedby="search-hint search-status">
-    <p class="hint" id="search-hint">Try “1.4.3”, “alt text”, “captions” or “zoom”.</p>
+    <p class="hint" id="search-hint">Try “1.4.3”, “alt text”, “zoom” or “accordion”.</p>
     <p class="visually-hidden" id="search-status" role="status" aria-live="polite"></p>
     <ul class="results" id="search-results"></ul>
   </div>
@@ -3513,6 +3586,234 @@ const BEST_PRACTICES = {
 "4.1.2":["First rule of ARIA: if a native element does the job, use it instead of ARIA","Don't add redundant roles to native elements (role=\"button\" on <button>)","Test custom widgets with at least two screen reader and browser pairings, such as NVDA + Chrome and VoiceOver + Safari"],
 "4.1.3":["Use polite announcements (role=\"status\") for almost everything; keep role=\"alert\" for urgent errors","Keep status messages short and debounce frequent updates, such as live search counts","Make sure the live region exists in the page before text is inserted"]
 };
+/* =========================================================
+   ARIA Authoring Practices (APG) patterns
+   To add a pattern: add an object to APG_PATTERNS with the
+   same shape, then list its slug as ready:true in APG_INDEX.
+   ========================================================= */
+const APG = "https://www.w3.org/WAI/ARIA/apg/patterns/";
+
+const APG_INDEX = [
+  ["accordion","Accordion",true],["alert","Alert",true],["alertdialog","Alert and Message Dialogs",true],
+  ["breadcrumb","Breadcrumb"],["button","Button"],["carousel","Carousel"],["checkbox","Checkbox"],["combobox","Combobox"],
+  ["dialog-modal","Dialog (Modal)"],["disclosure","Disclosure (Show/Hide)"],["feed","Feed"],["grid","Grid"],
+  ["landmarks","Landmarks"],["link","Link"],["listbox","Listbox"],["menubar","Menu and Menubar"],["menu-button","Menu Button"],
+  ["meter","Meter"],["radio","Radio Group"],["slider","Slider"],["slider-multithumb","Slider (Multi-Thumb)"],
+  ["spinbutton","Spinbutton"],["switch","Switch"],["table","Table"],["tabs","Tabs"],["toolbar","Toolbar"],
+  ["tooltip","Tooltip"],["treeview","Tree View"],["treegrid","Treegrid"],["windowsplitter","Window Splitter"]
+];
+
+const APG_PATTERNS = {
+/* ---------------------------------------------------------- accordion */
+accordion:{
+  name:"Accordion", apg:APG+"accordion/", example:APG+"accordion/examples/accordion/",
+  kw:"accordion expand collapse aria-expanded aria-controls heading button panel faq",
+  summary:"A vertical stack of headings, each containing a button that shows or hides a panel of content.",
+  what:"An accordion packs a lot of content into a small space without long scrolling. Think FAQs, filter groups, or a multi-section form. Each heading holds a button; activating it reveals or hides the panel below.",
+  parts:[["Accordion header","The title that controls a panel. It's a button inside a heading element (h2, h3 and so on). Activating it shows or hides its panel."],["Accordion panel","The block of content tied to a header. It's shown or hidden according to the header's state."]],
+  demo:"accordion",
+  demoNote:"This demo lets more than one panel be open, and every header can collapse its own panel. APG allows other designs too (only one open at a time, or one panel always open). Whichever is chosen must be consistent and predictable.",
+  keyboard:[["Enter or Space","On a collapsed header: expands its panel (and, in one-at-a-time designs, collapses the previously open one). On an expanded header: collapses it, if the design allows collapsing."],["Tab","Moves to the next focusable element. Every header button is in the normal page tab order; there's no trapping."],["Shift + Tab","Moves to the previous focusable element."],["Down / Up Arrow (optional)","Moves focus to the next / previous header, wrapping at the ends."],["Home / End (optional)","Moves focus to the first / last header."]],
+  kbNote:"Only Enter, Space, Tab and Shift+Tab are required. APG lists arrow keys, Home and End as optional extras, so don't fail an accordion for lacking them. Arrow keys are required in patterns like Tabs and Menus.",
+  roles:[
+    ["Header text","A real heading element (h2, h3…) at a level that fits the page outline","Lets screen reader users jump between headers with heading navigation, like any other heading."],
+    ["Header control","A <button> element (or role=\"button\")","Announced as something to activate, not plain text. The heading must contain only the button."],
+    ["Header button","aria-expanded=\"true\" or \"false\"","Communicates open or closed state; must stay in sync with what's shown."],
+    ["Header button","aria-controls=\"panel-id\"","Points to the panel this button shows and hides."],
+    ["Header button (rare)","aria-disabled=\"true\"","Only when the panel is expanded and the design doesn't allow collapsing it."],
+    ["Panel","role=\"region\" with aria-labelledby=\"header-id\" (optional)","Makes the open panel a named landmark users can jump to. Avoid it when about six or more panels can be open at once, to prevent landmark clutter."]
+  ],
+  code:[
+    {label:"Markup for one header and panel", code:String.raw`<h3>
+  <button type="button"
+          aria-expanded="false"
+          aria-controls="panel-1"
+          id="header-1">
+    What is WCAG?
+  </button>
+</h3>
+<div id="panel-1"
+     role="region"
+     aria-labelledby="header-1"
+     hidden>
+  <p>WCAG is the W3C standard for accessible web content...</p>
+</div>`},
+    {label:"Minimal toggle script", code:String.raw`button.addEventListener('click', () => {
+  const expanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', String(!expanded));
+  panel.hidden = expanded;   // show when it was collapsed, and vice versa
+});`, note:"The hidden attribute hides the panel from everyone, including screen readers, with no CSS. display:none via a class works too. Never hide content only visually (like opacity:0) while it's still exposed to assistive tech, or the other way round."}
+  ],
+  mistakes:[
+    ["A div or span as the header","Not focusable or operable by keyboard and announces no role. It must be a real <button> (or role=\"button\" with tabindex and key handling)."],
+    ["Missing or stale aria-expanded","If it's missing or doesn't update, screen reader users get no state, or the wrong one."],
+    ["Button not inside a heading, or heading wraps more than the button","Breaks heading navigation, or buries the button's name among other content."],
+    ["No visible focus indicator","Removing the outline with no replacement fails 2.4.7 Focus Visible."],
+    ["Hidden panel content still in the tab order","If a panel is only visually hidden, its links and inputs still receive focus, so keyboard users land on invisible controls."]
+  ],
+  good:"Heading + button + aria-expanded + aria-controls, all kept in sync, is what makes the pattern understandable to assistive technology.",
+  wcag:[["4.1.2","The header exposes a name, the button role, and its expanded or collapsed state."],["2.1.1","Everything works by keyboard alone."],["2.4.7","Focus on each header is visible."],["2.4.3","Tab order through headers and panel content is logical."],["1.3.1","Heading structure and the header–panel relationship are in the code, not only visual."]],
+  playwright:String.raw`test('accordion header exposes and updates its state', async ({ page }) => {
+  await page.goto('/faq');
+  const header = page.getByRole('heading', { name: 'What is WCAG?' })
+                     .getByRole('button', { name: 'What is WCAG?' });
+  await expect(header).toHaveAttribute('aria-expanded', 'false');
+  await header.focus();
+  await page.keyboard.press('Enter');
+  await expect(header).toHaveAttribute('aria-expanded', 'true');
+  const panelId = await header.getAttribute('aria-controls');
+  await expect(page.locator('#' + panelId)).toBeVisible();
+  await page.keyboard.press('Space');
+  await expect(page.locator('#' + panelId)).toBeHidden();
+});`,
+  quiz:[
+    {q:"Which keys must an accordion support to meet the APG pattern?", o:["Arrow keys, Home and End","Enter, Space, Tab and Shift+Tab","Only Tab"], a:1, e:"Enter/Space toggle a header and Tab/Shift+Tab move between focusable elements. Arrow keys, Home and End are optional."},
+    {q:"When should you avoid role=\"region\" on accordion panels?", o:["Always; it's not allowed","When about six or more panels can be open at the same time","When the accordion has headings"], a:1, e:"Many open regions create landmark clutter. APG suggests avoiding region roles in that case."}
+  ],
+  recap:"An accordion is a heading-wrapped button that toggles a connected panel through aria-expanded and aria-controls. It needs only Tab and Enter/Space, must keep its state accurate at all times, and can give open panels a region landmark where that doesn't cause clutter."
+},
+
+/* ---------------------------------------------------------- alert */
+alert:{
+  name:"Alert", apg:APG+"alert/", example:APG+"alert/examples/alert/",
+  kw:"alert role alert live region assertive announcement status message toast",
+  summary:"An important, usually time-sensitive message that's announced without moving focus or interrupting the user's task.",
+  what:"An alert grabs attention without interrupting what the user is doing: “Your changes were saved”, “Session expiring in 2 minutes”, “That field is required”. Most screen readers announce alert content automatically the moment it appears, with no click or focus change.",
+  parts:[["Focus never moves","An alert must not steal keyboard focus. The user keeps working where they were; the message is simply announced."],["No keyboard interaction","There's nothing to operate. If the user must respond, or focus has to move, use the Alert Dialog pattern instead."]],
+  callout:{title:"Important limitation", text:"Screen readers don't announce alerts that are already in the page before it finishes loading. Insert or update the alert's content with script after load."},
+  demo:"alert",
+  demoNote:"Clicking a button doesn't move focus and nothing pops up over the page. The message appears and screen readers speak it straight away, while focus stays on the button you clicked.",
+  keyboard:[["None","Alerts have no keyboard interaction. There's nothing to Tab to or activate in the alert container itself."]],
+  kbNote:"If an alert contains buttons (like Undo or Dismiss) that's fine, as long as focus wasn't forced there automatically.",
+  roles:[
+    ["Message container","role=\"alert\"","Marks the element where alert content is added or updated. It's the only attribute you need to add."],
+    ["Message container","aria-live=\"assertive\" (implicit)","Built into role=\"alert\". Tells assistive tech to interrupt and announce the change immediately."],
+    ["Message container","aria-atomic=\"true\" (implicit)","Also built in. The whole alert is read, not just the changed part."]
+  ],
+  rolesNote:"Adding aria-live=\"assertive\" and aria-atomic=\"true\" by hand is redundant but harmless. The one thing you must add is role=\"alert\".",
+  code:[
+    {label:"Empty container present on page load", code:String.raw`<div id="live-alert" role="alert"></div>`},
+    {label:"Script that inserts a message after load", code:String.raw`function showAlert(message) {
+  const container = document.getElementById('live-alert');
+  // Changing content AFTER load triggers the announcement.
+  container.textContent = message;
+}
+
+showAlert('Your changes have been saved.');`, note:"The container is already a live region before the update, so the accessibility tree notices the change. If you create a brand-new role=\"alert\" element each time, some screen readers miss the announcement."}
+  ],
+  mistakes:[
+    ["Alert text present at page load","If the role=\"alert\" element has its final text in the initial HTML, most screen readers never announce it."],
+    ["Moving focus into the alert","That turns a non-interrupting message into something else. If focus must move, it's an alert dialog."],
+    ["Alerts that disappear on a timer","A message that vanishes before people can read it can fail 2.2.1 Timing Adjustable (APG also points to 2.2.3). Let users dismiss it themselves, or keep it visible."],
+    ["Using alerts for routine messages","Assertive announcements interrupt whatever is being read. Use role=\"status\" (polite) for routine confirmations and keep role=\"alert\" for important, time-sensitive information."]
+  ],
+  good:"Keep one empty role=\"alert\" container in the DOM from page load and swap its text with script when needed.",
+  wcag:[["4.1.3","Status messages must reach assistive technology without a focus change, which is exactly what role=\"alert\" (or role=\"status\") provides."],["4.1.2","The container exposes the right role so changes are programmatically determinable."],["2.2.1","If the alert disappears automatically, users need a way to adjust or turn off that time limit."],["2.2.4","Users should be able to postpone or suppress non-essential interruptions, including frequent alerts (AAA)."],["3.2.1","An alert must not move focus; check that it wasn't implemented as a focus change anyway."]],
+  playwright:String.raw`test('saving shows an alert without moving focus', async ({ page }) => {
+  await page.goto('/settings');
+  const save = page.getByRole('button', { name: 'Save changes' });
+  await save.click();
+  await expect(page.getByRole('alert')).toHaveText('Your changes have been saved.');
+  await expect(save).toBeFocused();
+});`,
+  quiz:[
+    {q:"An alert's text is in the HTML when the page loads. What happens?", o:["It's announced as soon as the page loads","Most screen readers never announce it","It's announced twice"], a:1, e:"Screen readers only announce changes to live regions after the page has loaded."},
+    {q:"Which attributes must you add by hand for a basic alert?", o:["role=\"alert\" only","role=\"alert\", aria-live and aria-atomic","aria-live=\"polite\""], a:0, e:"role=\"alert\" implies aria-live=\"assertive\" and aria-atomic=\"true\"."}
+  ],
+  recap:"An alert is a role=\"alert\" container whose content changes after page load, so screen readers announce it straight away: no focus movement, no keyboard interaction, and no extra ARIA beyond the role. Reserve it for important, time-sensitive messages, never let it vanish before people can read it, and never let it steal focus."
+},
+
+/* ---------------------------------------------------------- alertdialog */
+alertdialog:{
+  name:"Alert and Message Dialogs", apg:APG+"alertdialog/", example:APG+"alertdialog/examples/alertdialog/",
+  kw:"alertdialog alert dialog modal confirmation aria-modal focus trap escape aria-describedby destructive",
+  summary:"A modal dialog that interrupts the user to communicate an important message and requires a response.",
+  what:"An alert dialog interrupts the workflow to deliver an important message and get a response before the user continues: “Are you sure you want to delete this?” or “Unsaved changes will be lost — continue?”. It's a modal dialog with role=\"alertdialog\" instead of role=\"dialog\", which lets assistive technology treat it as urgent, for example by playing a system alert sound.",
+  callout:{title:"alertdialog vs dialog", text:"Structurally they behave the same (focus moves in, Tab cycles inside, Escape closes). The difference is the role and the urgency it signals. Use alertdialog only when the message is critical and needs acknowledgement, not for routine dialogs like “Edit profile”."},
+  compare:{
+    caption:"Alert, alert dialog and modal dialog compared",
+    head:["","Alert (role=\"alert\")","Alert dialog (role=\"alertdialog\")","Modal dialog (role=\"dialog\")"],
+    rows:[
+      ["Interrupts the workflow?","No; announced passively","Yes; blocks the page until resolved","Yes; blocks the page until closed"],
+      ["Moves keyboard focus?","Never","Always, into the dialog","Always, into the dialog"],
+      ["Needs a response?","No","Yes: confirm, cancel or acknowledge","Depends on the content"],
+      ["Typical use","“Your changes have been saved.”","“Discard all your notes? This can't be undone.”","Forms, settings, a date picker grid"]
+    ],
+    note:"“Dialog” describes the container behaviour (modal, focus kept inside, Escape to close). What goes inside it (a message, a form, a calendar grid) and how urgent it is (alertdialog or dialog) are separate decisions layered on the same base pattern."
+  },
+  demo:"alertdialog",
+  demoNote:"While the confirmation is open: focus starts on “No” (the safer choice), Tab and Shift+Tab cycle only between No and Yes, Escape closes it (same as No), and closing returns focus to “Discard”. This demo uses the native <dialog> element opened with showModal(), which makes the background inert, with role=\"alertdialog\" on it.",
+  sections:[
+    {id:"initial-focus", title:"Initial focus: the safety rule", html:"<p>When an alert dialog opens, focus moves inside it. Which element gets it is a deliberate choice. <b>Put initial focus on the least destructive option.</b> In the demo, focus lands on “No”, not “Yes”, so a reflexive Enter or Space cancels rather than triggering something irreversible. This protects keyboard and screen reader users, and anyone who presses Enter out of habit.</p>"},
+    {id:"aria-modal", title:"aria-modal vs aria-hidden", html:"<p><code>aria-modal=\"true\"</code> tells assistive technology that everything behind the dialog is inert. It's a serious commitment. Only set it when <b>both</b> are true: the code really prevents interaction with everything outside the dialog, and the styling (such as a dimmed overlay) visually obscures it. If a dialog claims to be modal but sighted mouse users can still use the page behind it, screen reader users are told the background is unreachable when it isn't.</p><p>Older implementations used <code>aria-hidden=\"true\"</code> on the rest of the page instead. If you meet that legacy technique: every element covering the background needs its own <code>aria-hidden=\"true\"</code>, and the dialog must not be inside any element with <code>aria-hidden=\"true\"</code>, or it hides itself. Today the native <code>&lt;dialog&gt;</code> element with <code>showModal()</code>, or the <code>inert</code> attribute, is the simplest reliable approach.</p>"}
+  ],
+  keyboard:[["Tab","Moves to the next focusable element inside the dialog; from the last, wraps to the first."],["Shift + Tab","Moves to the previous focusable element; from the first, wraps to the last."],["Escape","Closes the dialog (equivalent to the least destructive or cancel option)."]],
+  kbNote:"While the dialog is open, focus must never reach the page behind it. That is intended and fine; it doesn't fail 2.1.2 No Keyboard Trap because Escape and the dialog's buttons always provide a way out.",
+  roles:[
+    ["Dialog container","role=\"alertdialog\"","Identifies an alert dialog, distinct from a plain dialog, so assistive tech can treat it as urgent."],
+    ["Dialog container","aria-modal=\"true\"","Declares the rest of the page inert while open (implied when using <dialog> with showModal()). See the warning above."],
+    ["Dialog container","aria-labelledby=\"title-id\" (or aria-label)","The accessible name, usually the visible heading such as “Confirmation”."],
+    ["Dialog container","aria-describedby=\"message-id\"","Points to the element with the actual message, so it's announced after the name. APG calls this out specifically for alert dialogs."],
+    ["Buttons in the app that are temporarily unavailable","aria-disabled=\"true\" (instead of the disabled attribute)","Keeps the button discoverable in the tab order so screen reader users know it exists and why it's unavailable. Used for Save and Discard in the APG example."]
+  ],
+  code:[
+    {label:"Markup", code:String.raw`<dialog id="confirm" role="alertdialog"
+        aria-labelledby="ad-title" aria-describedby="ad-desc">
+  <h2 id="ad-title">Confirmation</h2>
+  <p id="ad-desc">Are you sure you want to discard all of your notes?</p>
+  <button type="button" id="ad-no">No</button>
+  <button type="button" id="ad-yes">Yes</button>
+</dialog>`},
+    {label:"Open, focus the safe option, return focus on close", code:String.raw`const dialog = document.getElementById('confirm');
+let opener;
+
+discardBtn.addEventListener('click', () => {
+  opener = document.activeElement;
+  dialog.showModal();                           // background becomes inert
+  document.getElementById('ad-no').focus();     // least destructive first
+});
+
+dialog.addEventListener('close', () => opener?.focus());  // Escape fires close too`}
+  ],
+  mistakes:[
+    ["aria-modal=\"true\" without real modality","The most damaging defect: assistive tech users are told the background is unreachable while others can still use it."],
+    ["Missing aria-describedby","The dialog announces its title but not the question, so users must hunt for what they're confirming."],
+    ["No accessible name","Neither aria-labelledby nor aria-label, so the dialog is announced without a name."],
+    ["Focus lands on the destructive button","Defaulting to “Yes”, “Delete” or “Confirm” invites accidental irreversible actions."],
+    ["Focus not moved in, or not returned on close","Focus stays behind the dialog when it opens, or ends up at the top of the page when it closes."],
+    ["Focus escapes the dialog","Tab eventually reaches the page underneath instead of cycling inside."],
+    ["Escape doesn't close it","A widely expected shortcut is missing."],
+    ["alertdialog used for routine content","Overuse dilutes the urgency signal. If nothing needs a decision, use an alert or a plain dialog."]
+  ],
+  good:"role=\"alertdialog\", a real modal (inert background), aria-labelledby and aria-describedby, focus on the safest option, Tab kept inside, Escape to close, and focus returned to the trigger.",
+  wcag:[["4.1.2","The dialog exposes its role, a name (title) and a description (the message)."],["2.1.1","Confirm, cancel and close all work by keyboard."],["2.1.2","Keeping focus inside is fine, as long as Escape or the buttons always let users out."],["2.4.3","Focus moves into the dialog on open, cycles logically, and returns to the trigger on close."],["3.2.1","Opening the dialog is an intended change of context from activation; nothing else unexpected should happen just from focus moving within it."],["3.3.4","A confirmation step before destructive or financial actions is one way to meet error prevention."]],
+  playwright:String.raw`test('discard confirmation follows the alertdialog pattern', async ({ page }) => {
+  await page.goto('/notes');
+  const discard = page.getByRole('button', { name: 'Discard' });
+  await discard.click();
+
+  const dialog = page.getByRole('alertdialog', { name: 'Confirmation' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveAccessibleDescription(/discard all of your notes/i);
+  await expect(dialog.getByRole('button', { name: 'No' })).toBeFocused();
+
+  await page.keyboard.press('Tab');
+  await expect(dialog.getByRole('button', { name: 'Yes' })).toBeFocused();
+  await page.keyboard.press('Tab');                // wraps inside the dialog
+  await expect(dialog.getByRole('button', { name: 'No' })).toBeFocused();
+
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await expect(discard).toBeFocused();              // focus returned
+});`,
+  quiz:[
+    {q:"Which attribute does APG specifically call for on an alertdialog, pointing to the message?", o:["aria-modal","aria-describedby","tabindex=\"0\""], a:1, e:"The alertdialog has aria-describedby referring to the element that contains the alert message."},
+    {q:"Why does initial focus go to “No” rather than “Yes” in the discard example?", o:["It's alphabetically first","It's the least destructive action, so a reflexive Enter cancels","Screen readers require the left-most button"], a:1, e:"Putting focus on the safest option prevents accidental irreversible actions."},
+    {q:"Is aria-modal=\"true\" enough on its own to make a dialog modal?", o:["Yes","No"], a:1, e:"It only tells assistive technology. The code must also block interaction with the background, and the styling must obscure it."}
+  ],
+  recap:"An alert dialog is a modal dialog with role=\"alertdialog\" that interrupts the user to demand a response. Its name and message are wired with aria-labelledby and aria-describedby. Focus moves in, ideally to the least destructive option, stays inside while open, Escape closes it, and focus returns to the trigger. Use it only when a real decision is needed."
+}
+};
 
 const PRINCIPLES = [
   { id:"perceivable", num:"1", name:"Perceivable", slug:"perceivable",
@@ -3546,8 +3847,6 @@ const PRINCIPLES = [
     get(k, d){ try { const v = localStorage.getItem("a11ywallet:" + k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
     set(k, v){ try { localStorage.setItem("a11ywallet:" + k, JSON.stringify(v)); } catch(e){} }
   };
-  let learned = store.get("learned", {});
-  let checks = store.get("checks", {});
   let levels = Object.assign({A:true, AA:true, AAA:true}, store.get("levels", {}));
 
   /* ---------- helpers ---------- */
@@ -3597,13 +3896,13 @@ const PRINCIPLES = [
 
   /* ---------- nav ---------- */
   function renderNav(current){
-    document.getElementById("navlist").innerHTML = PRINCIPLES.map(p =>
-      `<li><a href="#/${p.id}"${current === p.id ? ' aria-current="page"' : ""}>${p.num}. ${esc(p.name)}${p.soon ? '<span class="soon-tag">soon</span>' : ""}</a></li>`
-    ).join("") + `<li><a href="#/audit"${current === "audit" ? ' aria-current="page"' : ""}>Audit guide</a></li>`;
+    const items = [["wcag","WCAG 2.2"],["apg","APG patterns"],["audit","Audit guide"]];
+    document.getElementById("navlist").innerHTML = items.map(x =>
+      `<li><a href="#/${x[0]}"${current === x[0] ? ' aria-current="page"' : ""}>${x[1]}</a></li>`).join("");
   }
 
   /* ---------- home ---------- */
-  function renderHome(){
+  function renderWcagHome(){
     const cards = PRINCIPLES.map((p, i) => {
       const n = p.guidelines.reduce((a, g) => a + g.criteria.length, 0);
       const inner = `<span class="c-num" aria-hidden="true">${p.num}</span><span class="c-name">${esc(p.name)}</span><span class="c-meta">${p.soon ? "Coming soon" : plural(n, "criterion", "criteria")}</span>`;
@@ -3617,10 +3916,11 @@ const PRINCIPLES = [
     }).join("");
     app.innerHTML = `
     <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">WCAG 2.2</span></li></ol></nav>
       <section class="hero" aria-labelledby="home-h1">
         <div>
-          <h1 id="home-h1" tabindex="-1">a11ywallet</h1>
-          <p class="tag">Pocket-sized study notes for WCAG 2.2, one principle at a time.</p>
+          <h1 id="home-h1" tabindex="-1">WCAG 2.2</h1>
+          <p class="tag">Study notes for every success criterion, one principle at a time.</p>
           <p class="intro">Each success criterion is broken down into what it means, who it helps, what to check, how to test it by hand and with tools, the documented failures, and code that fails next to code that passes.</p>
           <div class="btn-row">
             <a class="btn" href="#/perceivable">Start with Perceivable</a>
@@ -3659,6 +3959,215 @@ const PRINCIPLES = [
     </div></section>`;
   }
 
+  /* ---------- landing (choose a section) ---------- */
+  function renderLanding(){
+    const nSC = ALL.length;
+    const nPat = Object.keys(APG_PATTERNS).length;
+    app.innerHTML = `<div class="wrap">
+      <section class="land" aria-labelledby="home-h1">
+        <h1 id="home-h1" tabindex="-1">a11ywallet</h1>
+        <p class="tag">Pocket-sized accessibility study notes. Pick what you want to learn today.</p>
+        <ul class="picks" aria-label="Sections">
+          <li><a class="pick pick-wcag" href="#/wcag">
+            <span class="chip" aria-hidden="true"></span>
+            <span class="pick-k">WCAG 2.2</span>
+            <span class="pick-t">Success criteria study notes</span>
+            <span class="pick-d">All ${nSC} criteria across Perceivable, Operable, Understandable and Robust, with checks, tests, failures and code.</span>
+          </a></li>
+          <li><a class="pick pick-apg" href="#/apg">
+            <span class="chip" aria-hidden="true"></span>
+            <span class="pick-k">ARIA APG</span>
+            <span class="pick-t">Design pattern notes</span>
+            <span class="pick-d">${nPat} patterns with live demos, keyboard and ARIA tables, audit mistakes and self-checks. More on the way.</span>
+          </a></li>
+        </ul>
+        <p class="land-more"><a href="#/audit">Read the audit guide</a>: how to plan, run and report an accessibility audit.</p>
+      </section>
+    </div>`;
+  }
+
+  /* ---------- APG index ---------- */
+  function renderApgHome(){
+    const ready = APG_INDEX.filter(x => x[2]);
+    const soon = APG_INDEX.filter(x => !x[2]);
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">APG patterns</span></li></ol></nav>
+      <header class="p-hero" style="grid-template-columns:1fr">
+        <h1 id="p-h1" tabindex="-1">ARIA design patterns</h1>
+        <p class="p-statement">Study notes on the W3C ARIA Authoring Practices Guide (APG): how common widgets should behave by keyboard, which roles, states and properties they need, and what to look for when you audit them.</p>
+        <div class="p-meta">${extLink(APG, "APG patterns at W3C")} ${extLink("https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/", "APG: Read me first")}</div>
+      </header>
+
+      <div class="apg-intro">
+        <div class="callout"><h2 class="ci-h">${I.warn}No ARIA is better than bad ARIA</h2><p>The first rule of ARIA: if a native HTML element does the job (<code>&lt;button&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code>, <code>&lt;input type="checkbox"&gt;</code>), use it. APG patterns are for widgets HTML doesn't provide, and a role promises keyboard behaviour you then have to build.</p></div>
+        <div class="g-aside"><h2 class="ci-h" style="font-size:1rem">Auditing any pattern</h2><ol class="mini-steps">
+          <li>Work out which APG pattern the widget is trying to be.</li>
+          <li>Check roles, states and properties against the pattern's table.</li>
+          <li>Test every key in its keyboard table.</li>
+          <li>Check focus: where it goes on open, inside, and on close.</li>
+          <li>Listen with a screen reader for name, role, state and changes.</li>
+          <li>Map each gap to a WCAG criterion (usually 4.1.2, 2.1.1, 2.4.3 or 1.3.1).</li>
+        </ol></div>
+      </div>
+
+      <h2 class="a-h" style="margin-top:2rem">Patterns with study notes</h2>
+      <ul class="pat-grid">${ready.map(x => { const p = APG_PATTERNS[x[0]]; return `<li><a class="pat" href="#/apg/${x[0]}"><span class="pat-n">${esc(x[1])}</span><span class="pat-s">${esc(p.summary)}</span></a></li>`; }).join("")}</ul>
+
+      <h2 class="a-h" style="margin-top:2.5rem">Coming soon</h2>
+      <p style="color:var(--muted);max-width:60ch">Notes for these patterns aren't written yet. Each link opens the pattern at W3C.</p>
+      <ul class="soon-grid">${soon.map(x => `<li>${extLink(APG + x[0] + "/", x[1])}</li>`).join("")}</ul>
+    </div>`;
+  }
+
+  /* ---------- APG pattern page ---------- */
+  function wcagLink(id){
+    const c = ALL.find(x => x.id === id);
+    return c ? `<a href="#/${c._p.id}/${c.id}">${c.id} ${esc(c.title)}</a> <span class="badge lvl-${c.level}">${c.level}</span>` : esc(id);
+  }
+  function tableHTML(label, head, rows, rowHeader){
+    return `<div class="tbl" role="region" aria-label="${esc(label)}" tabindex="0"><table><caption class="visually-hidden">${esc(label)}</caption><thead><tr>${head.map(h => `<th scope="col">${h ? esc(h) : '<span class="visually-hidden">Aspect</span>'}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr>${r.map((c, i) => i === 0 && rowHeader !== false ? `<th scope="row">${esc(c)}</th>` : `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  }
+
+  function demoHTML(kind){
+    if (kind === "accordion") return `<div class="demo-acc">${[
+      ["What is WCAG?","WCAG (Web Content Accessibility Guidelines) is the W3C standard for making web content accessible. It's organised into four principles: Perceivable, Operable, Understandable and Robust."],
+      ["Why does aria-expanded matter?","It tells assistive technology whether the panel this button controls is open (true) or closed (false). Without it, screen reader users can't tell the button toggles anything, or what state it's in."],
+      ["What should an auditor check?","That each header is a real button inside a heading, aria-expanded flips correctly, aria-controls points at the panel, and everything works by keyboard alone."]
+    ].map((q, i) => `<h3 class="demo-acc-h"><button type="button" id="dacc-h${i}" aria-expanded="false" aria-controls="dacc-p${i}" class="demo-acc-b"><span>${esc(q[0])}</span>${I.chev}</button></h3>
+      <div id="dacc-p${i}" role="region" aria-labelledby="dacc-h${i}" class="demo-acc-p" hidden><p>${esc(q[1])}</p></div>`).join("")}</div>`;
+
+    if (kind === "alert") return `<div class="demo-row">
+        <button type="button" class="dbtn" data-alert="info" data-msg="Your changes have been saved.">Trigger info alert</button>
+        <button type="button" class="dbtn" data-alert="warn" data-msg="Your session will expire in 2 minutes.">Trigger warning alert</button>
+        <button type="button" class="dbtn" data-alert="err" data-msg="Unable to save: the email field is required.">Trigger error alert</button>
+      </div>
+      <div id="demo-alert" role="alert" class="demo-alert"></div>`;
+
+    if (kind === "alertdialog") return `<div class="demo-notes">
+        <label for="demo-notes-t"><b>Notes</b></label>
+        <textarea id="demo-notes-t" rows="4">This is an example text box. Try editing it, then Save or Discard.</textarea>
+        <div class="demo-row">
+          <button type="button" class="dbtn" id="demo-save" aria-disabled="true">Save</button>
+          <button type="button" class="dbtn" id="demo-discard" aria-disabled="false">Discard</button>
+        </div>
+        <div id="demo-notes-alert" role="alert" class="demo-alert"></div>
+      </div>
+      <dialog id="demo-ad" class="demo-ad" role="alertdialog" aria-labelledby="demo-ad-t" aria-describedby="demo-ad-d">
+        <h3 id="demo-ad-t">Confirmation</h3>
+        <p id="demo-ad-d">Are you sure you want to discard all of your notes?</p>
+        <div class="demo-row"><button type="button" class="dbtn" id="demo-ad-no">No</button><button type="button" class="dbtn danger" id="demo-ad-yes">Yes</button></div>
+      </dialog>`;
+    return "";
+  }
+
+  function initDemo(kind){
+    if (kind === "accordion"){
+      app.querySelectorAll(".demo-acc-b").forEach(b => b.addEventListener("click", () => {
+        const ex = b.getAttribute("aria-expanded") === "true";
+        b.setAttribute("aria-expanded", String(!ex));
+        document.getElementById(b.getAttribute("aria-controls")).hidden = ex;
+      }));
+      const heads = [...app.querySelectorAll(".demo-acc-b")];
+      heads.forEach((b, i) => b.addEventListener("keydown", e => {
+        let n = null;
+        if (e.key === "ArrowDown") n = (i + 1) % heads.length;
+        else if (e.key === "ArrowUp") n = (i - 1 + heads.length) % heads.length;
+        else if (e.key === "Home") n = 0;
+        else if (e.key === "End") n = heads.length - 1;
+        if (n !== null){ e.preventDefault(); heads[n].focus(); }
+      }));
+    }
+    if (kind === "alert"){
+      const box = document.getElementById("demo-alert");
+      app.querySelectorAll("[data-alert]").forEach(b => b.addEventListener("click", () => {
+        box.className = "demo-alert is-" + b.dataset.alert;
+        box.textContent = b.dataset.msg;
+      }));
+    }
+    if (kind === "alertdialog"){
+      const t = document.getElementById("demo-notes-t"), save = document.getElementById("demo-save"), discard = document.getElementById("demo-discard");
+      const msg = document.getElementById("demo-notes-alert"), dlg = document.getElementById("demo-ad");
+      const no = document.getElementById("demo-ad-no"), yes = document.getElementById("demo-ad-yes");
+      let saved = t.value;
+      const refresh = () => { save.setAttribute("aria-disabled", String(t.value === saved)); discard.setAttribute("aria-disabled", String(t.value.trim() === "")); };
+      t.addEventListener("input", refresh);
+      save.addEventListener("click", () => { if (save.getAttribute("aria-disabled") === "true") return; saved = t.value; refresh(); msg.textContent = "Notes saved."; });
+      discard.addEventListener("click", () => { if (discard.getAttribute("aria-disabled") === "true") return; msg.textContent = ""; dlg.showModal(); no.focus(); });
+      dlg.addEventListener("keydown", e => {
+        if (e.key !== "Tab") return;
+        e.preventDefault();
+        (document.activeElement === no ? yes : no).focus();
+      });
+      no.addEventListener("click", () => dlg.close());
+      yes.addEventListener("click", () => { t.value = ""; saved = ""; refresh(); dlg.close(); });
+      dlg.addEventListener("close", () => discard.focus());
+      refresh();
+    }
+  }
+
+  function renderPattern(slug){
+    const p = APG_PATTERNS[slug];
+    const toc = [["what","What it is"]];
+    if (p.compare) toc.push(["compare","How it compares"]);
+    toc.push(["demo","Try it: live example"]);
+    (p.sections || []).forEach(s => toc.push([s.id, s.title]));
+    toc.push(["keyboard","Keyboard interaction"],["roles","Roles, states and properties"],["code","Annotated code"],["mistakes","Common audit findings"],["wcag","Related WCAG criteria"],["automate","Automate it with Playwright"],["questions","Key questions"],["recap","Quick recap"]);
+    const H = (id, title) => `<h2 id="apg-${id}" tabindex="-1" class="a-h">${esc(title)}</h2>`;
+
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li><li><span aria-current="page">${esc(p.name)}</span></li></ol></nav>
+      <header class="p-hero" style="grid-template-columns:1fr">
+        <h1 id="p-h1" tabindex="-1">${esc(p.name)}</h1>
+        <p class="p-statement">${esc(p.summary)}</p>
+        <div class="p-meta">${extLink(p.apg, p.name + " pattern at W3C")} ${extLink(p.example, "APG example")}</div>
+      </header>
+      <div class="audit">
+        <nav class="a-toc" aria-labelledby="toc-h"><h2 id="toc-h">On this page</h2><ol>${toc.map(t => `<li><a href="#/apg/${slug}/${t[0]}">${esc(t[1])}</a></li>`).join("")}</ol></nav>
+        <div class="a-body">
+          <section aria-labelledby="apg-what">${H("what","What it is")}
+            <p class="lead">${esc(p.what)}</p>
+            ${p.parts ? tableHTML(p.name + ": key ideas", ["Term","What it means"], p.parts) : ""}
+            ${p.callout ? `<div class="callout" style="margin-top:1rem"><h3 class="ci-h">${I.bulb}${esc(p.callout.title)}</h3><p>${esc(p.callout.text)}</p></div>` : ""}
+          </section>
+          ${p.compare ? `<section aria-labelledby="apg-compare">${H("compare","How it compares")}${tableHTML(p.compare.caption, p.compare.head, p.compare.rows)}<p style="margin-top:1rem">${esc(p.compare.note)}</p></section>` : ""}
+          <section aria-labelledby="apg-demo">${H("demo","Try it: live example")}
+            <p>Use it with the keyboard only (Tab, Shift+Tab, Enter, Space${slug === "alertdialog" ? ", Escape" : ""}), and with a screen reader or the DevTools Accessibility pane open.</p>
+            <div class="demo">${demoHTML(p.demo)}</div>
+            <p class="auto-note">${esc(p.demoNote)}</p>
+          </section>
+          ${(p.sections || []).map(s => `<section aria-labelledby="apg-${s.id}">${H(s.id, s.title)}${s.html}</section>`).join("")}
+          <section aria-labelledby="apg-keyboard">${H("keyboard","Keyboard interaction")}
+            ${tableHTML(p.name + " keyboard interaction", ["Key","What happens"], p.keyboard)}
+            ${p.kbNote ? `<p style="margin-top:1rem">${esc(p.kbNote)}</p>` : ""}
+          </section>
+          <section aria-labelledby="apg-roles">${H("roles","Roles, states and properties")}
+            ${tableHTML(p.name + " roles, states and properties", ["Element","Role or attribute","Why it's needed"], p.roles)}
+            ${p.rolesNote ? `<p style="margin-top:1rem">${esc(p.rolesNote)}</p>` : ""}
+          </section>
+          <section aria-labelledby="apg-code">${H("code","Annotated code")}
+            ${p.code.map(c => `<h3 class="sub-h">${esc(c.label)}</h3><div class="auto"><pre tabindex="0" aria-label="${esc(c.label)}"><code>${esc(c.code)}</code></pre></div>${c.note ? `<p class="auto-note">${esc(c.note)}</p>` : ""}`).join("")}
+          </section>
+          <section aria-labelledby="apg-mistakes">${H("mistakes","Common audit findings")}
+            <ul class="scenario fails-list">${p.mistakes.map(m => `<li><strong>${esc(m[0])}.</strong> ${esc(m[1])}</li>`).join("")}</ul>
+            <div class="ex good" style="margin-top:1rem"><div class="ex-h">${I.ok}What good looks like</div><p>${esc(p.good)}</p></div>
+          </section>
+          <section aria-labelledby="apg-wcag">${H("wcag","Related WCAG criteria")}
+            <ul class="wcag-rel">${p.wcag.map(w => `<li><span class="wr-sc">${wcagLink(w[0])}</span><span>${esc(w[1])}</span></li>`).join("")}</ul>
+          </section>
+          <section aria-labelledby="apg-automate">${H("automate","Automate it with Playwright")}
+            <div class="auto"><pre tabindex="0" aria-label="Playwright test for ${esc(p.name)}"><code>${esc(p.playwright)}</code></pre></div>
+            <p class="auto-note">getByRole locators double as checks: if Playwright can't find the widget by role and name, a screen reader can't either.</p>
+          </section>
+          <section aria-labelledby="apg-questions">${H("questions","Key questions")}
+            <dl class="qa">${p.quiz.map(q => `<dt>${esc(q.q)}</dt><dd><b>${esc(q.o[q.a])}.</b> ${esc(q.e)}</dd>`).join("")}</dl>
+          </section>
+          <section aria-labelledby="apg-recap">${H("recap","Quick recap")}<p class="lead">${esc(p.recap)}</p></section>
+        </div>
+      </div>
+    </div>`;
+    initDemo(p.demo);
+  }
+
   /* ---------- audit guide ---------- */
   const AUDIT_CHECK = [
     "Scope, sample pages, key user journeys and conformance target (WCAG 2.2 AA) agreed in writing",
@@ -3688,7 +4197,6 @@ const PRINCIPLES = [
   function renderAudit(){
     const toc = [["plan","Plan the audit"],["setup","Set up your test environment"],["workflow","Run the audit in this order"],["findings","Write findings developers can act on"],["severity","Rate severity"],["fail-or-bp","Failure or best practice?"],["pitfalls","Common auditing mistakes"],["retest","Retest and prevent regressions"],["checklist","Audit checklist"]];
     const H = (id, title) => `<h2 id="audit-${id}" tabindex="-1" class="a-h">${esc(title)}</h2>`;
-    const done = checks["audit"] || [];
     const table = (label, head, rows) => `<div class="tbl" role="region" aria-label="${esc(label)}" tabindex="0"><table><caption class="visually-hidden">${esc(label)}</caption><thead><tr>${head.map(h => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${r.slice(1).map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 
     app.innerHTML = `<div class="wrap">
@@ -3838,9 +4346,8 @@ for (const path of pages) {
         </section>
 
         <section aria-labelledby="audit-checklist">${H("checklist","Audit checklist")}
-          <p class="check-count" id="cc-audit" aria-live="polite">${done.length} of ${AUDIT_CHECK.length} checked</p>
-          <ul class="checklist">${AUDIT_CHECK.map((t, i) => `<li><label><input type="checkbox" data-sc="audit" data-i="${i}"${done.includes(i) ? " checked" : ""}><span>${esc(t)}</span></label></li>`).join("")}</ul>
-          <p><button type="button" class="linkbtn" data-reset-audit>Clear audit checklist</button></p>
+          <p>What a complete audit covers, for reference.</p>
+          <ul class="checkref">${AUDIT_CHECK.map(t => `<li>${esc(t)}</li>`).join("")}</ul>
         </section>
         </div>
       </div>
@@ -3852,7 +4359,6 @@ for (const path of pages) {
 
   function scHTML(c){
     const k = c.id, d = idf(k);
-    const done = checks[k] || [];
     const sec = (icon, title, body, cls) => `<div class="sec ${cls || ""}"><h4>${icon}${esc(title)}</h4>${body}</div>`;
 
     let body = `<div class="sc-links">
@@ -3862,8 +4368,7 @@ for (const path of pages) {
     body += sec(I.eye, "What it means", `<p class="lead">${esc(c.intent)}</p>`);
     body += sec(I.people, "Who this helps", `<ul class="who">${c.who.map(w => `<li>${esc(w)}</li>`).join("")}</ul>`);
     body += sec(I.list, "What to check",
-      `<p class="check-count" id="cc-${d}" aria-live="polite">${done.length} of ${c.check.length} checked</p>
-       <ul class="checklist">${c.check.map((t, i) => `<li><label><input type="checkbox" data-sc="${k}" data-i="${i}"${done.includes(i) ? " checked" : ""}><span>${esc(t)}</span></label></li>`).join("")}</ul>`);
+      `<ul class="checkref">${c.check.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`);
     body += sec(I.flask, "How to test", `<ol class="steps">${c.how.map(t => `<li><span>${esc(t)}</span></li>`).join("")}</ol>`);
     if (c.tools && c.tools.length) body += sec(I.wrench, "Tools", `<ul class="toolchips">${c.tools.map(key => { const t = TOOLS[key]; if (!t) return ""; return `<li>${t.url ? extLink(t.url, t.name) : `<span>${esc(t.name)}</span>`}</li>`; }).join("")}</ul>`);
 
@@ -3896,21 +4401,14 @@ for (const path of pages) {
     if (c.bp && c.bp.length) body += sec(I.star, "Best practice (beyond the requirement)", `<p class="bp-note">Recommend these in an audit, but label them as best practice. On their own they are not failures of ${k}.</p><ul class="bp">${c.bp.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`);
     if (c.tip) body += `<div class="sec callout"><h4>${I.bulb}QA tip</h4><p>${esc(c.tip)}</p></div>`;
 
-    const isL = !!learned[k];
-    body += `<div class="learn-row">
-      <button type="button" class="learn" data-learn="${k}" aria-pressed="${isL}">
-        <span class="ico-off">${I.wallet}</span><span class="ico-on">${I.walletOn}</span>
-        <span>Mark ${k} as learned</span>
-      </button>
-      <div class="navbtn"><button type="button" class="linkbtn" data-collapse="${k}">Collapse ${k}</button></div>
-    </div>`;
+    body += `<div class="learn-row"><div class="navbtn"><button type="button" class="linkbtn" data-collapse="${k}">Collapse ${k}</button></div></div>`;
 
     return `<article class="sc" id="sc-${d}" data-level="${c.level}" data-id="${k}">
       <h3 class="sc-h">
         <button type="button" class="sc-toggle" id="scbtn-${d}" aria-expanded="false" aria-controls="scb-${d}">
           <span class="sc-num">${k}</span>
           <span class="sc-title">${esc(c.title)}</span>
-          <span class="sc-flags"><span class="badge lvl-${c.level}">Level ${c.level}</span><span class="learned-flag" data-flag="${k}"${isL ? "" : " hidden"}>${I.ok}Learned</span></span>
+          <span class="sc-flags"><span class="badge lvl-${c.level}">Level ${c.level}</span></span>
           ${I.chev}
         </button>
       </h3>
@@ -3931,7 +4429,6 @@ for (const path of pages) {
         <div class="g-aside">
           <h3 id="ga-${d}">At a glance</h3>
           <p style="margin:0 0 .6rem">${plural(n, "criterion", "criteria")}: ${["A","AA","AAA"].filter(l => c[l]).map(l => `<span class="badge lvl-${l}">${c[l]} ${l}</span>`).join(" ")}</p>
-          <p style="margin:0 0 .6rem"><span data-gprog="${g.id}"></span></p>
           <ul>${(g.kit || []).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
           <div class="links">
             ${extLink(UND + g.slug + ".html", "Understanding Guideline " + g.id)}
@@ -3957,7 +4454,8 @@ for (const path of pages) {
   function renderPrinciple(p){
     const all = p.guidelines.flatMap(g => g.criteria);
     const c = counts(all);
-    const crumbs = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">${p.num}. ${esc(p.name)}</span></li></ol></nav>`;
+    const crumbs = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/wcag">WCAG 2.2</a></li><li><span aria-current="page">${p.num}. ${esc(p.name)}</span></li></ol></nav>
+      <nav class="subnav" aria-label="WCAG principles"><ul>${PRINCIPLES.map(x => `<li><a href="#/${x.id}"${x.id === p.id ? ' aria-current="page"' : ""}>${x.num}. ${esc(x.name)}</a></li>`).join("")}</ul></nav>`;
     let html = `<div class="wrap">${crumbs}
       <header class="p-hero">
         <span class="p-num" aria-hidden="true">${p.num}</span>
@@ -3966,7 +4464,6 @@ for (const path of pages) {
         <div class="p-meta">
           ${all.length ? `<div class="counts">${plural(all.length, "success criterion", "success criteria")}: ${["A","AA","AAA"].filter(l => c[l]).map(l => `<span class="badge lvl-${l}">${c[l]} at ${l}</span>`).join(" ")}</div>` : `<div>Study notes for this principle are on the way.</div>`}
           ${extLink(SPEC + "#" + p.slug, "Principle " + p.num + " in WCAG 2.2")}
-          ${all.length ? `<div class="prog"><span id="p-prog"></span><span class="meter" aria-hidden="true"><i id="p-meter" style="width:0"></i></span></div>` : ""}
         </div>
       </header>
       ${p.blurb ? `<p style="max-width:68ch;font-size:1.08rem;margin:-.5rem 0 2rem">${esc(p.blurb)}</p>` : ""}`;
@@ -3986,7 +4483,7 @@ for (const path of pages) {
     }
     html += `</div>`;
     app.innerHTML = html;
-    if (!p.soon){ applyLevels(); refreshProgress(); }
+    if (!p.soon){ applyLevels(); }
   }
 
   /* ---------- behaviours ---------- */
@@ -4039,20 +4536,6 @@ for (const path of pages) {
     });
   }
 
-  function refreshProgress(){
-    const p = currentPrinciple(); if (!p || p.soon) return;
-    const all = p.guidelines.flatMap(g => g.criteria);
-    const n = all.filter(c => learned[c.id]).length;
-    const pp = document.getElementById("p-prog");
-    if (pp) pp.textContent = `${n} of ${all.length} learned`;
-    const m = document.getElementById("p-meter");
-    if (m) m.style.width = (all.length ? Math.round(n / all.length * 100) : 0) + "%";
-    p.guidelines.forEach(g => {
-      const el = app.querySelector(`[data-gprog="${g.id}"]`);
-      if (el) el.textContent = `${g.criteria.filter(c => learned[c.id]).length} of ${g.criteria.length} learned`;
-    });
-  }
-
   app.addEventListener("click", e => {
     const tab = e.target.closest('[role="tab"]');
     if (tab){ selectTab(tab.dataset.gid, {hash:true}); return; }
@@ -4102,38 +4585,6 @@ for (const path of pages) {
       try { navigator.clipboard.writeText(FINDING_TEMPLATE).then(ok, fallback); } catch(err){ fallback(); }
       return;
     }
-    const rs = e.target.closest("[data-reset-audit]");
-    if (rs){
-      checks["audit"] = []; store.set("checks", checks);
-      app.querySelectorAll('input[data-sc="audit"]').forEach(x => { x.checked = false; });
-      document.getElementById("cc-audit").textContent = `0 of ${AUDIT_CHECK.length} checked`;
-      return;
-    }
-
-    const ln = e.target.closest("[data-learn]");
-    if (ln){
-      const k = ln.dataset.learn;
-      if (learned[k]) delete learned[k]; else learned[k] = true;
-      store.set("learned", learned);
-      ln.setAttribute("aria-pressed", !!learned[k]);
-      const flag = app.querySelector(`[data-flag="${k}"]`);
-      if (flag) flag.hidden = !learned[k];
-      refreshProgress();
-    }
-  });
-
-  app.addEventListener("change", e => {
-    const cb = e.target.closest('input[type="checkbox"][data-sc]');
-    if (!cb) return;
-    const k = cb.dataset.sc, i = +cb.dataset.i;
-    const set = new Set(checks[k] || []);
-    cb.checked ? set.add(i) : set.delete(i);
-    checks[k] = [...set];
-    store.set("checks", checks);
-    const c = ALL.find(x => x.id === k);
-    const total = k === "audit" ? AUDIT_CHECK.length : (c ? c.check.length : 0);
-    const cc = document.getElementById("cc-" + idf(k));
-    if (cc) cc.textContent = `${set.size} of ${total} checked`;
   });
 
   app.addEventListener("keydown", e => {
@@ -4159,6 +4610,23 @@ for (const path of pages) {
     const p = PRINCIPLES.find(x => x.id === parts[0]);
     const sub = parts[1] || "";
 
+    if (parts[0] === "apg"){
+      const slug = parts[1] && APG_PATTERNS[parts[1]] ? parts[1] : "";
+      const view = "apg:" + slug;
+      const same = app.dataset.view === view;
+      if (!same){ app.dataset.view = view; renderNav("apg"); slug ? renderPattern(slug) : renderApgHome(); window.scrollTo(0, 0); }
+      document.title = (slug ? APG_PATTERNS[slug].name + " pattern | APG" : "APG patterns") + " | a11ywallet";
+      const target = slug && parts[2] && document.getElementById("apg-" + parts[2]);
+      if (target){ target.scrollIntoView(); if (!first) target.focus({preventScroll:true}); }
+      else if (!first && !same) document.getElementById("p-h1").focus();
+      first = false; return;
+    }
+    if (parts[0] === "wcag"){
+      if (app.dataset.view !== "wcag"){ app.dataset.view = "wcag"; renderNav("wcag"); renderWcagHome(); window.scrollTo(0, 0); }
+      document.title = "WCAG 2.2 study notes | a11ywallet";
+      if (!first) document.getElementById("home-h1").focus();
+      first = false; return;
+    }
     if (parts[0] === "audit"){
       const same = app.dataset.view === "audit";
       if (!same){ app.dataset.view = "audit"; renderNav("audit"); renderAudit(); window.scrollTo(0, 0); }
@@ -4170,14 +4638,14 @@ for (const path of pages) {
     }
 
     if (!p){
-      if (app.dataset.view !== "home"){ app.dataset.view = "home"; renderNav(""); renderHome(); }
-      document.title = "a11ywallet | WCAG 2.2 study notes";
+      if (app.dataset.view !== "home"){ app.dataset.view = "home"; renderNav(""); renderLanding(); window.scrollTo(0, 0); }
+      document.title = "a11ywallet | Accessibility study notes";
       if (!first) document.getElementById("home-h1").focus();
       first = false; return;
     }
 
     const same = app.dataset.view === p.id;
-    if (!same){ app.dataset.view = p.id; renderNav(p.id); renderPrinciple(p); }
+    if (!same){ app.dataset.view = p.id; renderNav("wcag"); renderPrinciple(p); }
     document.title = `${p.name} | a11ywallet`;
 
     if (!p.soon){
@@ -4220,13 +4688,20 @@ for (const path of pages) {
     const t = q.value.trim().toLowerCase();
     if (!t){ list.innerHTML = ""; status.textContent = ""; return; }
     const words = t.split(/\s+/);
-    const res = ALL.filter(c => {
+    const pats = Object.keys(APG_PATTERNS).map(k => ({slug:k, p:APG_PATTERNS[k]})).filter(x => {
+      const hay = ("apg pattern " + x.slug + " " + x.p.name + " " + x.p.summary + " " + x.p.kw).toLowerCase();
+      return words.every(w => hay.includes(w));
+    });
+    const scs = ALL.filter(c => {
       const hay = (c.id + " " + c.title + " " + c.s + " " + (c.kw || "") + " level " + c.level).toLowerCase();
       return words.every(w => hay.includes(w));
-    }).slice(0, 15);
-    list.innerHTML = res.map(c => `<li><a href="#/${c._p.id}/${c.id}"><span class="sc-num">${c.id}</span><span class="r-t">${esc(c.title)}</span><span class="badge lvl-${c.level}">${c.level}</span><span class="r-sum">${esc(c.s)}</span></a></li>`).join("");
-    status.textContent = res.length ? plural(res.length, "result", "results") : "No criteria found. Try a number like 1.4 or a word like contrast.";
-    if (!res.length) list.innerHTML = `<li style="padding:.6rem .5rem;color:var(--muted)">No criteria found. Try a number like 1.4 or a word like contrast.</li>`;
+    });
+    const res = [...pats.map(x => ({pat:x})), ...scs.map(c => ({sc:c}))].slice(0, 15);
+    list.innerHTML = res.map(r => r.pat
+      ? `<li><a href="#/apg/${r.pat.slug}"><span class="sc-num">APG</span><span class="r-t">${esc(r.pat.p.name)} pattern</span><span></span><span class="r-sum">${esc(r.pat.p.summary)}</span></a></li>`
+      : `<li><a href="#/${r.sc._p.id}/${r.sc.id}"><span class="sc-num">${r.sc.id}</span><span class="r-t">${esc(r.sc.title)}</span><span class="badge lvl-${r.sc.level}">${r.sc.level}</span><span class="r-sum">${esc(r.sc.s)}</span></a></li>`).join("");
+    status.textContent = res.length ? plural(res.length, "result", "results") : "Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.";
+    if (!res.length) list.innerHTML = `<li style="padding:.6rem .5rem;color:var(--muted)">Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.</li>`;
   }
   q.addEventListener("input", doSearch);
   function openSearch(){ if (!dlg.open){ dlg.showModal(); q.select(); doSearch(); } }
