@@ -170,7 +170,7 @@ main:focus,[tabindex="-1"]:focus{outline:none}
 
 /* tabs, styled as cards sliding out of a wallet */
 .tablist{display:flex;gap:.5rem;overflow-x:auto;padding:.5rem .25rem 0;margin:0 -.25rem;border-bottom:3px solid var(--leather-2)}
-.tab{flex:1 0 12rem;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-bottom:0;border-radius:14px 14px 0 0;padding:.75rem 1rem .8rem;cursor:pointer;position:relative;top:0}
+.tab{flex:1 0 12rem;max-width:22rem;text-align:left;background:var(--surface-2);border:1px solid var(--line);border-bottom:0;border-radius:14px 14px 0 0;padding:.75rem 1rem .8rem;cursor:pointer;position:relative;top:0}
 .tab:hover{background:var(--surface)}
 .tab .t-id{display:block;font-weight:800;font-size:1.35rem;line-height:1.1}
 .tab .t-name{display:block;font-weight:600}
@@ -288,6 +288,30 @@ pre:focus-visible{outline-offset:-3px}
 
 .empty{padding:1.5rem;border:2px dashed var(--line);border-radius:12px;text-align:center;color:var(--muted)}
 
+.removed{background:var(--surface-2);border:1px dashed var(--line);border-radius:14px;padding:1rem 1.2rem;margin-bottom:1.25rem;color:var(--muted)}
+.removed p{max-width:78ch}
+.removed-h{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;color:var(--text)}
+.removed-tag{font-size:.8rem;font-weight:700;border:1.5px solid var(--muted);border-radius:999px;padding:.05rem .55rem;color:var(--muted)}
+.bp-note{font-size:.95rem;color:var(--muted)}
+.bp li::marker{content:"★  ";color:var(--brass-ink)}
+.audit{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:2.5rem;align-items:start}
+.a-toc{position:sticky;top:5.5rem;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+.a-toc h2{font-size:1rem;margin-bottom:.5rem}
+.a-toc ol{margin:0;padding-left:1.2rem;font-size:.95rem}
+.a-toc li{margin:.3rem 0}
+.a-body section{max-width:78ch;margin-bottom:2.75rem}
+.a-body ul{padding-left:1.25rem}
+.a-body li{margin:.45rem 0}
+.a-h{font-size:1.55rem;letter-spacing:-.01em;margin-bottom:.75rem;padding-top:.25rem}
+.scs{display:block;font-family:var(--mono);font-size:.85rem;color:var(--muted);margin-top:.2rem}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.tbl table{border-collapse:collapse;width:100%;min-width:34rem;font-size:.95rem}
+.tbl th,.tbl td{text-align:left;vertical-align:top;padding:.65rem .85rem;border-bottom:1px solid var(--line)}
+.tbl thead th{background:var(--surface-2)}
+.tbl tbody tr:last-child>*{border-bottom:0}
+.copy-status{color:var(--pass);font-weight:600;margin-left:.5rem}
+.linkbtn svg{width:1rem;height:1rem;vertical-align:-.15em;margin-right:.25rem}
+@media (max-width:900px){.audit{grid-template-columns:minmax(0,1fr)}.a-toc{position:static}}
 /* coming soon principle */
 .soon-list{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.75rem}
 .soon-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
@@ -1610,29 +1634,1903 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });`
   ]
 }
 ];
+/* ================= extra tools for principles 2–4 ================= */
+Object.assign(TOOLS, {
+  kbd:{name:"Keyboard only (put the mouse away)", url:"", note:"Tab, Shift+Tab, Enter, Space, arrow keys, Escape."},
+  peat:{name:"PEAT (Photosensitive Epilepsy Analysis Tool)", url:"https://trace.umd.edu/peat/", note:"Analyses video and animation against the flash thresholds."},
+  talkback:{name:"TalkBack (Android)", url:"https://support.google.com/accessibility/android/answer/6283677", note:"Android's built-in screen reader."},
+  voice:{name:"Voice Control / Dragon", url:"", note:"Speak “Click Save” to check that visible labels match accessible names."},
+  hemingway:{name:"Readability checker", url:"https://hemingwayapp.com/", note:"Estimates reading grade level of a passage."},
+  validator:{name:"W3C Markup Validator", url:"https://validator.w3.org/", note:"Finds duplicate ids and broken nesting that confuse assistive tech."},
+  aitabs:{name:"Accessibility Insights: Tab stops", url:"https://accessibilityinsights.io/docs/web/getstarted/fastpass/", note:"Draws the tab order as numbered lines over the page."}
+});
+
+const OPERABLE_GUIDELINES = [
+/* ------------------------------------------------------ 2.1 */
+{
+  id:"2.1", name:"Keyboard Accessible", slug:"keyboard-accessible",
+  desc:"Make all functionality available from a keyboard.",
+  why:"Keyboard access is the foundation for almost every other input method. Screen readers, switch devices, sip-and-puff, voice control and on-screen keyboards all send keystrokes or keyboard-like commands. If something only works with a mouse, all of those users are locked out.",
+  kit:["Reach and operate everything with Tab, Enter, Space, arrows and Escape","Never get stuck inside a component","Single-key shortcuts can be turned off or remapped"],
+  criteria:[
+  {
+    id:"2.1.1", title:"Keyboard", slug:"keyboard", level:"A",
+    kw:"keyboard tab enter space onclick div button mouse hover drag",
+    s:"All functionality can be operated with a keyboard, without requiring specific timings for individual keystrokes.",
+    intent:"Everything a mouse user can do, a keyboard user must be able to do: open menus, submit forms, play media, sort tables, close dialogs, use custom widgets. It doesn't have to be done the same way (a drag can become buttons), but the result must be reachable. The only exception is functionality that depends on the path of movement, like freehand drawing.",
+    who:["Blind screen reader users","People with motor disabilities using keyboards, switches or sip-and-puff","Voice control users","Power users who prefer the keyboard"],
+    check:[
+      "Every link, button, form field and custom control can receive focus with Tab or arrow keys",
+      "Every control can be activated: Enter for links, Enter/Space for buttons, Space for checkboxes, arrows for radios, sliders, tabs and menus",
+      "Custom widgets built from div or span have tabindex=\"0\" and keyboard event handlers, or better, are real buttons and links",
+      "Mouse-only events (mouseover, mousedown, dblclick, drag) have keyboard equivalents",
+      "Hover-only menus and tooltips also open on focus or with a key",
+      "Drag and drop (sortable lists, file drop zones, sliders) has a keyboard alternative",
+      "Scrollable regions can be scrolled with the keyboard",
+      "Embedded content (iframes, maps, video players, chat widgets) is operable",
+      "Nothing requires fast or held keystrokes"
+    ],
+    how:[
+      "Click in the browser address bar, then press Tab repeatedly through the whole page. Don't touch the mouse for the rest of the test.",
+      "At each stop, note what has focus and try to operate it with the expected keys.",
+      "List everything you can do with the mouse on the page (open menus, play video, dismiss banner, change quantity) and confirm each is possible by keyboard.",
+      "Check custom components against the ARIA Authoring Practices keyboard patterns: tabs, menus, comboboxes, dialogs, sliders, accordions.",
+      "Inspect suspicious clickable elements: if a div or span has a click handler, check it has a role, tabindex and a keydown handler.",
+      "Use Accessibility Insights' Tab stops visualiser to spot controls that never receive focus."
+    ],
+    tools:["kbd","aitabs","devtools","nvda","axe"],
+    fails:[["F54","Only pointing-device-specific event handlers for a function"],["F55","Script removes focus as soon as it is received"],["F42","Scripted events emulate links without being keyboard accessible"]],
+    scenarios:[
+      ["Clickable div","“Add to cart” is a styled <div onclick> that Tab skips entirely."],
+      ["Hover menu","The account menu opens only on mouseover."],
+      ["Drag-only sorting","Reordering products in a settings table is drag and drop only."],
+      ["Custom select","A styled dropdown opens on click but ignores arrow keys and Enter."]
+    ],
+    ex:{
+      bad:String.raw`<div class="btn" onclick="addToCart()">Add to cart</div>
+
+<li class="menu" onmouseover="openMenu()">Account</li>`,
+      badNote:"Neither can be reached or operated by keyboard.",
+      good:String.raw`<button type="button" onclick="addToCart()">Add to cart</button>
+
+<button type="button" aria-expanded="false" aria-controls="acct-menu"
+        onclick="toggleMenu(this)">Account</button>
+<ul id="acct-menu" hidden>...</ul>`,
+      goodNote:"Native buttons are focusable and respond to Enter and Space for free."
+    },
+    auto:{code:String.raw`test('every visible interactive element is in the tab order', async ({ page }) => {
+  await page.goto('/');
+  const reached = new Set<string>();
+  for (let i = 0; i < 200; i++) {
+    await page.keyboard.press('Tab');
+    const id = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement;
+      if (!el.dataset.pwId) el.dataset.pwId = String(Math.random());
+      return el.dataset.pwId;
+    });
+    if (reached.has(id)) break;          // looped back to the start
+    reached.add(id);
+  }
+  const clickableDivs = await page.locator('div[onclick], span[onclick]').count();
+  expect(clickableDivs, 'click handlers on non-interactive elements').toBe(0);
+  expect(reached.size).toBeGreaterThan(0);
+});`, note:"Automation can find unreachable elements; it can't tell whether a custom widget responds to the right keys. Test widgets by hand."},
+    tech:[["G202","Keyboard control for all functionality"],["H91","HTML form controls and links"],["SCR20","Keyboard and other device-specific functions together"],["SCR35","Making actions keyboard accessible with onclick on links and buttons"],["SCR2","Redundant keyboard and mouse event handlers"],["SCR29","Adding keyboard-accessible actions to static HTML elements"]],
+    exc:["Functionality that depends on the path of the user's movement, such as freehand drawing or a signature pad (not just the end points)"],
+    tip:"A real <button> gives you focus, Enter, Space, a role and a name without a line of JavaScript. Most keyboard bugs are someone rebuilding a button out of a div."
+  },
+  {
+    id:"2.1.2", title:"No Keyboard Trap", slug:"no-keyboard-trap", level:"A",
+    kw:"keyboard trap stuck focus modal iframe embed escape",
+    s:"If keyboard focus can move into a component, it can also move out using the keyboard. If that needs more than Tab, arrows or Escape, users are told how.",
+    intent:"Getting stuck is worse than not getting in. A keyboard user trapped inside a widget, video player or iframe can't reach anything else on the page and may have to reload or give up. Note that modal dialogs intentionally keep focus inside while open; that's fine as long as the dialog can be closed with the keyboard.",
+    who:["Keyboard users","Screen reader users","Switch and alternative input users"],
+    check:[
+      "You can Tab into and out of every component, including embedded players, maps, editors and iframes",
+      "Rich text editors that capture Tab explain how to leave (for example Esc then Tab, or Ctrl+M)",
+      "Modal dialogs can be closed with Escape or a keyboard-reachable close button",
+      "Focus returns to a sensible place after a dialog closes",
+      "Date pickers, comboboxes and chat widgets don't swallow Tab",
+      "Third-party widgets (cookie banners, support chat) are included"
+    ],
+    how:[
+      "Tab through the entire page from top to bottom and back with Shift+Tab.",
+      "At every component, try Tab, Shift+Tab, arrows and Escape to leave it.",
+      "Pay extra attention to iframes, video players, code editors and anything with its own keyboard handling.",
+      "If a component needs a special key to exit, check the instructions are shown before or when focus enters."
+    ],
+    tools:["kbd","aitabs"],
+    fails:[["F10","Content formats combined so that users are trapped inside one of them"]],
+    scenarios:[
+      ["Trapped in the editor","A code editor turns Tab into indentation and gives no way out."],
+      ["Chat widget loop","Focus cycles endlessly inside a support chat launcher."]
+    ],
+    ex:{
+      bad:String.raw`editor.addEventListener('keydown', e => {
+  if (e.key === 'Tab') { e.preventDefault(); insertTab(); }
+});`,
+      badNote:"Tab can never leave the editor.",
+      good:String.raw`<p id="ed-help">Tab inserts an indent. Press Esc, then Tab, to move to the next field.</p>
+<div role="textbox" aria-multiline="true" aria-describedby="ed-help" tabindex="0"></div>
+
+let escaped = false;
+editor.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { escaped = true; return; }
+  if (e.key === 'Tab' && !escaped) { e.preventDefault(); insertTab(); }
+  escaped = false;
+});`,
+      goodNote:"An exit route exists and is announced."
+    },
+    auto:{code:String.raw`test('Tab eventually leaves the rich text editor', async ({ page }) => {
+  await page.goto('/compose');
+  await page.getByRole('textbox', { name: 'Message' }).focus();
+  await page.keyboard.press('Escape');
+  await page.keyboard.press('Tab');
+  await expect(page.getByRole('button', { name: 'Send' })).toBeFocused();
+});`, note:"Write one of these for each component that handles its own keys."},
+    tech:[["G21","Ensuring users are not trapped in content"]],
+    tip:"This criterion is one of the few that WCAG says affects the whole page. A trap anywhere breaks conformance everywhere, so report it as a blocker."
+  },
+  {
+    id:"2.1.3", title:"Keyboard (No Exception)", slug:"keyboard-no-exception", level:"AAA",
+    kw:"keyboard no exception drawing path",
+    s:"All functionality is operable by keyboard, with no exception for path-dependent input.",
+    intent:"This removes the freehand-drawing exception from 2.1.1. Even drawing, signatures or path-based tools must offer a keyboard way to achieve the result, such as typing a name for a signature or entering coordinates.",
+    who:["Keyboard and switch users"],
+    check:["Drawing, signature and path-based features have a keyboard method","Everything in 2.1.1 passes"],
+    how:["Repeat the 2.1.1 test, including features you excused under the path-based exception."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G202","Keyboard control for all functionality"]],
+    tip:"A typed-name signature option often satisfies both this and legal requirements."
+  },
+  {
+    id:"2.1.4", title:"Character Key Shortcuts", slug:"character-key-shortcuts", level:"A",
+    kw:"keyboard shortcuts single key letter shortcut voice control remap turn off",
+    s:"If a shortcut uses only letters, numbers, punctuation or symbols (no Ctrl, Alt or Cmd), users can turn it off, remap it, or it only works when the related component has focus.",
+    intent:"Speech input users dictate words, and each letter can trigger a single-key shortcut by accident: saying “yes” might archive, star and send. Keyboard users with tremors hit keys by mistake. Shortcuts that need a modifier key are much safer.",
+    who:["Voice control users","People with tremors or motor disabilities","Screen reader users (who use single keys for navigation)"],
+    check:[
+      "List every single-character shortcut (for example ?, /, j, k, s)",
+      "Each can be turned off, or remapped to include Ctrl/Alt/Cmd",
+      "Or it only fires when a specific component (like a list or media player) has focus",
+      "Shortcuts don't fire while typing in text fields"
+    ],
+    how:[
+      "Check the app's help or settings for a shortcut list. Also search the JavaScript for keydown handlers that check e.key without a modifier.",
+      "With focus on the page body, press each letter key and watch for actions.",
+      "Look for a setting to disable or change shortcuts."
+    ],
+    tools:["kbd","voice","devtools"],
+    fails:[["F99","Character key shortcuts that can't be turned off or remapped"]],
+    scenarios:[["Accidental archive","Pressing “e” anywhere archives the current ticket, with no way to disable it."]],
+    ex:{
+      bad:String.raw`document.addEventListener('keydown', e => {
+  if (e.key === 'e') archiveTicket();
+});`,
+      badNote:"Fires anywhere, can't be disabled.",
+      good:String.raw`document.addEventListener('keydown', e => {
+  if (!settings.shortcutsEnabled) return;
+  if (e.target.closest('input, textarea, [contenteditable]')) return;
+  if (e.key === 'e' && e.altKey) archiveTicket();
+});`,
+      goodNote:"Needs a modifier, respects a user setting and ignores typing."
+    },
+    auto:{code:String.raw`test('single-key shortcuts are off when the setting is disabled', async ({ page }) => {
+  await page.goto('/settings');
+  await page.getByRole('checkbox', { name: 'Keyboard shortcuts' }).uncheck();
+  await page.goto('/tickets/42');
+  await page.locator('body').press('e');
+  await expect(page.getByRole('status')).not.toHaveText(/archived/i);
+});`, note:"Pair it with a positive test proving the shortcut works when enabled."},
+    tech:[["G217","Letting users remap or turn off character key shortcuts"]],
+    tip:"Gmail-style shortcuts are fine: they're off by default and have a setting."
+  }
+  ]
+},
+/* ------------------------------------------------------ 2.2 */
+{
+  id:"2.2", name:"Enough Time", slug:"enough-time",
+  desc:"Provide users enough time to read and use content.",
+  why:"People read, type and navigate at very different speeds. Screen reader users, people with motor disabilities, people with cognitive disabilities and non-native speakers can all need much longer than designers expect. Time limits and moving content should never decide for them.",
+  kit:["Session timeouts and countdowns","Carousels, marquees and auto-updating feeds","Interruptions and re-authentication"],
+  criteria:[
+  {
+    id:"2.2.1", title:"Timing Adjustable", slug:"timing-adjustable", level:"A",
+    kw:"time limit session timeout countdown extend warning 20 seconds",
+    s:"For each time limit set by the content, users can turn it off, adjust it to at least 10 times the default, or extend it with a simple action after at least a 20-second warning.",
+    intent:"Timeouts protect security and inventory, but they shouldn't lock people out for being slow. The content has to offer a way out, unless the time limit is part of a real-time event, essential, or longer than 20 hours.",
+    who:["Screen reader users","People with motor disabilities","People with cognitive or learning disabilities","Older users and non-native speakers"],
+    check:[
+      "Identify every time limit: session expiry, checkout reservation, OTP expiry, quiz timers, auto-advancing slides, auto-redirects",
+      "Before expiry, users get a warning with at least 20 seconds to respond",
+      "Extending takes a simple action, such as pressing a button or any key",
+      "The warning is announced to screen readers and receives focus or uses an alert",
+      "Users can extend at least 10 times",
+      "Or the limit can be turned off, or adjusted to 10 times the default before it starts",
+      "Meta refresh and timed redirects are not used without user control"
+    ],
+    how:[
+      "Ask the developers for all configured timeouts, or read the session settings. Then wait them out on a test account.",
+      "When the warning appears, check it's reachable by keyboard, announced by the screen reader and gives at least 20 seconds.",
+      "Extend repeatedly and confirm it keeps working.",
+      "Search the source for meta http-equiv=\"refresh\" and setTimeout redirects."
+    ],
+    tools:["nvda","kbd","axe"],
+    fails:[["F40","Meta redirect with a time limit"],["F41","Meta refresh that reloads the page"],["F58","Server-side automatic redirect after a timeout"]],
+    scenarios:[
+      ["Silent logout","The admin session ends after 15 minutes of inactivity and unsaved settings are lost, with no warning."],
+      ["Unannounced warning","A visual countdown modal appears, but focus stays behind it and nothing is announced."]
+    ],
+    ex:{
+      bad:String.raw`<meta http-equiv="refresh" content="300; url=/logged-out">`,
+      badNote:"Leaves after 5 minutes with no warning or control.",
+      good:String.raw`<div role="alertdialog" aria-modal="true" aria-labelledby="to-h" aria-describedby="to-d">
+  <h2 id="to-h">Your session is about to end</h2>
+  <p id="to-d">You'll be signed out in 2 minutes to protect your account.</p>
+  <button type="button" id="stay">Stay signed in</button>
+  <button type="button">Sign out now</button>
+</div>`,
+      goodNote:"Warning well ahead of expiry; one button extends."
+    },
+    auto:{code:String.raw`test('session timeout warns and can be extended', async ({ page }) => {
+  await page.clock.install();
+  await page.goto('/account');
+  await page.clock.fastForward('13:00');            // warning due at 13 min
+  const dlg = page.getByRole('alertdialog', { name: /session is about to end/i });
+  await expect(dlg).toBeVisible();
+  await dlg.getByRole('button', { name: 'Stay signed in' }).click();
+  await page.clock.fastForward('13:00');
+  await expect(page).toHaveURL(/\/account/);        // still signed in
+});`, note:"page.clock needs Playwright 1.45 or later. Adjust times to your app's config."},
+    tech:[["G133","Checkbox on the first page of a multi-part form to request more time"],["G198","A way to turn the time limit off"],["G180","Option to set the time limit to 10 times the default"],["SCR16","Script that warns the user a time limit is about to expire"],["SCR1","Allowing the user to extend the default time limit"],["G4","Allowing content to pause and restart"]],
+    exc:["Real-time exception: part of a real-time event such as an auction, where no alternative is possible","Essential exception: extending would invalidate the activity, such as a timed exam","20-hour exception: the limit is longer than 20 hours"],
+    tip:"Test with the real configured timeout at least once. Warnings are often built against the dev setting and break in production values."
+  },
+  {
+    id:"2.2.2", title:"Pause, Stop, Hide", slug:"pause-stop-hide", level:"A",
+    kw:"carousel slider marquee animation auto-updating pause stop hide 5 seconds",
+    s:"Moving, blinking or scrolling content that starts automatically, lasts more than 5 seconds and sits alongside other content can be paused, stopped or hidden. Auto-updating content can be paused, stopped, hidden or have its update frequency controlled.",
+    intent:"Movement grabs attention whether you want it or not. For people with attention disorders it can make the rest of the page unusable. For screen magnifier and screen reader users, content changing underneath them is disorienting. Carousels and animations must give control back.",
+    who:["People with attention deficit disorders","People with cognitive disabilities","Screen magnifier and screen reader users","People with vestibular disorders"],
+    check:[
+      "Auto-rotating carousels and sliders have a visible pause/stop button",
+      "Marquees, tickers and scrolling text can be paused",
+      "Looping background videos and animated GIFs can be paused (or stop within 5 seconds)",
+      "Auto-updating content (live scores, stock tickers, feeds) can be paused or its frequency set",
+      "Pause controls are keyboard accessible and near the start of the moving content",
+      "Pausing on hover alone is not enough; keyboard and touch users need a control",
+      "Loading spinners are exempt only while actually loading"
+    ],
+    how:[
+      "Load the page and watch for 10 seconds. Note anything that moves, blinks, scrolls or updates.",
+      "For each, find the control. Operate it by keyboard and check it really stops.",
+      "Tab into a carousel: rotation should also pause while focus is inside.",
+      "Check the stopped state persists and doesn't restart on its own."
+    ],
+    tools:["kbd","nvda","axe"],
+    fails:[["F16","Scrolling content with no way to pause and restart it"],["F47","blink element"],["F4","text-decoration: blink without a way to stop within 5 seconds"],["F50","Script-driven blinking that can't be stopped within 5 seconds"],["F7","Object or applet that blinks for more than 5 seconds"]],
+    scenarios:[
+      ["Hover-only pause","The homepage slider pauses on mouse hover, but has no button."],
+      ["Endless GIF","A looping animated banner in the sidebar never stops."]
+    ],
+    ex:{
+      bad:String.raw`<div class="carousel" data-autoplay="5000">
+  <div class="slide">...</div>
+</div>`,
+      badNote:"Rotates forever with no control.",
+      good:String.raw`<section class="carousel" aria-roledescription="carousel" aria-label="Featured plugins">
+  <button type="button" class="rotation" aria-pressed="false">Pause slides</button>
+  <div class="slides" aria-live="off">...</div>
+</section>`,
+      goodNote:"A first-in-order pause button; live announcements stay off while rotating."
+    },
+    auto:{code:String.raw`test('carousel can be paused', async ({ page }) => {
+  await page.goto('/');
+  const current = page.locator('.carousel .slide.is-active');
+  await page.getByRole('button', { name: /pause/i }).click();
+  const before = await current.getAttribute('data-index');
+  await page.waitForTimeout(7000);
+  await expect(current).toHaveAttribute('data-index', before ?? '');
+});`, note:"axe's blink and marquee rules catch the old-school cases only."},
+    tech:[["G4","Allowing content to pause and restart from where it stopped"],["G11","Content that blinks for less than 5 seconds"],["G152","Animated GIFs that stop blinking within 5 seconds"],["G186","A control that stops moving, blinking or auto-updating content"],["G187","Blinking that users can stop through the browser"],["SCR22","Scripts that stop blinking within 5 seconds"],["SCR33","Scrolling content with a way to pause it"],["SCR36","Letting users show moving text in a static window"]],
+    exc:["The movement is part of an activity where it's essential","Moving content that doesn't sit alongside other content","Moving content that stops within 5 seconds"],
+    tip:"Put the pause button before the carousel in the DOM. If it sits after five slides of links, keyboard users have to wade through moving content to reach it."
+  },
+  {
+    id:"2.2.3", title:"No Timing", slug:"no-timing", level:"AAA",
+    kw:"no timing time limit essential",
+    s:"Timing is not an essential part of the activity, except for non-interactive synchronized media and real-time events.",
+    intent:"At AAA, remove time limits entirely rather than making them adjustable.",
+    who:["Everyone who needs more time"],
+    check:["No time limits on tasks, quizzes, forms or reading, except real-time events and media playback"],
+    how:["List all timers and confirm each has been removed or falls under the exceptions."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G5","Letting users complete an activity without a time limit"]],
+    tip:"Ask why each timer exists. Many are leftovers nobody needs."
+  },
+  {
+    id:"2.2.4", title:"Interruptions", slug:"interruptions", level:"AAA",
+    kw:"interruptions notifications popups postpone suppress",
+    s:"Interruptions such as notifications and pop-ups can be postponed or suppressed by the user, except in an emergency.",
+    intent:"Unexpected pop-ups break concentration and can be hard to recover from, especially for people with attention or memory impairments.",
+    who:["People with attention and memory impairments","Screen reader users"],
+    check:["Promotional pop-ups, chat prompts and update notices can be turned off or postponed","Auto-updating content can be set to update on request"],
+    how:["Use the site for 10 minutes and log every interruption; check each can be suppressed."],
+    tools:["kbd","nvda"],
+    fails:[],
+    tech:[["G75","A mechanism to postpone any updating of content"],["G76","A mechanism to request an update instead of updating automatically"]],
+    tip:"A “Do not disturb” preference in the account covers most of this."
+  },
+  {
+    id:"2.2.5", title:"Re-authenticating", slug:"re-authenticating", level:"AAA",
+    kw:"re-authenticate session expires data loss",
+    s:"When a session expires, users can continue after signing back in without losing data.",
+    intent:"Losing a long form because a session expired is frustrating for everyone and can be devastating for someone who took an hour to fill it in.",
+    who:["People who need extra time"],
+    check:["After re-login, the form data and position are restored"],
+    how:["Start a long form, let the session expire, sign in again and check data is still there."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G105","Saving data so it can be used after re-authentication"],["G181","Encoding user data in the re-authorisation page"]],
+    tip:"Autosave drafts to the server or local storage."
+  },
+  {
+    id:"2.2.6", title:"Timeouts", slug:"timeouts", level:"AAA",
+    kw:"timeouts inactivity data loss warning",
+    s:"Users are warned of how long they can be inactive before data is lost, unless data is kept for more than 20 hours.",
+    intent:"People should know in advance that a pause could cost them their work, so they can plan breaks.",
+    who:["People with cognitive disabilities","People who take breaks"],
+    check:["At the start of a process, the inactivity limit is stated","Or data is preserved for at least 20 hours"],
+    how:["Start a checkout or multi-step form and look for a timeout notice at the beginning."],
+    tools:["kbd"],
+    fails:[],
+    tech:[],
+    tip:"“Your basket is saved for 7 days” is a perfectly good way to pass."
+  }
+  ]
+},
+/* ------------------------------------------------------ 2.3 */
+{
+  id:"2.3", name:"Seizures and Physical Reactions", slug:"seizures-and-physical-reactions",
+  desc:"Do not design content in a way that is known to cause seizures or physical reactions.",
+  why:"Flashing content can trigger seizures in people with photosensitive epilepsy, sometimes on first exposure. Large motion effects such as parallax and zoom transitions can cause nausea, dizziness and migraines in people with vestibular disorders. These are safety issues, not just usability ones.",
+  kit:["Flash rate and size","Red flashes","prefers-reduced-motion support for animations"],
+  criteria:[
+  {
+    id:"2.3.1", title:"Three Flashes or Below Threshold", slug:"three-flashes-or-below-threshold", level:"A",
+    kw:"flash flashing seizure epilepsy strobe three per second",
+    s:"Nothing flashes more than three times in any one-second period, or the flashing is below the general and red flash thresholds.",
+    intent:"Flashing between light and dark at around 3 to 50 times per second can trigger seizures. Large flashing areas and saturated red flashes are the most dangerous. Because this can cause physical harm, it applies to the whole page, even outside your test scope.",
+    who:["People with photosensitive epilepsy","People with migraines or other photosensitivity"],
+    check:[
+      "Videos, animations, GIFs and transitions don't flash more than 3 times per second",
+      "If they do, the flashing area is small (roughly under a quarter of a 10° field of view, about 341 × 256 px at typical viewing distance) and not saturated red",
+      "Error or alert states don't strobe",
+      "Game effects, ads and hero videos are included"
+    ],
+    how:[
+      "Watch all animation and video. Count flashes in any one second; step frame by frame if unsure.",
+      "Analyse suspicious video with PEAT or a similar flash-analysis tool.",
+      "Treat anything that looks like strobing as a blocker until proven safe."
+    ],
+    tools:["peat","player"],
+    fails:[],
+    scenarios:[["Celebration strobe","A “Congratulations!” full-screen confetti animation flashes white and red rapidly."]],
+    tech:[["G19","No component flashes more than three times in any one-second period"],["G176","Keeping the flashing area small enough"],["G15","Using a tool to check content doesn't exceed the flash thresholds"]],
+    tip:"Don't test suspicious content by staring at it for a long time yourself. Use a tool and a short look."
+  },
+  {
+    id:"2.3.2", title:"Three Flashes", slug:"three-flashes", level:"AAA",
+    kw:"flash three per second no threshold",
+    s:"Nothing flashes more than three times in any one-second period, regardless of size or colour.",
+    intent:"The AAA version removes the size and colour thresholds: any flashing above three per second fails.",
+    who:["People with photosensitive epilepsy"],
+    check:["No flashing more than three times per second at any size"],
+    how:["Same as 2.3.1 without the threshold allowance."],
+    tools:["peat"],
+    fails:[],
+    tech:[["G19","No component flashes more than three times per second"]],
+    tip:"Easiest rule: just don't flash."
+  },
+  {
+    id:"2.3.3", title:"Animation from Interactions", slug:"animation-from-interactions", level:"AAA",
+    kw:"animation motion parallax reduced motion vestibular prefers-reduced-motion",
+    s:"Motion animation triggered by interaction can be disabled, unless the animation is essential.",
+    intent:"Parallax scrolling, zooming page transitions and elements that fly in as you scroll can cause dizziness and nausea for people with vestibular disorders. Respecting the operating system's reduced-motion setting is the usual solution. Although AAA, it's cheap and widely expected.",
+    who:["People with vestibular disorders","People with migraines","People with attention disorders"],
+    check:["With reduced motion enabled in the OS, parallax, scroll-triggered and transition animations stop or become simple fades","Or a site control disables them"],
+    how:["Turn on Reduce Motion (macOS/iOS), Remove animations (Windows) or emulate prefers-reduced-motion in DevTools Rendering, then scroll and interact."],
+    tools:["rendering","devtools"],
+    fails:[],
+    ex:{
+      good:String.raw`@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}`,
+      goodNote:"A global safety net for users who ask for less motion."
+    },
+    auto:{code:String.raw`test.use({ reducedMotion: 'reduce' });
+
+test('no parallax transform with reduced motion', async ({ page }) => {
+  await page.goto('/');
+  await page.mouse.wheel(0, 800);
+  const transform = await page.locator('.hero-bg').evaluate(el => getComputedStyle(el).transform);
+  expect(transform).toBe('none');
+});`, note:"reducedMotion is a Playwright context option; set it per project to run your suite both ways."},
+    tech:[["C39","CSS prefers-reduced-motion to prevent motion"]],
+    exc:["Animation essential to the functionality or information"],
+    tip:"This very site uses prefers-reduced-motion. Toggle it and watch the wallet cards stop rising."
+  }
+  ]
+},
+/* ------------------------------------------------------ 2.4 */
+{
+  id:"2.4", name:"Navigable", slug:"navigable",
+  desc:"Provide ways to help users navigate, find content, and determine where they are.",
+  why:"Sighted mouse users scan a page and jump straight to what they want. Keyboard and screen reader users move through it one element at a time. Skip links, clear titles, headings, link text, visible focus and a logical focus order are what make a page navigable instead of a maze.",
+  kit:["Skip links and landmarks","Page titles","Focus order, visibility and not being hidden","Link text and headings","Multiple ways to find pages"],
+  criteria:[
+  {
+    id:"2.4.1", title:"Bypass Blocks", slug:"bypass-blocks", level:"A",
+    kw:"skip link skip to content landmarks repeated navigation",
+    s:"There's a way to skip blocks of content that repeat on multiple pages, such as the header and navigation.",
+    intent:"Without a bypass, keyboard users press Tab through the same 40 navigation links on every page before reaching the content. A skip link, landmarks or headings let them jump straight in.",
+    who:["Keyboard users","Screen reader users","Switch users (every keystroke is effort)"],
+    check:[
+      "A “Skip to main content” link is the first focusable element (or near it)",
+      "It becomes visible when focused",
+      "Activating it moves focus to the main content, not just scroll",
+      "The page has a <main> landmark and other landmarks for repeated regions",
+      "Content sections start with headings",
+      "Iframes with repeated content can be skipped"
+    ],
+    how:[
+      "Load the page, press Tab once. A skip link should appear.",
+      "Press Enter, then Tab again. Focus should land on the first element inside main content, not back in the header.",
+      "Check landmarks with a screen reader (NVDA: D) or Accessibility Insights."
+    ],
+    tools:["kbd","ai","nvda","axe"],
+    fails:[],
+    scenarios:[["Broken skip link","The skip link points to #content but no element has that id."],["Hidden forever","The skip link is display:none, so it's never focusable."]],
+    ex:{
+      bad:String.raw`<a href="#content" style="display:none">Skip to content</a>
+...
+<div class="page">...</div>`,
+      badNote:"Not focusable, and the target doesn't exist.",
+      good:String.raw`<a class="skip" href="#main">Skip to main content</a>
+<header>...</header>
+<nav aria-label="Primary">...</nav>
+<main id="main" tabindex="-1">...</main>
+
+.skip { position: absolute; top: -4rem; }
+.skip:focus { top: 0; }`,
+      goodNote:"Visible on focus, and the target can receive focus."
+    },
+    auto:{code:String.raw`test('skip link moves focus to main content', async ({ page }) => {
+  await page.goto('/');
+  await page.keyboard.press('Tab');
+  const skip = page.getByRole('link', { name: /skip to (main )?content/i });
+  await expect(skip).toBeFocused();
+  await expect(skip).toBeVisible();
+  await page.keyboard.press('Enter');
+  await page.keyboard.press('Tab');
+  const inMain = await page.evaluate(() => !!document.activeElement?.closest('main'));
+  expect(inMain).toBe(true);
+});`, note:"Also run axe's bypass and region rules."},
+    tech:[["G1","A link at the top of each page that goes to the main content"],["G123","A link at the start of a repeated block to skip it"],["G124","Links at the top of the page to each content area"],["ARIA11","ARIA landmarks to identify regions"],["H69","Headings at the start of each section"],["SCR28","Expandable and collapsible menus to bypass blocks"]],
+    tip:"This site's skip link is a working example. Press Tab on any page."
+  },
+  {
+    id:"2.4.2", title:"Page Titled", slug:"page-titled", level:"A",
+    kw:"page title document title tab title spa",
+    s:"Every page has a title that describes its topic or purpose.",
+    intent:"The title is the first thing a screen reader announces and what appears in tabs, bookmarks and history. It should say what the page is, with the most specific part first.",
+    who:["Screen reader users","People with many tabs open","People with memory impairments"],
+    check:[
+      "Every page has a non-empty <title>",
+      "Titles are unique and describe the page: “Edit shipping zone | Settings | StoreName”",
+      "The most specific information comes first",
+      "Single-page apps update document.title on each route",
+      "Error and step states are reflected (for example “Error: Checkout step 2 of 3”)"
+    ],
+    how:[
+      "Hover over or read each browser tab title while navigating the site.",
+      "In SPAs, navigate between routes and check the title changes.",
+      "Listen to what the screen reader announces on page load."
+    ],
+    tools:["axe","nvda","devtools"],
+    fails:[["F25","Title doesn't identify the contents"]],
+    scenarios:[["Same title everywhere","Every admin page is titled “Dashboard ‹ My Site”."]],
+    ex:{
+      bad:String.raw`<title>Untitled</title>
+<title>My Store</title>`,
+      badNote:"Generic, or identical on every page.",
+      good:String.raw`<title>Order #1042 | Orders | My Store</title>`,
+      goodNote:"Specific first, site name last."
+    },
+    auto:{code:String.raw`const routes = ['/', '/shop', '/cart', '/checkout', '/my-account'];
+test('titles are present and unique', async ({ page }) => {
+  const titles = new Set<string>();
+  for (const r of routes) {
+    await page.goto(r);
+    const t = await page.title();
+    expect(t.trim(), r + ' has no title').not.toBe('');
+    titles.add(t);
+  }
+  expect(titles.size).toBe(routes.length);
+});`, note:"Uniqueness is a strong heuristic, not the rule. Descriptiveness still needs a human."},
+    tech:[["H25","title element"],["G88","Descriptive titles for web pages"],["G127","Identifying a page's relationship to the larger collection"]],
+    tip:"When an SPA route changes, update the title and move focus to the new heading. This site does both."
+  },
+  {
+    id:"2.4.3", title:"Focus Order", slug:"focus-order", level:"A",
+    kw:"focus order tab order tabindex positive modal dialog logical sequence",
+    s:"When users move through a page with the keyboard, focus moves in an order that preserves meaning and operability.",
+    intent:"Focus should move the way people read and work: header, navigation, main content, footer; and within a form, top to bottom. Jumping randomly, or into hidden content, or away from a dialog you just opened, makes the page confusing or unusable.",
+    who:["Keyboard users","Screen reader users","Screen magnifier users (focus drives the view)"],
+    check:[
+      "Tab order follows the visual and logical reading order",
+      "No positive tabindex values (tabindex=\"1\" and up) create an odd order",
+      "Opening a dialog moves focus into it; closing returns focus to the trigger",
+      "Content revealed by a button (menus, accordions) comes right after it in the tab order",
+      "Hidden or off-screen content (closed menus, inactive slides) doesn't receive focus",
+      "After deleting an item or submitting, focus goes somewhere sensible, not to the top of the page"
+    ],
+    how:[
+      "Tab through the page and watch the order. Use Accessibility Insights' Tab stops to draw it.",
+      "Search the code for tabindex values above 0.",
+      "Open and close every dialog, menu and disclosure and track where focus goes.",
+      "Check that focus never disappears onto an invisible element."
+    ],
+    tools:["kbd","aitabs","devtools"],
+    fails:[["F44","tabindex creates an order that doesn't preserve meaning"],["F85","Dialogs or menus not placed next to their trigger in the focus order"]],
+    scenarios:[["Lost after delete","Removing a cart item sends focus to the top of the page."],["Invisible stops","Tab lands on links inside the closed off-canvas menu."],["Modal left behind","A modal opens but focus stays on the button underneath."]],
+    ex:{
+      bad:String.raw`<input tabindex="3" placeholder="City">
+<input tabindex="1" placeholder="Name">
+<input tabindex="2" placeholder="Street">`,
+      badNote:"Positive tabindex fights the visual order.",
+      good:String.raw`<label>Name <input></label>
+<label>Street <input></label>
+<label>City <input></label>
+
+// dialog
+openBtn.addEventListener('click', () => { dialog.showModal(); });
+dialog.addEventListener('close', () => openBtn.focus());`,
+      goodNote:"DOM order drives focus; native dialog moves focus in, and we return it on close."
+    },
+    auto:{code:String.raw`test('checkout fields are tabbed in visual order', async ({ page }) => {
+  await page.goto('/checkout');
+  await page.getByLabel('First name').focus();
+  const expected = ['Last name', 'Company name (optional)', 'Country / Region', 'Street address'];
+  for (const label of expected) {
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel(label, { exact: true })).toBeFocused();
+  }
+});`, note:"Encode the expected order once in your page object and reuse it."},
+    tech:[["G59","Interactive elements in an order that follows sequences and relationships"],["H4","Logical tab order through links, form controls and objects"],["C27","DOM order matching visual order"],["SCR26","Inserting dynamic content into the DOM right after its trigger"],["SCR27","Reordering page sections using the DOM"],["SCR37","Device-independent custom dialogs"]],
+    tip:"tabindex has three safe values: none, 0 (make focusable) and -1 (focusable by script only). Anything positive is a bug report waiting to happen."
+  },
+  {
+    id:"2.4.4", title:"Link Purpose (In Context)", slug:"link-purpose-in-context", level:"A",
+    kw:"link text click here read more learn more link purpose context",
+    s:"The purpose of each link can be understood from the link text alone, or from the link text together with its programmatically determined context.",
+    intent:"Screen reader users often pull up a list of links. “Read more, Read more, Click here” tells them nothing. Link text should say where it goes, or the surrounding sentence, list item, table cell or heading must make it clear.",
+    who:["Screen reader users browsing link lists","Voice control users (“click Pricing”)","People with cognitive disabilities"],
+    check:[
+      "Link text describes the destination or action",
+      "Generic links (“Read more”, “Learn more”, “Here”) have context in the same sentence, paragraph, list item or table cell, or extra hidden text",
+      "Image links have alt describing the destination",
+      "Icon links have accessible names",
+      "Links with the same text go to the same place; different destinations have different text",
+      "URLs used as link text are understandable, or replaced with descriptive text",
+      "Links that open a new tab, download a file or go off-site say so"
+    ],
+    how:[
+      "Open the screen reader's links list (NVDA: Insert+F7, VoiceOver: rotor) and read it out of context.",
+      "For vague links, check the surrounding sentence, list item or cell.",
+      "Check the accessible name in DevTools for icon and image links."
+    ],
+    tools:["nvda","vo","wave","devtools","axe"],
+    fails:[["F63","Link context given only in content unrelated to the link"],["F89","Image as the only link content with empty alt"]],
+    scenarios:[["Card grid","Twelve product cards each end in “View details”, with the product name in a separate heading not associated with the link."]],
+    ex:{
+      bad:String.raw`<h3>Accessibility audit</h3>
+<p>We check your site against WCAG.</p>
+<a href="/audit">Read more</a>`,
+      badNote:"The link list shows only “Read more”.",
+      good:String.raw`<a href="/audit">Read more<span class="visually-hidden"> about accessibility audits</span></a>
+
+<a href="/audit" aria-describedby="audit-h">Read more</a>
+
+<a href="/report.pdf" download>Download the audit report (PDF, 2 MB)</a>`,
+      goodNote:"Hidden text or a description adds context; file type and size are stated."
+    },
+    auto:{code:String.raw`test('no ambiguous link text', async ({ page }) => {
+  await page.goto('/blog');
+  const names = await page.getByRole('link').evaluateAll(links =>
+    links.map(l => (l.getAttribute('aria-label') ?? l.textContent ?? '').trim().toLowerCase()));
+  const vague = names.filter(n => /^(click here|here|read more|more|learn more|link)$/.test(n));
+  expect(vague, 'ambiguous links').toEqual([]);
+});`, note:"This uses text content as a rough stand-in for the accessible name; the accessibility tree is the final word."},
+    tech:[["H30","Link text that describes the purpose"],["G91","Link text describing the purpose"],["G53","Link text plus the text of its sentence"],["H77","Link text combined with its list item"],["H78","Link text combined with its paragraph"],["H79","Link text combined with its table cell and headers"],["H81","Link text combined with the parent list item"],["ARIA7","aria-labelledby for link purpose"],["ARIA8","aria-label for link purpose"],["C7","CSS to hide part of the link text"]],
+    tip:"If you use hidden text, put the visible words first. “Read more about audits” works with voice control; “About audits: read more” may not (see 2.5.3)."
+  },
+  {
+    id:"2.4.5", title:"Multiple Ways", slug:"multiple-ways", level:"AA",
+    kw:"multiple ways search sitemap navigation table of contents",
+    s:"There is more than one way to find a page within a set of pages, unless the page is a step in a process.",
+    intent:"People find things differently. Some browse menus, some search, some prefer a sitemap or A–Z index. Offering at least two ways means nobody gets stuck.",
+    who:["People with cognitive disabilities","Screen reader users","People with low vision"],
+    check:["At least two of: navigation menu, search, sitemap, table of contents, related links, A–Z index","Checkout and wizard steps are exempt"],
+    how:["From a page deep in the site, try to reach another page by two different methods."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G125","Links to related pages"],["G64","A table of contents"],["G63","A site map"],["G161","A search function"],["G126","A list of links to all other pages"]],
+    exc:["Pages that are a result of, or a step in, a process"],
+    tip:"Plugin admin screens often rely on menus only. A search box in settings pages is a big usability win."
+  },
+  {
+    id:"2.4.6", title:"Headings and Labels", slug:"headings-and-labels", level:"AA",
+    kw:"headings labels descriptive clear",
+    s:"Headings and labels describe the topic or purpose of what they introduce.",
+    intent:"This criterion doesn't require headings or labels; it requires the ones you have to be clear. “Details” and “Section 2” don't help anyone find their way.",
+    who:["Screen reader users navigating by heading","People with cognitive disabilities","Everyone scanning a page"],
+    check:["Each heading describes its section","Headings are unique enough to tell apart in a headings list","Form labels explain what to enter","Button labels say what happens"],
+    how:["Read the heading outline alone (HeadingsMap or screen reader list) and see if it summarises the page.","Read each form label out of context."],
+    tools:["headings","nvda","wave"],
+    fails:[],
+    scenarios:[["Vague labels","A settings page with sections headed “General”, “Other” and “More”."]],
+    tech:[["G130","Descriptive headings"],["G131","Descriptive labels"]],
+    tip:"1.3.1 asks whether headings are marked up. 2.4.6 asks whether they say anything useful. Test both."
+  },
+  {
+    id:"2.4.7", title:"Focus Visible", slug:"focus-visible", level:"AA",
+    kw:"focus visible outline none focus indicator ring keyboard",
+    s:"Any keyboard-operable interface has a visible keyboard focus indicator.",
+    intent:"A keyboard user needs to see where they are, the way a mouse user sees the pointer. Removing the browser's outline without a replacement leaves them guessing.",
+    who:["Keyboard users","People with attention or memory limitations","Low-vision users"],
+    check:[
+      "Every focusable element shows a visible indicator when focused by keyboard",
+      "outline: none or outline: 0 is always paired with an alternative style",
+      "The indicator is visible on all backgrounds, including dark sections and images",
+      "Custom components (cards, tabs, menu items) show focus",
+      "Focus isn't hidden by overflow: hidden on a parent"
+    ],
+    how:[
+      "Tab through the page and confirm you can always see where focus is.",
+      "Search CSS for outline: none, outline: 0 and :focus rules.",
+      "Check both light and dark themes and every background colour."
+    ],
+    tools:["kbd","devtools","cca"],
+    fails:[["F55","Script removes focus when it's received"],["F78","Outlines styled so the focus indicator is removed or invisible"]],
+    scenarios:[["Reset stylesheet","A CSS reset sets *:focus { outline: none } globally."],["Clipped ring","Card focus outlines are cut off by overflow: hidden on the grid."]],
+    ex:{
+      bad:String.raw`*:focus { outline: none; }`,
+      badNote:"Removes every focus indicator.",
+      good:String.raw`:focus-visible {
+  outline: 3px solid #1D5C8F;
+  outline-offset: 2px;
+}
+/* two-colour ring for mixed backgrounds */
+.on-image :focus-visible {
+  outline: 3px solid #fff;
+  box-shadow: 0 0 0 6px #1C2421;
+}`,
+      goodNote:":focus-visible shows the ring for keyboard users; the two-colour version works anywhere."
+    },
+    auto:{code:String.raw`test('focused controls have a visible outline', async ({ page }) => {
+  await page.goto('/');
+  for (let i = 0; i < 25; i++) {
+    await page.keyboard.press('Tab');
+    const style = await page.evaluate(() => {
+      const cs = getComputedStyle(document.activeElement as Element);
+      return { w: parseFloat(cs.outlineWidth), s: cs.outlineStyle, shadow: cs.boxShadow };
+    });
+    const visible = (style.s !== 'none' && style.w > 0) || style.shadow !== 'none';
+    expect(visible, 'focus stop ' + (i + 1) + ' has no outline or box-shadow').toBe(true);
+  }
+});`, note:"Some designs indicate focus with background or underline changes; adjust the check, or use screenshot comparison."},
+    tech:[["G149","Browser-highlighted focus"],["C15","CSS to change presentation on focus"],["G165","The platform's default focus indicator"],["G195","An author-supplied, highly visible focus indicator"],["C40","A two-colour focus indicator"],["SCR31","Script to change background or border on focus"]],
+    tip:"Use :focus-visible, not :focus. Designers who complain about rings on mouse click will stop complaining."
+  },
+  {
+    id:"2.4.8", title:"Location", slug:"location", level:"AAA",
+    kw:"location breadcrumb current page aria-current",
+    s:"Information about the user's location within a set of pages is available.",
+    intent:"Knowing where you are, via breadcrumbs, a highlighted nav item or a step indicator, helps people who get disoriented easily.",
+    who:["People with cognitive disabilities","Screen reader users"],
+    check:["Breadcrumbs, highlighted current nav item or site map location","aria-current=\"page\" on the current link"],
+    how:["Navigate deep into the site and check you can tell where you are."],
+    tools:["nvda","devtools"],
+    fails:[],
+    tech:[["G65","A breadcrumb trail"],["G63","A site map"],["G128","Indicating the current location in navigation bars"]],
+    tip:"aria-current=\"page\" costs nothing and screen readers announce “current page”."
+  },
+  {
+    id:"2.4.9", title:"Link Purpose (Link Only)", slug:"link-purpose-link-only", level:"AAA",
+    kw:"link text only purpose",
+    s:"The purpose of each link can be identified from the link text alone.",
+    intent:"The AAA version drops the context allowance: every link must make sense on its own.",
+    who:["Screen reader users","Voice control users"],
+    check:["No link relies on surrounding text"],
+    how:["Read the links list only; each should be clear."],
+    tools:["nvda","vo"],
+    fails:[["F84","Non-specific links such as “click here” without a way to make them specific"]],
+    tech:[["G91","Link text that describes the purpose"],["H30","Link text that describes the purpose"],["ARIA8","aria-label for link purpose"],["C7","CSS to hide part of the link text"]],
+    tip:"Write links like headlines: they should work when read alone."
+  },
+  {
+    id:"2.4.10", title:"Section Headings", slug:"section-headings", level:"AAA",
+    kw:"section headings organize content",
+    s:"Section headings are used to organise the content.",
+    intent:"Breaking long content into headed sections makes it scannable and navigable for everyone.",
+    who:["Screen reader users","People with cognitive disabilities"],
+    check:["Long content is divided into sections with headings"],
+    how:["Scan long pages for walls of text without headings."],
+    tools:["headings"],
+    fails:[],
+    tech:[["G141","Organising a page using headings"],["H69","Headings at the start of each section"]],
+    tip:"If you scroll more than one screen without a heading, add one."
+  },
+  {
+    id:"2.4.11", title:"Focus Not Obscured (Minimum)", slug:"focus-not-obscured-minimum", level:"AA",
+    kw:"focus obscured sticky header footer cookie banner hidden behind new 2.2",
+    s:"When an element receives keyboard focus, it isn't entirely hidden by author-created content such as sticky headers, footers, cookie banners or chat widgets.",
+    intent:"New in WCAG 2.2. Sticky bars and overlays often cover the element a keyboard user just tabbed to, so they can't see what has focus. At AA, at least part of the focused element must remain visible.",
+    who:["Keyboard users","Screen magnifier users","Low-vision users at high zoom"],
+    check:[
+      "Tabbing through the page never puts focus on an element completely covered by a sticky header or footer",
+      "Cookie banners and chat launchers don't fully cover focused elements",
+      "Non-modal dialogs or panels that stay open don't hide focused content behind them",
+      "Check at 200% and 400% zoom, where sticky elements take up more of the screen"
+    ],
+    how:[
+      "Tab through every page with sticky or fixed elements visible, including after scrolling.",
+      "Repeat at 200% and 400% zoom.",
+      "If the user can dismiss the covering content (for example close the cookie banner), check whether it's still in the way before dismissal: it can pass if dismissal is possible without moving focus."
+    ],
+    tools:["kbd","zoom"],
+    fails:[["F110","Sticky header or footer completely hides the focused element"]],
+    scenarios:[["Under the footer","Tabbing to the “Terms” checkbox at the bottom of checkout puts it behind a sticky “Place order” bar."]],
+    ex:{
+      good:String.raw`html {
+  scroll-padding-top: 5rem;     /* height of the sticky header */
+  scroll-padding-bottom: 4rem;  /* height of the sticky footer */
+}`,
+      goodNote:"Browsers keep focused elements clear of the padding when scrolling them into view."
+    },
+    auto:{code:String.raw`test('focused elements are not hidden under the sticky header', async ({ page }) => {
+  await page.goto('/');
+  await page.mouse.wheel(0, 600);
+  const headerBottom = await page.locator('header').evaluate(h => h.getBoundingClientRect().bottom);
+  for (let i = 0; i < 30; i++) {
+    await page.keyboard.press('Tab');
+    const rect = await page.evaluate(() => document.activeElement!.getBoundingClientRect().toJSON());
+    expect(rect.bottom, 'stop ' + (i + 1) + ' is fully under the header').toBeGreaterThan(headerBottom);
+  }
+});`, note:"The check is “entirely hidden”, so a partially visible element still passes at AA."},
+    tech:[["C43","CSS scroll-padding to keep content un-obscured"]],
+    tip:"This site uses scroll-padding-top for exactly this reason."
+  },
+  {
+    id:"2.4.12", title:"Focus Not Obscured (Enhanced)", slug:"focus-not-obscured-enhanced", level:"AAA",
+    kw:"focus obscured enhanced no part hidden",
+    s:"No part of the focused element is hidden by author-created content.",
+    intent:"The AAA version: the whole focused element, not just part of it, must be visible.",
+    who:["Keyboard users","Screen magnifier users"],
+    check:["Focused elements are completely visible"],
+    how:["Same as 2.4.11, but any overlap fails."],
+    tools:["kbd","zoom"],
+    fails:[],
+    tech:[["C43","CSS scroll-padding"]],
+    tip:"Set scroll-padding a little larger than your sticky elements."
+  },
+  {
+    id:"2.4.13", title:"Focus Appearance", slug:"focus-appearance", level:"AAA",
+    kw:"focus appearance indicator area 2px contrast 3:1",
+    s:"The focus indicator is at least as large as a 2 CSS pixel perimeter around the component and has at least 3:1 contrast between focused and unfocused states.",
+    intent:"2.4.7 only asks for a visible indicator. This asks for a strong one: big enough and contrasting enough to spot at a glance.",
+    who:["Low-vision users","Keyboard users","People with attention difficulties"],
+    check:["Indicator area is at least a 2px outline around the component","Changed pixels have 3:1 contrast between focused and unfocused states","The indicator is not hidden by author content"],
+    how:["Measure outline thickness in DevTools; measure contrast of the ring against the unfocused state with the Colour Contrast Analyser."],
+    tools:["cca","devtools"],
+    fails:[],
+    tech:[["C40","Two-colour focus indicator"],["C41","Strong focus indicator inside the component"],["G195","Highly visible author-supplied focus indicator"]],
+    tip:"A 2px solid outline with 3:1 contrast is the simplest way to pass."
+  }
+  ]
+},
+/* ------------------------------------------------------ 2.5 */
+{
+  id:"2.5", name:"Input Modalities", slug:"input-modalities",
+  desc:"Make it easier for users to operate functionality through various inputs beyond keyboard.",
+  why:"Touch, stylus, voice, head pointers and device motion all behave differently from a mouse. People with tremors can't pinch, people using voice need visible labels that match, people with limited dexterity need big targets and simple taps. These criteria make pointer and alternative input forgiving.",
+  kit:["Gestures and dragging have simple alternatives","Actions fire on release, not press","Visible labels match accessible names","Targets big enough to hit"],
+  criteria:[
+  {
+    id:"2.5.1", title:"Pointer Gestures", slug:"pointer-gestures", level:"A",
+    kw:"gestures swipe pinch multipoint path two finger touch",
+    s:"Functionality that uses multipoint or path-based gestures (pinch, two-finger swipe, drawing a path) can also be operated with a single pointer without a path, like a tap or click, unless the gesture is essential.",
+    intent:"Many people can't perform complex gestures: they use a head pointer, a mouth stick, one finger or have tremors. Every gesture needs a simple tap or click alternative.",
+    who:["People with motor disabilities","People using head pointers, eye gaze or mouth sticks","People using one hand"],
+    check:["Pinch-to-zoom maps have + and − buttons","Swipe carousels have previous and next buttons","Swipe-to-delete has a delete button","Custom multi-finger gestures have alternatives"],
+    how:["List every gesture the interface supports, including on touch devices, and find a single-tap or single-click equivalent for each."],
+    tools:["device","kbd"],
+    fails:[["F105","Path-based gesture with no simple pointer alternative"]],
+    scenarios:[["Swipe-only gallery","Product images change only by swiping."]],
+    tech:[["G215","Controls that achieve the same result as path-based or multipoint gestures"],["G216","Single-point activation for space-based actions"]],
+    exc:["Essential gestures, such as a signature"],
+    tip:"This covers gestures the site defines, not browser or OS gestures like pinch-zooming the page."
+  },
+  {
+    id:"2.5.2", title:"Pointer Cancellation", slug:"pointer-cancellation", level:"A",
+    kw:"pointer cancellation mousedown up event abort undo",
+    s:"For single-pointer actions, at least one of these is true: the action doesn't fire on the down-event; it fires on the up-event and can be aborted by moving away; it can be undone; or the down-event is essential.",
+    intent:"People with motor impairments often press the wrong thing. If the action fires only on release, they can slide off before letting go. Actions that fire the instant you touch leave no escape.",
+    who:["People with tremors or motor disabilities","People with low vision who touch the wrong spot"],
+    check:["Buttons and links activate on click/pointerup, not mousedown/pointerdown/touchstart","Drag-and-drop can be cancelled by dropping outside a target","If down-event activation is used, the action can be undone"],
+    how:["Press and hold on each control, move the pointer off it, then release. Nothing should happen.","Search the code for mousedown, pointerdown and touchstart handlers."],
+    tools:["devtools","device"],
+    fails:[["F101","Control activated on the down-event"]],
+    ex:{
+      bad:String.raw`deleteBtn.addEventListener('mousedown', deleteItem);`,
+      badNote:"Fires the moment the button is pressed.",
+      good:String.raw`deleteBtn.addEventListener('click', deleteItem);`,
+      goodNote:"click fires on release, and not at all if the pointer leaves first."
+    },
+    tech:[["G210","Drag and drop actions can be cancelled"],["G212","Native controls so functionality triggers on the up-event"]],
+    exc:["Down-event is essential, such as a piano keyboard or a game trigger"],
+    tip:"Plain click listeners pass by default. The bugs are usually in custom sliders and drag libraries."
+  },
+  {
+    id:"2.5.3", title:"Label in Name", slug:"label-in-name", level:"A",
+    kw:"label in name accessible name visible label voice control aria-label mismatch",
+    s:"For controls with a visible text label, the accessible name contains that visible text, ideally at the start.",
+    intent:"Voice control users say what they see: “Click Send”. If the accessible name is “Submit message form”, the command fails. Screen reader users who can see a bit also get confused when what's announced differs from what's shown.",
+    who:["Voice control users","Sighted screen reader users","People with cognitive disabilities"],
+    check:[
+      "aria-label on visibly labelled controls includes the visible text, in the same order",
+      "The visible text appears at the start of the accessible name",
+      "Hidden extra text is added after the visible text, not before",
+      "Icons with visible text labels use that text as the name"
+    ],
+    how:[
+      "Compare the visible label to the computed accessible name in the DevTools Accessibility pane for each control.",
+      "Try Voice Control (macOS/iOS) or Dragon: say “Click” plus the visible label."
+    ],
+    tools:["devtools","voice","axe"],
+    fails:[["F96","Accessible name doesn't contain the visible label text"]],
+    scenarios:[["aria-label override","A button visibly reads “Buy now” but has aria-label=\"Purchase product\"."]],
+    ex:{
+      bad:String.raw`<button aria-label="Submit message form">Send</button>`,
+      badNote:"Saying “Click Send” won't work.",
+      good:String.raw`<button>Send</button>
+
+<button aria-label="Send message">Send</button>
+
+<a href="/pricing">Pricing <span class="visually-hidden">for teams</span></a>`,
+      goodNote:"Visible words first; extra context after."
+    },
+    auto:{code:String.raw`test('accessible names start with the visible label', async ({ page }) => {
+  await page.goto('/');
+  const buttons = page.locator('button[aria-label], a[aria-label]');
+  for (let i = 0; i < await buttons.count(); i++) {
+    const el = buttons.nth(i);
+    const visible = (await el.innerText()).trim().toLowerCase();
+    const name = ((await el.getAttribute('aria-label')) ?? '').toLowerCase();
+    if (visible) expect(name.startsWith(visible), name + ' vs ' + visible).toBe(true);
+  }
+});`, note:"axe's label-content-name-mismatch rule (experimental) checks the same thing."},
+    tech:[["G208","Including the visible label text in the accessible name"],["G211","Matching the accessible name to the visible label"]],
+    tip:"The safest aria-label is no aria-label. If there's visible text, let it be the name."
+  },
+  {
+    id:"2.5.4", title:"Motion Actuation", slug:"motion-actuation", level:"A",
+    kw:"motion shake tilt device motion actuation accelerometer",
+    s:"Functions triggered by moving the device (shake, tilt) or by gestures at a camera can also be done with regular controls, and the motion response can be turned off.",
+    intent:"Some people can't move their device, others have it mounted, and some trigger motion by accident because of tremors. Motion should never be the only way, and must be able to be disabled.",
+    who:["People with devices mounted on wheelchairs","People with tremors","People who can't hold a device"],
+    check:["Shake-to-undo or tilt-to-scroll has a button alternative","A setting turns off motion response"],
+    how:["Look for devicemotion and deviceorientation listeners; test on a device."],
+    tools:["device","devtools"],
+    fails:[["F106","Motion actuation that can't be turned off"]],
+    tech:[["G213","Conventional controls plus a way to disable motion actuation"]],
+    exc:["Motion supported through an accessibility-supported interface","Motion is essential, such as a step counter"],
+    tip:"Rare on websites, common in web-based games and PWAs."
+  },
+  {
+    id:"2.5.5", title:"Target Size (Enhanced)", slug:"target-size-enhanced", level:"AAA",
+    kw:"target size 44 pixels touch enhanced",
+    s:"Pointer targets are at least 44 by 44 CSS pixels, with some exceptions.",
+    intent:"Large targets are easier for everyone, and essential for people with tremors or limited dexterity.",
+    who:["People with motor disabilities","Touch screen users","Older users"],
+    check:["Buttons, links and controls are at least 44 × 44 px","Exceptions: an equivalent large target exists, inline links in text, browser-default controls, essential size"],
+    how:["Measure targets in DevTools."],
+    tools:["devtools"],
+    fails:[],
+    tech:[],
+    exc:["Equivalent target of the right size on the page","Inline links in a sentence","Browser-controlled size","Essential presentation"],
+    tip:"44px matches Apple's and Google's touch guidelines."
+  },
+  {
+    id:"2.5.6", title:"Concurrent Input Mechanisms", slug:"concurrent-input-mechanisms", level:"AAA",
+    kw:"concurrent input touch keyboard mouse switch",
+    s:"Content doesn't restrict users to one input method (touch only, mouse only) when the platform offers others.",
+    intent:"People switch between touch, keyboard and mouse, and may plug a keyboard into a tablet. Don't disable one because you detected another.",
+    who:["People who combine inputs","Switch and keyboard users on touch devices"],
+    check:["Keyboard works on touch devices","Touch works on devices with a mouse"],
+    how:["Connect a keyboard to a phone or tablet and use the site."],
+    tools:["device","kbd"],
+    fails:[["F98","Interactions that limit the user to a single input modality"]],
+    tech:[],
+    exc:["Restriction is essential, required for security, or required to respect user settings"],
+    tip:"Watch for code that skips keyboard handlers when 'ontouchstart' in window."
+  },
+  {
+    id:"2.5.7", title:"Dragging Movements", slug:"dragging-movements", level:"AA",
+    kw:"dragging drag and drop sortable slider single pointer alternative new 2.2",
+    s:"Anything done by dragging can also be done with a single pointer without dragging, unless dragging is essential.",
+    intent:"New in WCAG 2.2. Holding a press while moving is hard or impossible for many people. Sortable lists, sliders, kanban boards and map panning need a click or tap alternative. Keyboard support (2.1.1) is not enough on its own, because this is about pointer users.",
+    who:["People with tremors or limited dexterity","Head pointer and eye tracking users","Touch users with one hand"],
+    check:["Sortable lists have move up/down buttons or a “Move to” menu","Sliders can be set by clicking the track or using +/− buttons or an input","Kanban cards can be moved via a menu","Map panning has arrow buttons","Uploads by drag and drop also have a file picker button"],
+    how:["List every drag interaction. For each, complete the task using only clicks or taps, with no press-and-hold movement."],
+    tools:["device","devtools"],
+    fails:[["F108","No single-pointer method for a dragging movement"]],
+    scenarios:[["Reorder by drag only","Menu items in a plugin settings screen can only be reordered by dragging handles."]],
+    ex:{
+      good:String.raw`<li>
+  Shipping zones
+  <button type="button" aria-label="Move Shipping zones up">↑</button>
+  <button type="button" aria-label="Move Shipping zones down">↓</button>
+</li>`,
+      goodNote:"Buttons complement the drag handle for pointer and keyboard users."
+    },
+    auto:{code:String.raw`test('list can be reordered without dragging', async ({ page }) => {
+  await page.goto('/settings/menu');
+  await page.getByRole('button', { name: 'Move Shipping zones up' }).click();
+  await expect(page.getByRole('listitem').first()).toContainText('Shipping zones');
+});`, note:"Name buttons with the item name so screen reader and voice users know which item moves."},
+    tech:[["G219","A single-pointer alternative to dragging"]],
+    exc:["Dragging is essential, or determined by the browser and not modified by the author"],
+    tip:"A “Move” menu with positions works well for long lists where up/down buttons would take too many clicks."
+  },
+  {
+    id:"2.5.8", title:"Target Size (Minimum)", slug:"target-size-minimum", level:"AA",
+    kw:"target size 24 pixels minimum spacing touch new 2.2",
+    s:"Pointer targets are at least 24 by 24 CSS pixels, or have enough spacing that a 24px circle centred on each doesn't overlap another target, with some exceptions.",
+    intent:"New in WCAG 2.2. Tiny, tightly packed targets cause mis-taps. 24px is the minimum; if a target is smaller, it needs spacing around it so mistakes are less likely.",
+    who:["People with motor disabilities","Touch screen users","Older users","People with low vision"],
+    check:[
+      "Icon buttons, close buttons, pagination links and checkboxes are at least 24 × 24 px",
+      "Or undersized targets have spacing so a 24px circle on each doesn't touch another",
+      "Toolbar icons and table action links are checked",
+      "Exceptions noted: inline links in text, equivalent larger control elsewhere, browser default size, essential"
+    ],
+    how:[
+      "Hover or inspect small controls in DevTools and read their box size.",
+      "For undersized ones, measure the gap to neighbouring targets.",
+      "Run axe with the target-size rule (tagged wcag22aa)."
+    ],
+    tools:["devtools","axe"],
+    fails:[],
+    scenarios:[["Tiny close","A toast's close “×” is 14 × 14 px and sits right next to an “Undo” link."]],
+    ex:{
+      bad:String.raw`.icon-btn { width: 16px; height: 16px; padding: 0; }`,
+      badNote:"Too small, and usually crammed together.",
+      good:String.raw`.icon-btn {
+  min-width: 24px; min-height: 24px;  /* AA */
+  padding: 4px;
+}
+.toolbar { gap: 8px; }`,
+      goodNote:"Meets the minimum, with spacing as an extra buffer."
+    },
+    auto:{code:String.raw`test('targets meet 24px minimum', async ({ page }) => {
+  await page.goto('/');
+  const results = await new AxeBuilder({ page }).withRules(['target-size']).analyze();
+  expect(results.violations).toEqual([]);
+});`, note:"axe handles the spacing exception for you."},
+    tech:[["C42","min-height and min-width on target containers"]],
+    exc:["Spacing: a 24px circle on the target doesn't intersect another target or its circle","Equivalent: the same function is available through a target that meets the size","Inline: the target is in a sentence or its size is constrained by line height","User agent: size is set by the browser and not modified","Essential: a particular presentation is essential or legally required"],
+    tip:"24px is the floor, 44px (2.5.5) is the comfortable size. Design to 44 where you can."
+  }
+  ]
+}
+];
+const UNDERSTANDABLE_GUIDELINES = [
+/* ------------------------------------------------------ 3.1 */
+{
+  id:"3.1", name:"Readable", slug:"readable",
+  desc:"Make text content readable and understandable.",
+  why:"Screen readers pick pronunciation rules from the declared language, so a missing or wrong lang attribute turns every word into gibberish. Beyond that, jargon, unexplained abbreviations and complex writing shut out people with cognitive and learning disabilities and non-native readers.",
+  kit:["lang on <html> and on passages in other languages","Definitions for jargon and abbreviations","Plain language"],
+  criteria:[
+  {
+    id:"3.1.1", title:"Language of Page", slug:"language-of-page", level:"A",
+    kw:"lang attribute html language page screen reader pronunciation",
+    s:"The default human language of each page is set in code, usually with the lang attribute on <html>.",
+    intent:"Screen readers and braille software switch pronunciation and translation tables based on the page language. Without it, an English page may be read with a French or Hindi voice. It also helps browsers translate and hyphenate correctly.",
+    who:["Screen reader users","Braille users","People using translation tools","People with reading disabilities using text-to-speech"],
+    check:["<html> has a lang attribute","The value is a valid language code (en, en-IN, ml, hi, fr) and matches the content","Iframes and embedded documents declare their own language","SPA shells and email templates also set it"],
+    how:["View source or run axe (html-has-lang, html-lang-valid).","Listen to the first paragraph with a screen reader and confirm the voice and accent are right."],
+    tools:["axe","nvda","devtools"],
+    fails:[],
+    scenarios:[["Template default","A multilingual site serves Malayalam pages with lang=\"en\"."]],
+    ex:{
+      bad:String.raw`<html>`,
+      badNote:"No language declared.",
+      good:String.raw`<html lang="en">`,
+      goodNote:"One attribute, big impact."
+    },
+    auto:{code:String.raw`test('page language is declared and valid', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveAttribute('lang', /^[a-z]{2,3}(-[A-Za-z0-9]+)*$/);
+  const results = await new AxeBuilder({ page }).withRules(['html-has-lang', 'html-lang-valid', 'html-xml-lang-mismatch']).analyze();
+  expect(results.violations).toEqual([]);
+});`, note:"Tools check the code is valid; only a person can confirm it matches the actual language."},
+    tech:[["H57","lang attribute on the html element"]],
+    tip:"On WordPress, the theme's language_attributes() prints this. Check custom templates didn't remove it."
+  },
+  {
+    id:"3.1.2", title:"Language of Parts", slug:"language-of-parts", level:"AA",
+    kw:"lang attribute parts passage foreign language switch",
+    s:"Passages or phrases in a different language from the page have their language set in code.",
+    intent:"When a sentence switches language, the screen reader should switch voice too. Without it, a French quote on an English page is read with English pronunciation and becomes hard to understand.",
+    who:["Screen reader users","Braille users"],
+    check:["Quotes, phrases and sections in another language have lang on their container","Language pickers show each language name in its own language with lang set (English, മലയാളം, हिन्दी)","Exempt: proper names, technical terms, words that have become part of the surrounding language"],
+    how:["Look for foreign-language text and inspect for lang.","Listen with a screen reader and check the voice switches."],
+    tools:["nvda","vo","axe"],
+    fails:[],
+    ex:{
+      bad:String.raw`<a href="/ml/">മലയാളം</a>`,
+      badNote:"Read with the English voice.",
+      good:String.raw`<a href="/ml/" lang="ml" hreflang="ml">മലയാളം</a>
+<p>The motto was <span lang="fr">liberté, égalité, fraternité</span>.</p>`,
+      goodNote:"The screen reader switches to the right voice for each part."
+    },
+    tech:[["H58","Language attributes to identify changes in language"]],
+    exc:["Proper names, technical terms, words of indeterminate language, and words that have become part of the vernacular of the surrounding text"],
+    tip:"Language switchers are the most common failure. Every entry needs its own lang."
+  },
+  {
+    id:"3.1.3", title:"Unusual Words", slug:"unusual-words", level:"AAA",
+    kw:"jargon idioms definitions glossary unusual words",
+    s:"Definitions are available for words used in an unusual or restricted way, including idioms and jargon.",
+    intent:"Idioms (“break a leg”) and jargon (“SKU”, “API key”) can be meaningless to people with cognitive disabilities or non-native readers.",
+    who:["People with cognitive disabilities","Non-native speakers","People who take words literally"],
+    check:["Jargon and idioms are defined inline, in a glossary or through links"],
+    how:["Read the content as a newcomer would and note terms that need explaining."],
+    tools:["hemingway"],
+    fails:[],
+    tech:[["G101","Definitions for unusual words"],["G55","Linking to definitions"],["G112","Inline definitions"],["G62","A glossary"],["H40","Description lists"]],
+    tip:"A small glossary page linked from help text goes a long way."
+  },
+  {
+    id:"3.1.4", title:"Abbreviations", slug:"abbreviations", level:"AAA",
+    kw:"abbreviations acronyms expanded form abbr",
+    s:"A way to find the expanded form or meaning of abbreviations is available.",
+    intent:"Abbreviations like WCAG, GST or CTA are opaque to anyone who doesn't already know them.",
+    who:["People with cognitive disabilities","Screen reader users","Newcomers to a domain"],
+    check:["Abbreviations are expanded on first use or in a glossary"],
+    how:["Scan for all-caps words and check each is explained somewhere."],
+    tools:["hemingway"],
+    fails:[],
+    tech:[["G102","The expansion or explanation of an abbreviation"],["G97","The expanded form immediately before or after first use"],["G55","Linking to definitions"],["H28","Definitions for abbreviations with the abbr element"]],
+    tip:"Write it out in full the first time: “Web Content Accessibility Guidelines (WCAG)”."
+  },
+  {
+    id:"3.1.5", title:"Reading Level", slug:"reading-level", level:"AAA",
+    kw:"reading level plain language lower secondary summary",
+    s:"When text needs reading ability beyond lower secondary education (about 7–9 years of schooling), a simpler version or supplementary content is available.",
+    intent:"Plain language helps people with reading and cognitive disabilities, and most other readers too.",
+    who:["People with learning and reading disabilities","Non-native speakers","Busy readers"],
+    check:["Complex content has a plain-language summary, illustrations, or a spoken or sign language version"],
+    how:["Run passages through a readability checker and review anything above about grade 9."],
+    tools:["hemingway"],
+    fails:[],
+    tech:[["G86","A text summary readable at lower secondary level"],["G103","Visual illustrations, pictures and symbols"],["G79","A spoken version of the text"],["G153","Making the text easier to read"],["G160","Sign language versions of information"]],
+    tip:"Short sentences, common words, active voice. Your error messages are a great place to start."
+  },
+  {
+    id:"3.1.6", title:"Pronunciation", slug:"pronunciation", level:"AAA",
+    kw:"pronunciation ruby homograph",
+    s:"Where meaning depends on pronunciation, a way to find the pronunciation is provided.",
+    intent:"Some words are spelled the same but mean different things depending on how they're said (like “read” or “lead”), and some languages need pronunciation guides, such as ruby text in Japanese.",
+    who:["People with reading disabilities","Screen reader users","Language learners"],
+    check:["Ambiguous words have pronunciation available where meaning depends on it"],
+    how:["Look for homographs or names whose meaning depends on how they're pronounced."],
+    tools:["nvda"],
+    fails:[],
+    tech:[["G120","Pronunciation immediately after the word"],["G121","Linking to pronunciations"],["G62","A glossary with pronunciation"],["H62","The ruby element"]],
+    tip:"Rarely an issue in product UI; more relevant in educational content."
+  }
+  ]
+},
+/* ------------------------------------------------------ 3.2 */
+{
+  id:"3.2", name:"Predictable", slug:"predictable",
+  desc:"Make web pages appear and operate in predictable ways.",
+  why:"Unexpected changes, like a new page opening when you tab to a field, a form submitting when you pick an option, or navigation moving around between pages, disorient everyone and can completely lose screen reader and keyboard users. Predictability means changes happen only when people ask for them, and things stay where they expect.",
+  kit:["No context change on focus or input","Consistent navigation and naming","Help in the same place on every page"],
+  criteria:[
+  {
+    id:"3.2.1", title:"On Focus", slug:"on-focus", level:"A",
+    kw:"on focus change of context new window submit focus",
+    s:"Moving focus to a component doesn't cause a change of context, like opening a new window, submitting a form or moving focus elsewhere.",
+    intent:"Keyboard users explore a page by tabbing. If tabbing onto an element opens a pop-up or navigates away, they can't safely explore. Focus should never act like a click.",
+    who:["Keyboard users","Screen reader users","People with cognitive disabilities"],
+    check:["Focusing a field, link or button never submits, navigates, opens a new window or moves focus elsewhere","Focusing a menu item doesn't activate it","Dialogs don't open on focus alone","Auto-advancing input fields (such as OTP boxes) are evaluated here and under 3.2.2"],
+    how:["Tab slowly through every interactive element and watch for anything beyond focus styling.","Search code for focus and focusin handlers that navigate or open windows."],
+    tools:["kbd","nvda","devtools"],
+    fails:[["F52","Opening a new window as soon as a page loads"],["F55","Script removes focus when it's received"]],
+    scenarios:[["Focus opens chat","Tabbing onto the help icon opens a full-screen chat panel and moves focus into it."]],
+    ex:{
+      bad:String.raw`<select onfocus="window.open('/help')">...</select>`,
+      badNote:"Tabbing to the field opens a window.",
+      good:String.raw`<select>...</select>
+<a href="/help">Help with choosing a plan</a>`,
+      goodNote:"Help is available on request."
+    },
+    tech:[["G107","Using activation rather than focus as a trigger for changes of context"]],
+    tip:"Change of context means big changes: new page, new window, focus moved, content that changes the meaning of the page. Showing a tooltip on focus is not a change of context."
+  },
+  {
+    id:"3.2.2", title:"On Input", slug:"on-input", level:"A",
+    kw:"on input change of context select onchange auto submit radio checkbox",
+    s:"Changing a setting in a form control (typing, selecting an option, checking a box) doesn't automatically cause a change of context, unless users are told beforehand.",
+    intent:"Screen reader and keyboard users often move through options with arrow keys. If each option change navigates to a new page, they can never reach the one they want. Changes should wait for an explicit action like a submit button.",
+    who:["Keyboard users","Screen reader users","People with cognitive disabilities"],
+    check:[
+      "Selecting a dropdown option doesn't navigate or submit (for example country or language selectors, sort-by dropdowns)",
+      "Checking a checkbox or radio doesn't reload the page or open a window",
+      "Typing the last character in a field doesn't auto-submit",
+      "If a change of context does happen, it's explained before the control",
+      "Filters that update results in place are fine if focus stays put and the change doesn't alter context"
+    ],
+    how:["Use arrow keys (not the mouse) to change each select, radio group and checkbox. Watch for navigation, reloads or focus jumps.","Type into fields right to the last character."],
+    tools:["kbd","nvda"],
+    fails:[["F36","Form auto-submits and shows new content without warning when the last field is filled"],["F37","New window opens without warning when a radio, checkbox or select changes"]],
+    scenarios:[["Sort-by navigates","Arrowing through a “Sort by” dropdown reloads the shop page on each option."]],
+    ex:{
+      bad:String.raw`<select onchange="location.href = this.value">
+  <option value="/en">English</option>
+  <option value="/ml">Malayalam</option>
+</select>`,
+      badNote:"Arrow-key browsing navigates immediately.",
+      good:String.raw`<form action="/lang">
+  <label for="lang">Language</label>
+  <select id="lang" name="lang">...</select>
+  <button type="submit">Change language</button>
+</form>`,
+      goodNote:"Nothing happens until the user presses the button."
+    },
+    auto:{code:String.raw`test('changing sort order by keyboard does not navigate', async ({ page }) => {
+  await page.goto('/shop');
+  const url = page.url();
+  const sort = page.getByLabel('Sort by');
+  await sort.focus();
+  await page.keyboard.press('ArrowDown');
+  await page.waitForTimeout(1000);
+  expect(page.url()).toBe(url);
+  await expect(sort).toBeFocused();
+});`, note:"If your design deliberately changes context on input, test that the warning text is present instead."},
+    tech:[["G80","A submit button to initiate a change of context"],["H32","Submit buttons"],["H84","A button with a select element to perform an action"],["G13","Describing what will happen before a change to a form control"],["SCR19","onchange on a select without causing a change of context"]],
+    tip:"WooCommerce's default “Sort by” submits on change. Check whether your theme or plugin adds a button or warning."
+  },
+  {
+    id:"3.2.3", title:"Consistent Navigation", slug:"consistent-navigation", level:"AA",
+    kw:"consistent navigation order repeated menus",
+    s:"Navigation that repeats across pages appears in the same relative order each time, unless the user changes it.",
+    intent:"People learn where things are. If the menu order shuffles between pages, screen reader users who memorised “Pricing is the fourth link” and people with cognitive disabilities who rely on visual memory get lost.",
+    who:["Screen reader users","People with cognitive disabilities","Low-vision users using magnification"],
+    check:["Main navigation, footer links and sidebars keep the same order on every page","Items can be added or removed, but the rest stays in the same order"],
+    how:["Compare navigation on several page templates, visually and with a screen reader links list."],
+    tools:["nvda","kbd"],
+    fails:[["F66","Navigation links presented in a different relative order"]],
+    tech:[["G61","Repeated components in the same relative order each time"]],
+    tip:"Highlighting the current page or adding a sub-menu is fine. Reordering is not."
+  },
+  {
+    id:"3.2.4", title:"Consistent Identification", slug:"consistent-identification", level:"AA",
+    kw:"consistent identification labels icons same function",
+    s:"Components with the same function are identified the same way across pages.",
+    intent:"If the search button is “Search” on one page and “Find” on another, or the same icon has different alt text, users can't rely on what they've learned.",
+    who:["Screen reader users","People with cognitive disabilities","Voice control users"],
+    check:["The same icon has the same accessible name everywhere","Buttons doing the same job have the same label across pages"],
+    how:["List common controls (search, cart, close, save, menu) and compare labels and names across templates."],
+    tools:["devtools","nvda"],
+    fails:[["F31","Two different labels for the same function on different pages"]],
+    tech:[["G197","Consistent labels, names and text alternatives for the same function"]],
+    tip:"A shared component library with fixed labels prevents most of these."
+  },
+  {
+    id:"3.2.5", title:"Change on Request", slug:"change-on-request", level:"AAA",
+    kw:"change on request new window auto redirect",
+    s:"Changes of context happen only when the user requests them, or there's a way to turn automatic changes off.",
+    intent:"The AAA version: no automatic redirects, pop-up windows or content swaps unless the user asked.",
+    who:["Screen reader users","People with cognitive disabilities"],
+    check:["No automatic redirects","Links that open new windows say so","No full-content auto-updates without an off switch"],
+    how:["Watch pages for automatic changes; check every target=\"_blank\" link is announced as opening a new window."],
+    tools:["nvda","kbd"],
+    fails:[["F22","Opening windows the user didn't request"],["F60","New window opens when the user types in a field"],["F61","Main content changes automatically with no way to turn it off"]],
+    tech:[["G76","A mechanism to request an update"],["H83","target attribute to open a new window on request, with notice in the link text"],["SCR24","Progressive enhancement to open new windows on request"],["G110","Instant client-side redirect"]],
+    tip:"This site marks external links with an icon and hidden “(opens in a new tab)” text."
+  },
+  {
+    id:"3.2.6", title:"Consistent Help", slug:"consistent-help", level:"A",
+    kw:"consistent help contact support chat location new 2.2",
+    s:"If help mechanisms (contact details, a contact form, chat, FAQ link, self-help) are repeated across pages, they appear in the same relative order.",
+    intent:"New in WCAG 2.2. People who struggle with a task need to find help without hunting for it. If the “Contact us” link or chat button is in the footer on one page and the header on another, they may give up.",
+    who:["People with cognitive disabilities","People with memory impairments","Anyone stuck on a task"],
+    check:["Help links, phone numbers, chat widgets and FAQ links sit in the same relative location on every page where they appear","This doesn't require help to exist, only consistency if it does"],
+    how:["Compare several templates (home, product, checkout, account) and note where each help mechanism appears."],
+    tools:["kbd","nvda"],
+    fails:[],
+    scenarios:[["Moving help","The support link is in the header on marketing pages and hidden in a sidebar on account pages."]],
+    tech:[],
+    tip:"Checkout templates often strip the header and footer. Make sure the help link survives."
+  }
+  ]
+},
+/* ------------------------------------------------------ 3.3 */
+{
+  id:"3.3", name:"Input Assistance", slug:"input-assistance",
+  desc:"Help users avoid and correct mistakes.",
+  why:"Forms are where accessibility turns into revenue and access to services. Everyone makes mistakes, but people with disabilities may not see a red border, hear an error, or remember a password. Clear labels, specific error messages, a chance to review, and accessible sign-in keep them moving.",
+  kit:["Labels and instructions","Errors identified in text and linked to fields","Suggestions for fixing errors","Review and confirm for important submissions","No re-entering data, accessible login"],
+  criteria:[
+  {
+    id:"3.3.1", title:"Error Identification", slug:"error-identification", level:"A",
+    kw:"error message identification validation aria-invalid form required",
+    s:"When an input error is detected automatically, the field in error is identified and the error is described to the user in text.",
+    intent:"Users need to know that something went wrong, where, and what. A red outline alone doesn't tell a screen reader user or a colour-blind user anything. The error must be text, and it must point to the field.",
+    who:["Screen reader users","People with colour vision deficiencies","People with cognitive disabilities"],
+    check:[
+      "Errors are shown as text, not only colour or icons",
+      "The text identifies which field is wrong",
+      "The field has aria-invalid=\"true\" and aria-describedby pointing to the error",
+      "Errors are announced: focus moves to an error summary or the first invalid field, or a live region is used",
+      "An error summary at the top links to each field",
+      "Server-side errors behave the same as client-side ones"
+    ],
+    how:[
+      "Submit each form empty, then with invalid values (wrong email format, short password, past expiry date).",
+      "Check where focus goes and what the screen reader announces.",
+      "Tab to each invalid field and confirm the error is read with it.",
+      "Check in greyscale that errors are still obvious."
+    ],
+    tools:["nvda","vo","devtools","rendering"],
+    fails:[],
+    scenarios:[["Silent failure","Pressing “Place order” does nothing visible except turning two fields red."],["Unlinked errors","Error text appears but isn't connected to its field, so tabbing to the field says nothing about the error."]],
+    ex:{
+      bad:String.raw`<input id="email" class="error">`,
+      badNote:"Only the red style changes.",
+      good:String.raw`<div role="alert" id="err-summary" tabindex="-1">
+  <h2>There is 1 problem</h2>
+  <ul><li><a href="#email">Enter an email address in the format name@example.com</a></li></ul>
+</div>
+
+<label for="email">Email address</label>
+<input id="email" type="email" aria-invalid="true" aria-describedby="email-err">
+<p id="email-err">Error: enter an email address in the format name@example.com</p>`,
+      goodNote:"Summary gets focus, each field carries its own message."
+    },
+    auto:{code:String.raw`test('empty submit identifies each required field in text', async ({ page }) => {
+  await page.goto('/checkout');
+  await page.getByRole('button', { name: 'Place order' }).click();
+  const email = page.getByLabel('Email address', { exact: true });
+  await expect(email).toHaveAttribute('aria-invalid', 'true');
+  await expect(email).toHaveAccessibleDescription(/email/i);
+  await expect(page.getByRole('alert')).toBeVisible();
+});`, note:"toHaveAccessibleDescription checks the error is actually wired to the field."},
+    tech:[["G83","Text descriptions to identify required fields that weren't completed"],["G84","Text description when input isn't one of the allowed values"],["G85","Text description when input falls outside the required format"],["ARIA21","aria-invalid to indicate an error field"],["ARIA19","role=alert or live regions to identify errors"],["ARIA18","aria-alertdialog to identify errors"],["SCR18","Client-side validation and alert"],["SCR32","Client-side validation that adds error text via the DOM"],["G139","A way to jump to errors"]],
+    tip:"Always prefix messages with “Error:” (visible or hidden). It makes the message unambiguous in a screen reader and in greyscale."
+  },
+  {
+    id:"3.3.2", title:"Labels or Instructions", slug:"labels-or-instructions", level:"A",
+    kw:"labels instructions form required format hint placeholder",
+    s:"Labels or instructions are provided when content requires user input.",
+    intent:"Users need to know what to enter before they make a mistake: what the field is, whether it's required, and any format rules (like date formats or password requirements). This is about what's visible; 1.3.1 and 4.1.2 cover the code side.",
+    who:["Everyone, especially people with cognitive disabilities","Screen reader users","Low-vision users"],
+    check:[
+      "Every field has a visible label (placeholder alone isn't enough, it disappears)",
+      "Required fields are marked, and the marker is explained (“* means required”)",
+      "Format requirements are stated up front (DD/MM/YYYY, password rules)",
+      "Groups of fields have a visible group label (such as a date split into three boxes)",
+      "Instructions sit before the field or are linked with aria-describedby",
+      "Icons used as labels (search magnifier) are clear or have text"
+    ],
+    how:["Look at each form without the placeholder text (click in and type a character). Is it still clear what each field wants?","Read through as a first-time user: would you know the password rules before typing?"],
+    tools:["nvda","devtools"],
+    fails:[["F82","Phone number split into fields with no text label"]],
+    scenarios:[["Placeholder label","A login form uses only placeholders “Email” and “Password”."],["Hidden rules","Password requirements appear only after a failed attempt."]],
+    ex:{
+      bad:String.raw`<input type="password" placeholder="Password">`,
+      badNote:"The label vanishes on typing and rules are unknown.",
+      good:String.raw`<label for="pw">Create a password</label>
+<p id="pw-hint">At least 12 characters. Spaces are allowed.</p>
+<input id="pw" type="password" autocomplete="new-password" aria-describedby="pw-hint" required>`,
+      goodNote:"Visible label, rules up front, linked in code."
+    },
+    tech:[["G131","Descriptive labels"],["H44","label elements"],["H71","fieldset and legend"],["H90","Indicating required controls with label or legend"],["G89","Expected data format and example"],["G184","Text instructions at the start of a form"],["G162","Positioning labels to maximise predictability"],["ARIA1","aria-describedby for descriptive labels"],["ARIA9","aria-labelledby to build a label from several text nodes"],["ARIA17","Grouping roles for related controls"]],
+    tip:"If a user has to fail once to learn the rule, the rule belongs above the field."
+  },
+  {
+    id:"3.3.3", title:"Error Suggestion", slug:"error-suggestion", level:"AA",
+    kw:"error suggestion correction how to fix message",
+    s:"If an input error is detected and suggestions for correction are known, they're given to the user, unless that would jeopardise security or purpose.",
+    intent:"“Invalid input” tells users something's wrong. “Enter a date in the future, like 25/12/2026” tells them how to fix it. That difference matters most to people with cognitive disabilities.",
+    who:["People with cognitive and learning disabilities","Screen reader users","Everyone"],
+    check:["Error messages say how to fix the problem, not just that there is one","Format errors show the expected format with an example","Out-of-range errors give the range","Security exceptions apply (don't reveal which of username or password was wrong)"],
+    how:["Trigger every validation rule and read each message: could you fix it from the message alone?"],
+    tools:["nvda"],
+    fails:[],
+    ex:{
+      bad:String.raw`<p id="exp-err">Invalid.</p>`,
+      badNote:"No hint about what's wrong.",
+      good:String.raw`<p id="exp-err">Error: expiry date must be in the future, for example 08/28.</p>`,
+      goodNote:"States the rule and gives an example."
+    },
+    tech:[["G83","Text descriptions for missing required fields"],["G84","Text description when input isn't an allowed value"],["G85","Text description when input is outside the required format"],["G177","Suggested correction text"],["SCR18","Client-side validation and alert"],["SCR32","Client-side validation adding error text via the DOM"],["ARIA2","aria-required"],["ARIA18","aria-alertdialog for errors"]],
+    tip:"Collect every validation message in one spreadsheet and review them together. Inconsistencies jump out."
+  },
+  {
+    id:"3.3.4", title:"Error Prevention (Legal, Financial, Data)", slug:"error-prevention-legal-financial-data", level:"AA",
+    kw:"error prevention legal financial data review confirm reversible checkout",
+    s:"For pages that create legal commitments, financial transactions, change user data or submit test responses, submissions are reversible, checked for errors with a chance to correct, or can be reviewed and confirmed.",
+    intent:"Mistakes in orders, payments, contracts or account deletion can be costly. People who misread, mistype or struggle with complex forms need a safety net before it's final.",
+    who:["People with cognitive disabilities","People with motor disabilities who mistype","Screen reader users"],
+    check:["Checkout has a review step, or orders can be cancelled within a stated time","Account deletion or data changes ask for confirmation or can be undone","Contracts and legal submissions show a summary before final submit","Test/quiz answers can be reviewed before submitting"],
+    how:["Complete a purchase, account change or deletion flow and look for review, confirm or undo at the end."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G98","Reviewing and correcting answers before submitting"],["G99","Recovering deleted information"],["G155","A checkbox in addition to a submit button"],["G164","A stated time within which a request can be amended or cancelled"],["G168","Requesting confirmation to continue"],["G199","Success feedback when data is submitted"]],
+    tip:"A “Delete account” button that needs typing the account name is a confirmation, but make sure the typing field is accessible too."
+  },
+  {
+    id:"3.3.5", title:"Help", slug:"help", level:"AAA",
+    kw:"context-sensitive help",
+    s:"Context-sensitive help is available.",
+    intent:"Help right where it's needed, like a “What's this?” link next to a tricky field, reduces errors for everyone.",
+    who:["People with cognitive disabilities","Everyone"],
+    check:["Complex fields have nearby help text or links"],
+    how:["Identify fields that commonly cause errors and check for help next to them."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G71","A help link on every page"],["G89","Expected data format and example"],["G184","Text instructions at the start of a form"],["G193","Help from an assistant"],["G194","Spell checking and suggestions"]],
+    tip:"Look at support tickets. The fields that generate tickets are the fields that need help text."
+  },
+  {
+    id:"3.3.6", title:"Error Prevention (All)", slug:"error-prevention-all", level:"AAA",
+    kw:"error prevention all submissions review",
+    s:"Every submission, not just legal, financial or data ones, is reversible, checked, or confirmed.",
+    intent:"The AAA version of 3.3.4, applied to all forms.",
+    who:["People with cognitive disabilities"],
+    check:["All forms offer review, validation with correction, or undo"],
+    how:["Same as 3.3.4 for every form."],
+    tools:["kbd"],
+    fails:[],
+    tech:[["G98","Review and correct before submitting"],["G99","Recover deleted information"],["G155","Checkbox plus submit"],["G168","Request confirmation"]],
+    tip:"Undo toasts (“Message deleted. Undo”) are an elegant way to pass."
+  },
+  {
+    id:"3.3.7", title:"Redundant Entry", slug:"redundant-entry", level:"A",
+    kw:"redundant entry re-enter same information autofill billing shipping new 2.2",
+    s:"Information the user already entered in the same process is auto-populated or available to select, rather than required again, unless re-entering is essential.",
+    intent:"New in WCAG 2.2. Retyping the same address or details is tiring for people with motor disabilities and error-prone for people with memory or cognitive disabilities. If you already have it, reuse it.",
+    who:["People with cognitive and memory disabilities","People with motor disabilities","Everyone on a phone"],
+    check:["“Billing same as shipping” option in checkout","Multi-step forms carry forward earlier answers","Previously entered info can be selected rather than retyped","Exceptions are noted: re-entry that is essential (like a memory game), needed for security, or where earlier information is no longer valid"],
+    how:["Go through each multi-step process and note every time you're asked for something you've already given in that same session."],
+    tools:["kbd"],
+    fails:[],
+    scenarios:[["Double address","Checkout asks for the full billing address after shipping, with no “same as shipping” option."]],
+    ex:{
+      good:String.raw`<fieldset>
+  <legend>Billing address</legend>
+  <label><input type="checkbox" id="same" checked> Same as shipping address</label>
+  <div id="billing-fields" hidden>...</div>
+</fieldset>`,
+      goodNote:"Reuses what the user already entered."
+    },
+    tech:[],
+    exc:["Re-entering is essential, required for security, or the previous information is no longer valid"],
+    tip:"This applies within one process in one session. It doesn't require remembering data between visits."
+  },
+  {
+    id:"3.3.8", title:"Accessible Authentication (Minimum)", slug:"accessible-authentication-minimum", level:"AA",
+    kw:"authentication login password paste captcha cognitive function test password manager new 2.2",
+    s:"Logging in doesn't require a cognitive function test (remembering a password, solving a puzzle, transcribing characters) unless there's an alternative, a mechanism to help (like paste and password managers), or it's object or personal-content recognition.",
+    intent:"New in WCAG 2.2. Remembering and typing complex passwords, or transcribing distorted CAPTCHA text, is a barrier for people with cognitive, memory and learning disabilities. Allowing paste and password manager autofill, or offering passwordless options, removes it.",
+    who:["People with cognitive and memory disabilities","People with dyslexia","People with motor disabilities"],
+    check:[
+      "Password fields allow paste and password manager autofill (no onpaste blocking)",
+      "Username and password fields use autocomplete=\"username\" and \"current-password\"",
+      "One-time codes can be pasted, and split OTP boxes accept a pasted code",
+      "Text-transcription CAPTCHAs have an alternative that isn't a cognitive test",
+      "Alternatives like email magic links, passkeys or OAuth are acceptable",
+      "Object recognition (“select the cars”) and personal content (“pick your photo”) are allowed at AA"
+    ],
+    how:["Save credentials in a password manager and log in with autofill.","Copy a password and a one-time code and paste them into the fields.","Check any CAPTCHA and its alternatives."],
+    tools:["devtools","kbd"],
+    fails:[["F109","Preventing password or code re-entry in the same format (such as blocking paste)"]],
+    scenarios:[["Paste blocked","The OTP field has onpaste=\"return false\"."],["Split boxes","A 6-digit code is split into six inputs that ignore a pasted code."]],
+    ex:{
+      bad:String.raw`<input type="password" onpaste="return false" autocomplete="off">`,
+      badNote:"Forces memorising and typing.",
+      good:String.raw`<label for="user">Email or username</label>
+<input id="user" autocomplete="username">
+<label for="pw">Password</label>
+<input id="pw" type="password" autocomplete="current-password">
+
+<label for="otp">6-digit code</label>
+<input id="otp" inputmode="numeric" autocomplete="one-time-code">`,
+      goodNote:"Password managers and paste work; the OTP is one field."
+    },
+    auto:{code:String.raw`test('password and OTP accept pasted values', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.goto('/login');
+  await page.evaluate(() => navigator.clipboard.writeText('S3cure-passphrase'));
+  const pw = page.getByLabel('Password');
+  await pw.focus();
+  await page.keyboard.press('ControlOrMeta+V');
+  await expect(pw).toHaveValue('S3cure-passphrase');
+  await expect(pw).toHaveAttribute('autocomplete', 'current-password');
+});`, note:"Clipboard permissions work in Chromium; for other browsers dispatch a paste event instead."},
+    tech:[["G218","Email link authentication"],["H100","Properly marked-up email and password inputs"]],
+    exc:["An alternative authentication method without a cognitive test","A mechanism helps complete the test (paste, password manager)","Object recognition","Identifying non-text content the user provided (personal content)"],
+    tip:"Blocking paste on password fields makes security worse, not better. Quote that when you file the bug."
+  },
+  {
+    id:"3.3.9", title:"Accessible Authentication (Enhanced)", slug:"accessible-authentication-enhanced", level:"AAA",
+    kw:"authentication enhanced object recognition",
+    s:"The same as 3.3.8, but object recognition and personal content are no longer allowed as exceptions.",
+    intent:"At AAA, “select all images with traffic lights” and similar puzzles also need an alternative.",
+    who:["People with cognitive disabilities","People with low vision"],
+    check:["No image-recognition CAPTCHA without an alternative"],
+    how:["Same as 3.3.8, including object and personal-content challenges."],
+    tools:["kbd"],
+    fails:[["F109","Preventing password or code re-entry in the same format"]],
+    tech:[["G218","Email link authentication"],["H100","Properly marked-up email and password inputs"]],
+    tip:"Passkeys pass both 3.3.8 and 3.3.9 with no puzzles at all."
+  }
+  ]
+}
+];
+
+const ROBUST_GUIDELINES = [
+{
+  id:"4.1", name:"Compatible", slug:"compatible",
+  desc:"Maximize compatibility with current and future user agents, including assistive technologies.",
+  why:"Assistive technology doesn't see your pixels; it reads the accessibility tree the browser builds from your code. Every control needs a name, a role and its current state exposed there, and status updates have to be announced without stealing focus. Note: 4.1.1 Parsing was marked obsolete and removed in WCAG 2.2, because modern browsers handle markup errors consistently; its real-world problems are covered by 1.3.1 and 4.1.2.",
+  kit:["Name, role and state for every control","Correct ARIA patterns for custom widgets","Status messages via live regions","4.1.1 Parsing is removed in WCAG 2.2"],
+  criteria:[
+  {
+    id:"4.1.2", title:"Name, Role, Value", slug:"name-role-value", level:"A",
+    kw:"name role value aria accessible name state expanded pressed checked custom widget toggle",
+    s:"For all user interface components, the name and role can be determined in code; states, properties and values can be set by the user and read in code; and changes are announced to assistive technology.",
+    intent:"When you build a custom toggle, tab, menu or accordion, the browser doesn't know what it is unless you tell it. A screen reader has to be able to say “Dark mode, toggle button, pressed” or “Shipping, collapsed, button”. Native HTML elements do this automatically; custom ones need ARIA roles, names and states that are kept up to date.",
+    who:["Screen reader users","Voice control users","Braille users","Switch users"],
+    check:[
+      "Every control has an accessible name (label, text, aria-label, aria-labelledby)",
+      "Every control exposes the right role (button, link, checkbox, tab, switch, combobox, dialog)",
+      "States are exposed and updated: aria-expanded, aria-pressed, aria-checked, aria-selected, aria-disabled, aria-current",
+      "Values of sliders and progress bars are exposed (aria-valuenow, aria-valuetext)",
+      "Custom widgets follow ARIA Authoring Practices patterns",
+      "Iframes have a title",
+      "No interactive elements nested inside other interactive elements",
+      "ARIA attributes are valid for their role, and required attributes are present",
+      "Links look and behave like links; buttons like buttons (roles match behaviour)"
+    ],
+    how:[
+      "Run axe for missing names, invalid ARIA and nested interactive elements.",
+      "Inspect each custom control in the DevTools Accessibility pane: check Name, Role and states.",
+      "Operate each control with a screen reader and listen: name, role and state should be announced, and state changes should be announced immediately.",
+      "Compare with the matching ARIA Authoring Practices pattern."
+    ],
+    tools:["axe","devtools","nvda","vo","talkback","ai"],
+    fails:[["F59","Script makes a div or span a control without a role"],["F68","A control has no programmatically determined name"],["F79","Focus state isn't programmatically determinable, or changes aren't notified"],["F86","No names for each part of a multi-part form field"],["F89","Image link with empty alt as its only content"],["F15","Custom controls that don't use the accessibility API, or use it incompletely"]],
+    scenarios:[
+      ["Silent toggle","A custom switch changes colour but has no role or aria-checked, so screen readers say only “clickable”."],
+      ["Stale state","An accordion button opens its panel but aria-expanded stays false."],
+      ["Unnamed iframe","A payment iframe has no title, announced as “frame”."]
+    ],
+    ex:{
+      bad:String.raw`<div class="switch on" onclick="toggle(this)"></div>
+
+<div class="acc-head" onclick="openPanel()">Shipping</div>`,
+      badNote:"No role, no name, no state.",
+      good:String.raw`<button type="button" role="switch" aria-checked="true" id="dm">
+  Dark mode
+</button>
+
+<h3>
+  <button type="button" aria-expanded="false" aria-controls="ship-panel">Shipping</button>
+</h3>
+<div id="ship-panel" hidden>...</div>
+
+<iframe src="https://pay.example.com" title="Card payment"></iframe>`,
+      goodNote:"Role, name and state all exposed, and updated by script when they change."
+    },
+    auto:{code:String.raw`test('controls expose name, role and state', async ({ page }) => {
+  await page.goto('/settings');
+  const results = await new AxeBuilder({ page })
+    .withTags(['wcag2a', 'wcag2aa'])
+    .withRules(['button-name', 'link-name', 'aria-allowed-attr', 'aria-required-attr',
+                'aria-valid-attr-value', 'aria-roles', 'nested-interactive',
+                'frame-title', 'select-name', 'aria-toggle-field-name'])
+    .analyze();
+  expect(results.violations).toEqual([]);
+});
+
+test('accordion updates aria-expanded', async ({ page }) => {
+  await page.goto('/faq');
+  const btn = page.getByRole('button', { name: 'Shipping' });
+  await expect(btn).toHaveAttribute('aria-expanded', 'false');
+  await btn.click();
+  await expect(btn).toHaveAttribute('aria-expanded', 'true');
+});`, note:"getByRole locators are themselves a 4.1.2 check: if the locator can't find the button by role and name, neither can a screen reader."},
+    tech:[["G108","Markup to expose name and role and set user-settable properties"],["H91","HTML form controls and links"],["H44","label elements"],["H64","title attribute on iframes"],["ARIA14","aria-label where a visible label can't be used"],["ARIA16","aria-labelledby to name controls"]],
+    tip:"Your Playwright getByRole locators are a free accessibility check. When you have to fall back to a CSS selector for a control, that's usually a 4.1.2 bug."
+  },
+  {
+    id:"4.1.3", title:"Status Messages", slug:"status-messages", level:"AA",
+    kw:"status messages live region aria-live role status alert toast added to cart search results",
+    s:"Status messages (success, results counts, progress, errors that appear without a page change) are exposed through roles or properties so assistive technology announces them without moving focus.",
+    intent:"When “Added to cart”, “12 results found” or “Saving…” appears on screen, sighted users see it. Screen reader users hear nothing unless it's in a live region. The message should be announced without yanking focus away from what they're doing.",
+    who:["Screen reader users","Screen magnifier users who may not see the message","People with cognitive disabilities"],
+    check:[
+      "Toasts and inline confirmations (“Saved”, “Added to cart”) use role=\"status\" or aria-live=\"polite\"",
+      "Urgent errors use role=\"alert\"",
+      "Search result counts and filter updates are announced",
+      "Progress messages (“Uploading 3 of 5”) use role=\"status\", role=\"log\" or role=\"progressbar\"",
+      "The live region exists in the DOM before the message is inserted",
+      "Messages aren't announced twice or constantly repeated",
+      "Focus is not moved just to announce a status (that would be a change of context)"
+    ],
+    how:[
+      "Trigger each status message with a screen reader running and listen: is it announced, and is focus unchanged?",
+      "Inspect the message container for role=\"status\", role=\"alert\", role=\"log\" or aria-live.",
+      "Check that the region was present before the text appeared (inject-and-fill is unreliable)."
+    ],
+    tools:["nvda","vo","talkback","devtools"],
+    fails:[["F103","Status messages that can't be programmatically determined through role or properties"]],
+    scenarios:[["Silent add to cart","“Added to cart” appears as a toast, but screen reader users hear nothing."],["Filter count","Applying a filter changes “24 products” to “6 products” silently."]],
+    ex:{
+      bad:String.raw`<div class="toast">Added to cart</div>`,
+      badNote:"Visible only.",
+      good:String.raw`<div role="status" class="toast-region"></div>
+
+// later, after the item is added
+document.querySelector('.toast-region').textContent = 'Blue hoodie added to cart';
+
+<p role="status" id="count">6 products found</p>`,
+      goodNote:"The region is in the page from the start; text is swapped in and announced politely."
+    },
+    auto:{code:String.raw`test('add to cart message is a status message', async ({ page }) => {
+  await page.goto('/product/blue-hoodie');
+  const addBtn = page.getByRole('button', { name: 'Add to cart' });
+  await addBtn.click();
+  await expect(page.getByRole('status')).toContainText(/added to cart/i);
+  await expect(addBtn).toBeFocused();   // focus didn't jump
+});`, note:"Confirming the announcement itself still needs a screen reader; this proves the plumbing is right."},
+    tech:[["ARIA22","role=status to present status messages"],["ARIA19","role=alert or live regions for errors"],["ARIA23","role=log for sequential updates"],["G199","Success feedback when data is submitted"]],
+    tip:"This site's search dialog uses a role=\"status\" region for its result count. Open it with / and try it with a screen reader."
+  }
+  ]
+}
+];
+/* =========================================================
+   Additions merged from Lee's own reference notes.
+   Each key is a success criterion id; arrays are appended
+   to that criterion's existing lists at load time.
+   ========================================================= */
+OPERABLE_GUIDELINES[2].note = {
+  title:"Safety note",
+  text:"These criteria protect people from seizures, which can be life-threatening. a11ywallet contains no flashing content: the examples below describe the patterns to look for without creating them."
+};
+ROBUST_GUIDELINES[0].removed = [{
+  id:"4.1.1", title:"Parsing", slug:"parsing",
+  text:"Used to require well-formed markup: complete start and end tags, correct nesting, no duplicate ids and no duplicate attributes. It was removed from WCAG 2.2 because modern browsers and assistive technologies all parse malformed HTML the same way under the HTML specification, so most historical parsing failures no longer affect users.",
+  tip:"avoid duplicate ids and broken markup anyway. They can break aria-labelledby, aria-describedby and label-for references (which then fail 1.3.1 or 4.1.2) and your own JavaScript."
+}];
+
+const ADDITIONS = {
+/* ---------- 1.1 ---------- */
+"1.1.1":{
+  check:["Star ratings, progress bars and icon sets communicate their value in text (for example “4 out of 5 stars”)"],
+  pairs:[
+    {t:"CAPTCHA", pass:"A visual CAPTCHA is paired with an audio CAPTCHA or another non-visual route, so people who can't see the image can still prove they're human.", fail:"An image CAPTCHA has alt=\"CAPTCHA image\" and no alternative, so blind users are completely blocked."},
+    {t:"Emoji-only button", passCode:String.raw`<button aria-label="Search">🔍</button>`, failCode:String.raw`<button>🔍</button>`, fail:"Announced as “button” or the emoji's name, such as “left-pointing magnifying glass”, which doesn't say what it does."},
+    {t:"Infographic", pass:"A short alt identifies the image, and a nearby table or summary gives the same data.", fail:"An infographic with 12 data points and 4 comparisons has alt=\"infographic\" and no text equivalent anywhere."}
+  ]
+},
+/* ---------- 1.2 ---------- */
+"1.2.3":{ scenarios:[["Visual-only steps","A cooking video captions the spoken instructions, but key steps (chopping, measuring, assembling) are only shown, with no description in audio or text."]] },
+"1.2.4":{ check:["For events on Zoom, Teams or Google Meet, live captions are switched on and set up for the event before it starts"] },
+"1.2.6":{ scenarios:[["Captions only","A safety training video has captions and audio description but no interpreter. For Deaf people whose first language is signed, captions may still not be enough."]] },
+"1.2.7":{ scenarios:[["No gaps to describe","A data visualisation video has continuous narration, so the audio description has to skip whole sections of visual content."]] },
+"1.2.8":{ scenarios:[["Speech-only transcript","A webinar transcript covers what was said but not the slides, demos or charts on screen, so it isn't a full media alternative."]] },
+"1.2.9":{ scenarios:[["Live call-in","A live charity auction call-in has no real-time text, so Deaf and hard of hearing participants can't follow along."]] },
+/* ---------- 1.3 ---------- */
+"1.3.1":{
+  check:["Error states use aria-invalid=\"true\" with aria-describedby pointing at the error text (see also 3.3.1)"],
+  scenarios:[["Bold cells as headers","A pricing table uses <td><b>Name</b></td> for its header row instead of <th scope=\"col\">, so no header relationships exist."]]
+},
+"1.3.2":{ scenarios:[["Warning read too late","CSS order puts a sidebar warning visually before the content, but in the DOM it comes after, so screen readers read the content first."]] },
+"1.3.5":{ check:["Fields that aren't about the user (site search, product options, coupon codes) are out of scope"] },
+"1.3.6":{ scenarios:[["Div soup","A page built entirely from divs and spans, with no landmarks, roles or labelled icons, so no region's purpose can be determined."]] },
+/* ---------- 1.4 ---------- */
+"1.4.1":{ how:["Remove colour styling from error states in DevTools (untick the color and border-color rules). Can you still tell which fields are in error?"] },
+"1.4.2":{ scenarios:[["Buried control","A product page plays background music on load, and the only stop control is a tiny player in the footer that screen reader users can't reach before the music drowns out their speech."]] },
+"1.4.4":{ check:["Font sizes use rem or em, so they follow the browser's base font-size setting"] },
+"1.4.5":{
+  check:["Text isn't delivered inside an <img> src or a CSS background-image"],
+  scenarios:[["Poster graphics","Event posters, “handwritten” quotes and promotional tiles are PNGs with the words baked in; they pixelate on zoom and can't be translated."]]
+},
+"1.4.6":{
+  ex:{
+    bad:String.raw`color: #767676;  /* on #FFFFFF = 4.54:1 */
+/* passes 1.4.3 (AA), fails 1.4.6 (AAA) */`,
+    badNote:"A colour that passes AA can still fail AAA.",
+    good:String.raw`color: #1A1A2E;  /* on #FFFFFF = about 17:1 */
+color: #000000;  /* on #FFFFFF = 21:1 */`,
+    goodNote:"Near-black body text clears 7:1 easily."
+  }
+},
+"1.4.7":{ scenarios:[["Music bed too loud","A news audio segment has dramatic background music at nearly the same volume as the narrator."]] },
+"1.4.8":{
+  scenarios:[["Wide, justified text","A news article runs 120+ characters per line on a wide monitor, fully justified, with 1.2 line height and no reading settings."]],
+  pairs:[{t:"Reading preferences", pass:"A reading app offers a preferences panel for text colour, background, font size and line spacing, with a body column around 70 characters wide and left-aligned text."}]
+},
+"1.4.9":{ scenarios:[["Custom font as image","A banner uses an image of text because the brand font matters. It may pass 1.4.5 under the customisable exception but fails 1.4.9."]] },
+"1.4.11":{
+  scenarios:[["Faint focus ring","A custom focus ring in #B0C4DE (light steel blue) on white is about 1.8:1, below 3:1."]],
+  pairs:[{t:"Custom checkbox", pass:"Checkbox border #5A5A5A on white (about 6.9:1), and the checked state uses a dark fill so the tick and box contrast at 3:1 or more."}]
+},
+"1.4.13":{
+  pairs:[{t:"Hover submenu", pass:"A submenu opened on hover stays open while the pointer moves diagonally from the menu item into it; the hover area is generous and doesn't collapse on small deviations.", fail:"The submenu closes the moment the pointer leaves the parent item, so users can't reach it with a slow or shaky pointer."}]
+},
+/* ---------- 2.1 ---------- */
+"2.1.1":{ scenarios:[["Mouse-only date picker","A custom date picker opens only on mousedown. Keyboard users can Tab to the field but can't open the calendar."]] },
+"2.1.2":{ scenarios:[["Trapped in an embed","A third-party map in an iframe captures Tab, so once focus enters it, it can never leave."]] },
+"2.1.3":{
+  scenarios:[["Draw-only whiteboard","A whiteboard app needs click-and-drag to draw shapes, with no shape tool or keyboard method."]],
+  pairs:[{t:"Signature", pass:"A signature field offers freehand drawing and an option to type a name as the signature."}]
+},
+/* ---------- 2.2 ---------- */
+"2.2.1":{
+  scenarios:[["Cart reservation timer","Items are held for 10 minutes with a countdown in the header; when it ends the cart is cleared with no warning and no way to extend. The real-time exception doesn't apply to a shop."]],
+  pairs:[{t:"Quiz timer", pass:"A 30-minute quiz shows the time remaining and lets the user request extended time or turn the timer off when timing isn't essential to the assessment."}]
+},
+"2.2.2":{
+  scenarios:[["News ticker","A scrolling news ticker runs continuously at the bottom of the page with no way to pause it."]],
+  pairs:[{t:"Live dashboard", pass:"An auto-updating data table has a “Pause updates” button that freezes it at the last state until the user resumes."}]
+},
+"2.2.3":{ scenarios:[["Timed game","A word-association game requires each answer within 3 seconds, with no way to play untimed."]] },
+"2.2.4":{
+  check:["Pop-ups don't steal focus mid-task; if they must appear, they can be dismissed permanently (“Don't show again”)"],
+  scenarios:[["Recurring promo","A promotional pop-up interrupts every few minutes, steals focus, and has no “Don't show again” option."]]
+},
+"2.2.5":{
+  check:["After signing back in, the user returns to the same step of the task, not the dashboard"],
+  scenarios:[["Sent to the dashboard","After re-authenticating, the user lands on the homepage and the half-filled form is gone."]]
+},
+"2.2.6":{
+  check:["The warning is given before the task starts; this is different from 2.2.1, which is about warning just before expiry"],
+  scenarios:[["No upfront notice","A 40-field insurance form never mentions its timeout. The user takes a tea break and loses everything."]]
+},
+/* ---------- 2.3 ---------- */
+"2.3.1":{
+  ex:{
+    bad:String.raw`/* 8 flashes per second over a large red area */
+.sale { animation: flash .125s step-end infinite; }`,
+    badNote:"Well over 3 flashes per second, large and red.",
+    good:String.raw`/* one smooth pulse every 2 seconds (0.5 Hz) */
+.logo { animation: pulse 2s ease-in-out infinite; }`,
+    goodNote:"Slow and smooth, far below the threshold."
+  }
+},
+"2.3.2":{ scenarios:[["Small but fast","A favicon-sized element blinks 4 times a second. Its small size may keep it under the 2.3.1 threshold, but it fails 2.3.2, which has no size allowance."]] },
+"2.3.3":{ scenarios:[["Spinning submit","Selecting Submit triggers a spinning, zooming page transition that ignores prefers-reduced-motion."]] },
+/* ---------- 2.4 ---------- */
+"2.4.1":{
+  scenarios:[["47 links first","No skip link and no landmarks, so keyboard users Tab through 47 navigation links on every page."]],
+  exc:["Pages with no repeated blocks (such as a standalone single-page form) don't need a skip link"]
+},
+"2.4.2":{ check:["Error pages, search results pages and pages shown as modals also have unique titles"] },
+"2.4.5":{ scenarios:[["One way in","A help article can only be reached through a button inside one dialog: no search, sitemap or menu link."]] },
+"2.4.6":{
+  check:["Labels are specific: not just “Name” (whose?), “Date” (which date?) or “Amount” (what currency or unit?)"],
+  ex:{
+    bad:String.raw`<h2>Section 1</h2>
+<label for="f1">Field</label>`,
+    badNote:"Tells users nothing.",
+    good:String.raw`<h2>Shipping address</h2>
+<label for="city">Town / City</label>`,
+    goodNote:"Says what the section and field are for."
+  }
+},
+"2.4.8":{
+  ex:{
+    good:String.raw`<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/products/headphones" aria-current="page">Headphones</a></li>
+  </ol>
+</nav>`,
+    goodNote:"A breadcrumb trail with the current page marked."
+  }
+},
+"2.4.10":{ scenarios:[["Wall of text","A 6,000-word policy document has no headings at all."]] },
+"2.4.11":{
+  check:["Fix with scroll-padding-top/bottom on html, or scroll-margin on the focusable elements, matching the sticky element's height"],
+  scenarios:[["100px header","A 100px sticky header with no scroll-padding: tabbing through body links scrolls each focused link completely behind it."]]
+},
+"2.4.12":{ scenarios:[["Half covered","A cookie banner covers the bottom 80px of the viewport, so focus rings near the bottom are half hidden. That passes 2.4.11 but fails 2.4.12."]] },
+"2.4.13":{
+  ex:{
+    bad:String.raw`:focus { outline: 1px dotted #888; }`,
+    badNote:"1px is thinner than the 2px perimeter required.",
+    good:String.raw`:focus-visible {
+  outline: 3px solid #0052CC;
+  outline-offset: 2px;
+}`,
+    goodNote:"Thick, solid and high-contrast."
+  }
+},
+/* ---------- 2.5 ---------- */
+"2.5.1":{
+  check:["Sliders can also be set by clicking the track or using buttons"],
+  pairs:[{t:"Map", pass:"An interactive map supports pinch-to-zoom and also has + and − buttons; two-finger panning also works with arrow buttons."}]
+},
+"2.5.2":{
+  check:["High-risk actions (Delete, Buy, Submit, Send) fire on the up-event, or ask for confirmation, or can be undone"],
+  scenarios:[["Instant purchase","“Buy now” fires on mousedown, so a user with a tremor who touches it by accident can't cancel."]]
+},
+"2.5.3":{ scenarios:[["Different word","A button shows “Search” but has aria-label=\"Find\"; saying “click Search” in Dragon finds nothing."]] },
+"2.5.4":{ scenarios:[["Tilt to reveal","A banking app reveals account numbers only when the phone is tilted, with no button alternative."]] },
+"2.5.5":{
+  scenarios:[["Tiny close","A modal's close icon is 16 × 16 px with no padding."]],
+  ex:{ good:String.raw`button, [role="button"] { min-width: 44px; min-height: 44px; }`, goodNote:"Padding can make the hit area large while the icon stays small." }
+},
+"2.5.6":{
+  ex:{
+    bad:String.raw`if (hasTouchScreen) {
+  document.removeEventListener('keydown', handleKey);
+}`,
+    badNote:"Plugging a keyboard into a tablet no longer works."
+  }
+},
+"2.5.7":{
+  scenarios:[["Resize by drag only","A split panel between a map and a sidebar can only be resized by dragging the divider, with no presets or input."]],
+  pairs:[{t:"Kanban board", pass:"Cards can be dragged between columns, and each card also has a menu with “Move to In progress / Done”."}]
+},
+"2.5.8":{
+  pairs:[{t:"Spacing exception", pass:"An 18 × 18 px icon button whose nearest neighbouring target is far enough away that a 24px circle centred on it doesn't touch any other target or its circle.", fail:"Three 16 × 16 px icon buttons with a 2px gap: their 24px circles overlap each other."}]
+},
+/* ---------- 3.1 ---------- */
+"3.1.1":{ check:["Checked on every page template, not just the homepage"] },
+"3.1.3":{
+  scenarios:[["Unexplained medical terms","Patient-facing pages use “idiopathic”, “comorbidity” and “etiology” with no glossary or definitions."]],
+  pairs:[{t:"Legal term", pass:"A contract uses “consideration” in its legal sense and links the first use to a glossary definition."}]
+},
+"3.1.4":{
+  check:["Use judgement for abbreviations that have become ordinary words, such as FAQ"],
+  scenarios:[["Form abbreviations","A government form uses DMV, EIN and FEIN with no expansion anywhere."]],
+  ex:{ good:String.raw`<abbr title="World Health Organization">WHO</abbr> announced new guidelines.`, goodNote:"Screen readers and mouse users can reach the expansion; writing it out in full on first use is even better." }
+},
+"3.1.5":{ pairs:[{t:"Plain-language summary", pass:"A complex insurance policy has a “Plain language summary” link at the top.", fail:"Dense legal terms with no summary, glossary or simpler version."}] },
+"3.1.6":{ pairs:[{t:"Heteronyms", pass:"A dictionary shows “record” with pronunciation and audio for the noun (REC-ord) and the verb (re-CORD).", fail:"A poem full of heteronyms (“read”, “lead”) with no pronunciation guide, so screen readers may read them wrongly."}] },
+/* ---------- 3.2 ---------- */
+"3.2.2":{ pairs:[{t:"Warned beforehand", pass:"A language selector labelled “Language (page reloads when changed)” tells users what will happen before they use it."}] },
+"3.2.3":{
+  check:["Footer links, sidebars and breadcrumbs are checked for consistency, not just the main menu"],
+  exc:["Changes the user makes, such as reordering a customised dashboard"]
+},
+"3.2.4":{ scenarios:[["Three names","The same search function is labelled “Search” on the home page, “Find” on product pages and “Look up” in support."]] },
+"3.2.5":{ scenarios:[["Timed redirect","A page redirects to a new URL after 10 seconds, with no setting to stop it."]] },
+"3.2.6":{
+  check:["Help covers human contact details, contact forms, chatbots and self-help such as FAQs"],
+  pairs:[{t:"Chat launcher", pass:"The live chat button sits in the same bottom-right position, at the same place in the page order, on every page."}]
+},
+/* ---------- 3.3 ---------- */
+"3.3.2":{ scenarios:[["Format in placeholder","A date field shows “DD/MM/YYYY” only as a placeholder, so the format guidance disappears once typing starts."]] },
+"3.3.3":{ scenarios:[["One message for everything","Every error across the form says “Invalid input”."]] },
+"3.3.4":{ scenarios:[["Instant deletion","Selecting “Delete account” permanently deletes it immediately, with no confirmation, review or undo."]] },
+"3.3.5":{ pairs:[{t:"Field-level help", pass:"Each field on a tax form has a “?” button that opens guidance for that exact field.", fail:"One “Help” link at the top of a long multi-step form goes to a generic FAQ."}] },
+"3.3.6":{ scenarios:[["Low-stakes forms too","A contact form submits instantly with no review or edit step. At AAA even simple forms need review, checking or undo."]] },
+"3.3.7":{ scenarios:[["Asked again","A registration form asks for the email on step 1 and again on step 3, with no carried-over value or “same as above” option."]] },
+"3.3.8":{ scenarios:[["Puzzle login","Login requires clicking rotated images in a specific order, with no alternative method."]] },
+/* ---------- 4.1 ---------- */
+"4.1.2":{
+  scenarios:[["Custom dropdown","A dropdown built from divs and spans has no listbox/option roles, no aria-expanded and no aria-selected, so screen reader users can't tell it's a dropdown or what's selected."]],
+  pairs:[
+    {t:"Toggle button", passCode:String.raw`<button type="button" aria-pressed="false" aria-label="Mute audio">🔇</button>`, pass:"Announced as “Mute audio, toggle button, not pressed”.", failCode:String.raw`<div onclick="toggleMute()">🔇</div>`, fail:"No role, name or state."},
+    {t:"Custom checkbox", passCode:String.raw`<div role="checkbox" aria-checked="true" tabindex="0"
+     aria-labelledby="nl-label"></div>
+<span id="nl-label">Subscribe to newsletter</span>`, pass:"Role, state and name exposed. It still needs Space to toggle it and must update aria-checked; a native checkbox gives you all of that for free."}
+  ]
+},
+"4.1.3":{
+  check:["Loading states, autosave indicators (“Saved”, “Saving…”) and cart counters are covered too"],
+  scenarios:[["Silent cart counter","Adding an item updates the cart icon count with JavaScript but nothing is announced; users must go to the cart to check."]]
+}
+};
+/* =========================================================
+   Best practices per criterion: things a good audit
+   recommends, but which are NOT failures on their own.
+   ========================================================= */
+const BEST_PRACTICES = {
+"1.1.1":["Keep alt text concise (around 150 characters or less) and put longer detail in visible text or a linked description","Don't start alt with “image of” or “picture of”; screen readers already say “image”","Don't use the title attribute as the text alternative; it isn't reliably announced and shows as a hover tooltip","Don't stuff alt with SEO keywords","If an image has a visible caption, make the alt complement the caption rather than repeat it"],
+"1.2.1":["Publish transcripts as HTML on the page (or a linked page), not only as PDFs","Place the transcript link directly below the player with the episode name in the link text"],
+"1.2.2":["Keep captions to one or two lines of about 32–42 characters, and position them so they don't cover on-screen text","Offer a transcript as well as captions; many people prefer to skim","Treat auto-captions as a first draft: review names, numbers and jargon before publishing"],
+"1.2.5":["Script videos so presenters describe what they do (“Select Save changes”); this often removes the need for separate description"],
+"1.3.1":["Use one <h1> per page that describes the page","Don't skip heading levels (h2 to h4); it's not a WCAG failure but confuses heading navigation","Use native HTML before ARIA: <button>, <nav>, <table>, <fieldset> carry semantics for free","Put all content inside a landmark so nothing is orphaned","Place labels above or before their fields"],
+"1.3.2":["Avoid CSS order, row-reverse and grid placement that differ from DOM order, even where meaning isn't affected; it also breaks focus order"],
+"1.3.3":["Always refer to controls by their visible label; add location or colour only as extra help"],
+"1.3.4":["Test portrait and landscape on a real phone and tablet as part of every release smoke test"],
+"1.3.5":["Use the right input type and inputmode (email, tel, numeric) so mobile users get the correct keyboard","Use autocomplete=\"one-time-code\" on OTP fields so phones can autofill codes from SMS"],
+"1.4.1":["Underline links in body text by default, even if they meet the 3:1 alternative","Pair status colours with icons and words (✓ Paid, ! Overdue)","Use direct labels on charts instead of colour-only legends"],
+"1.4.2":["Don't autoplay audio at all; start sound only when the user asks"],
+"1.4.3":["Aim for at least 4.5:1 for all text, including large text and disabled labels","Build contrast checks into your design tokens so every colour pair is pre-approved","Keep placeholder text at 4.5:1 even though placeholders shouldn't be labels"],
+"1.4.4":["Size text in rem so it follows the user's browser font-size setting, and test with a larger default font as well as zoom"],
+"1.4.5":["Use SVG with real <text> or HTML text over images instead of text baked into bitmaps"],
+"1.4.10":["Test at 200% and 400% zoom; bugs often appear at one and not the other","Where possible, make data tables stack responsively instead of scrolling sideways"],
+"1.4.11":["Keep disabled controls recognisable (not faded to near-invisible) even though they're exempt","Give focus indicators 3:1 against both the component and the page background"],
+"1.4.12":["Avoid fixed heights on anything containing text; use min-height and padding","Use a default line-height of about 1.5 for body text"],
+"1.4.13":["Don't put essential information only in hover tooltips; show it as visible text or use a click-to-open toggletip","Keep tooltip text short, and never put interactive content inside a role=\"tooltip\""],
+"2.1.1":["Follow the ARIA Authoring Practices Guide keyboard patterns for every custom widget","Use roving tabindex for composite widgets (tabs, toolbars, menus) so each is one Tab stop with arrow-key movement","Prefer native elements; they bring keyboard support with no script"],
+"2.1.2":["For modals: move focus in on open, keep Tab inside while open, close on Escape, and return focus to the trigger","Use the native <dialog> element or the inert attribute on background content"],
+"2.1.4":["Use modifier keys for shortcuts and document them in a help dialog (commonly opened with ?)"],
+"2.2.1":["Warn users about timeouts before the task starts, not just before expiry","Autosave long forms so a timeout doesn't lose work"],
+"2.2.2":["Don't auto-rotate carousels; let users advance them","Respect prefers-reduced-motion for all animation"],
+"2.3.3":["Respect prefers-reduced-motion even though this is AAA; it's low effort and widely expected"],
+"2.4.1":["Make the skip link the very first focusable element, and don't add so many skip links that they become a block of their own"],
+"2.4.2":["Use the pattern “Page name | Section | Site name” so the unique part is announced first"],
+"2.4.3":["After deleting an item, move focus to the next item or a sensible heading, not the top of the page","After SPA navigation, move focus to the new page's <h1>"],
+"2.4.4":["Avoid “click here” and “read more” altogether; write link text that works in a links list","Say when a link opens a new tab, goes off-site or downloads a file, including format and size"],
+"2.4.6":["Make headings unique enough to tell apart in a headings list (“Billing address” and “Shipping address”, not two “Address” headings)"],
+"2.4.7":["Aim for the 2.4.13 standard: a solid indicator at least 2px thick with 3:1 contrast","Use :focus-visible so keyboard users always get the ring and mouse users aren't distracted"],
+"2.4.11":["Aim for 2.4.12: keep focused elements fully visible, not just partly"],
+"2.5.3":["Start the accessible name with the exact visible label; avoid aria-label on elements that already have visible text"],
+"2.5.7":["Offer keyboard and single-click alternatives for every drag interaction from the start of design"],
+"2.5.8":["Aim for 44 × 44 px targets (2.5.5), especially on touch interfaces"],
+"3.1.1":["Use a region subtag where it helps pronunciation or spelling, such as en-IN or en-GB"],
+"3.2.2":["Always give forms an explicit submit or apply button rather than acting on change"],
+"3.3.1":["Show an error summary at the top of the form, move focus to it, and link each item to its field","Keep inline error text next to each field too","Don't clear what the user typed when showing an error","Validate on submit or on leaving a field, not on every keystroke"],
+"3.3.2":["Keep labels visible above fields; never rely on placeholders","If most fields are required, mark the optional ones instead (“(optional)”), and explain whichever marker you use"],
+"3.3.3":["Write errors as instructions: say what to do, not just what went wrong"],
+"3.3.4":["Send a confirmation (email or on-screen summary) after important submissions"],
+"3.3.7":["Carry data forward across steps and across related forms in the same session wherever possible"],
+"3.3.8":["Offer passkeys or email/magic-link sign-in","Provide a “Show password” toggle"],
+"4.1.2":["First rule of ARIA: if a native element does the job, use it instead of ARIA","Don't add redundant roles to native elements (role=\"button\" on <button>)","Test custom widgets with at least two screen reader and browser pairings, such as NVDA + Chrome and VoiceOver + Safari"],
+"4.1.3":["Use polite announcements (role=\"status\") for almost everything; keep role=\"alert\" for urgent errors","Keep status messages short and debounce frequent updates, such as live search counts","Make sure the live region exists in the page before text is inserted"]
+};
 
 const PRINCIPLES = [
   { id:"perceivable", num:"1", name:"Perceivable", slug:"perceivable",
     statement:"Information and user interface components must be presentable to users in ways they can perceive.",
     blurb:"Nobody should miss content because of how it is presented. If someone can't see it, there's text. If they can't hear it, there are captions and transcripts. If they need it bigger, higher contrast or restyled, it adapts.",
     guidelines: PERCEIVABLE_GUIDELINES },
-  { id:"operable", num:"2", name:"Operable", slug:"operable", soon:true,
+  { id:"operable", num:"2", name:"Operable", slug:"operable",
     statement:"User interface components and navigation must be operable.",
-    guidelines:[
-      {id:"2.1",name:"Keyboard Accessible",slug:"keyboard-accessible",criteria:[]},
-      {id:"2.2",name:"Enough Time",slug:"enough-time",criteria:[]},
-      {id:"2.3",name:"Seizures and Physical Reactions",slug:"seizures-and-physical-reactions",criteria:[]},
-      {id:"2.4",name:"Navigable",slug:"navigable",criteria:[]},
-      {id:"2.5",name:"Input Modalities",slug:"input-modalities",criteria:[]}]},
-  { id:"understandable", num:"3", name:"Understandable", slug:"understandable", soon:true,
+    blurb:"Every function has to work for people who don't use a mouse, who need more time, who could be harmed by flashing, and who use touch, voice or switches. If a control can't be reached, seen when focused, or activated, the content might as well not be there.",
+    guidelines: OPERABLE_GUIDELINES },
+  { id:"understandable", num:"3", name:"Understandable", slug:"understandable",
     statement:"Information and the operation of the user interface must be understandable.",
-    guidelines:[
-      {id:"3.1",name:"Readable",slug:"readable",criteria:[]},
-      {id:"3.2",name:"Predictable",slug:"predictable",criteria:[]},
-      {id:"3.3",name:"Input Assistance",slug:"input-assistance",criteria:[]}]},
-  { id:"robust", num:"4", name:"Robust", slug:"robust", soon:true,
+    blurb:"People have to understand both the content and how to use the interface. That means declared languages, plain words, predictable behaviour, consistent navigation, and forms that explain themselves and help people recover from mistakes.",
+    guidelines: UNDERSTANDABLE_GUIDELINES },
+  { id:"robust", num:"4", name:"Robust", slug:"robust",
     statement:"Content must be robust enough that it can be interpreted by a wide variety of user agents, including assistive technologies.",
-    guidelines:[{id:"4.1",name:"Compatible",slug:"compatible",criteria:[]}]}
+    blurb:"Your interface has to be described correctly in code, so browsers, screen readers, voice control and tools that don't exist yet can all interpret it. This is where names, roles, states and live announcements live.",
+    guidelines: ROBUST_GUIDELINES }
 ];
 
 (function(){
@@ -1675,10 +3573,23 @@ const PRINCIPLES = [
     book:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2V5ZM4 19a2 2 0 0 1 2-2h13"/></svg>',
     gate:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16M4 21h16M9 12h6"/></svg>',
     bulb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z"/></svg>',
+    star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"/></svg>',
+    copy:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>',
     wallet:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="3" y="6" width="18" height="14" rx="3"/><path d="M16 13h2M3 10h18"/></svg>',
     walletOn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="m5 12 5 5 9-10"/></svg>'
   };
 
+  /* merge extra notes (ADDITIONS) into the main data */
+  if (typeof ADDITIONS !== "undefined"){
+    PRINCIPLES.forEach(p => p.guidelines.forEach(g => g.criteria.forEach(c => {
+      const a = ADDITIONS[c.id]; if (!a) return;
+      ["check","how","scenarios","exc","tools","pairs"].forEach(f => { if (a[f]) c[f] = (c[f] || []).concat(a[f]); });
+      if (a.ex && !c.ex) c.ex = a.ex;
+    })));
+  }
+  if (typeof BEST_PRACTICES !== "undefined"){
+    PRINCIPLES.forEach(p => p.guidelines.forEach(g => g.criteria.forEach(c => { if (BEST_PRACTICES[c.id]) c.bp = BEST_PRACTICES[c.id]; })));
+  }
   const ALL = [];
   PRINCIPLES.forEach(p => p.guidelines.forEach(g => g.criteria.forEach(c => { c._p = p; c._g = g; ALL.push(c); })));
 
@@ -1688,7 +3599,7 @@ const PRINCIPLES = [
   function renderNav(current){
     document.getElementById("navlist").innerHTML = PRINCIPLES.map(p =>
       `<li><a href="#/${p.id}"${current === p.id ? ' aria-current="page"' : ""}>${p.num}. ${esc(p.name)}${p.soon ? '<span class="soon-tag">soon</span>' : ""}</a></li>`
-    ).join("");
+    ).join("") + `<li><a href="#/audit"${current === "audit" ? ' aria-current="page"' : ""}>Audit guide</a></li>`;
   }
 
   /* ---------- home ---------- */
@@ -1713,6 +3624,7 @@ const PRINCIPLES = [
           <p class="intro">Each success criterion is broken down into what it means, who it helps, what to check, how to test it by hand and with tools, the documented failures, and code that fails next to code that passes.</p>
           <div class="btn-row">
             <a class="btn" href="#/perceivable">Start with Perceivable</a>
+            <a class="btn ghost" href="#/audit">Read the audit guide</a>
             ${extLink(SPEC, "Read WCAG 2.2 at W3C").replace('class="ext"', 'class="btn ghost ext"')}
           </div>
         </div>
@@ -1745,6 +3657,194 @@ const PRINCIPLES = [
       <h2 id="kit-h">Testing kit used in these notes</h2>
       <ul class="toolgrid">${tools}</ul>
     </div></section>`;
+  }
+
+  /* ---------- audit guide ---------- */
+  const AUDIT_CHECK = [
+    "Scope, sample pages, key user journeys and conformance target (WCAG 2.2 AA) agreed in writing",
+    "Browser, screen reader and device combinations recorded",
+    "Automated scan run on every sampled page and state",
+    "Full keyboard pass: reach, operate, no traps, visible focus, logical order, focus not obscured",
+    "Zoom 200%, reflow at 320px, text spacing bookmarklet, orientation",
+    "Colour and contrast: text, components, focus rings, greyscale check",
+    "Structure: title, headings, landmarks, lists, tables, form labels and groups",
+    "Screen reader walk-through of each key journey, including errors and status messages",
+    "Media, motion, timing and flashing checked",
+    "Touch and pointer: target size, gestures, dragging, label in name",
+    "Consistency across pages: navigation, identification, help",
+    "Each finding written with title, description, expected result, SC and level, recommendation",
+    "Severity assigned and best practices separated from failures"
+  ];
+
+  const FINDING_TEMPLATE = [
+    "Issue title: ",
+    "Issue description: (where it is, the element or selector, what happens, which users are affected, steps to reproduce, environment)",
+    "Expected result: ",
+    "SC & Level: ",
+    "Recommendation: ",
+    "Severity: "
+  ].join("\n");
+
+  function renderAudit(){
+    const toc = [["plan","Plan the audit"],["setup","Set up your test environment"],["workflow","Run the audit in this order"],["findings","Write findings developers can act on"],["severity","Rate severity"],["fail-or-bp","Failure or best practice?"],["pitfalls","Common auditing mistakes"],["retest","Retest and prevent regressions"],["checklist","Audit checklist"]];
+    const H = (id, title) => `<h2 id="audit-${id}" tabindex="-1" class="a-h">${esc(title)}</h2>`;
+    const done = checks["audit"] || [];
+    const table = (label, head, rows) => `<div class="tbl" role="region" aria-label="${esc(label)}" tabindex="0"><table><caption class="visually-hidden">${esc(label)}</caption><thead><tr>${head.map(h => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${rows.map(r => `<tr><th scope="row">${esc(r[0])}</th>${r.slice(1).map(c => `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">Audit guide</span></li></ol></nav>
+      <header class="p-hero" style="grid-template-columns:1fr">
+        <h1 id="p-h1" tabindex="-1">Audit guide</h1>
+        <p class="p-statement">How to plan, run and report a WCAG 2.2 audit that developers trust: what to test, in what order, how to write each finding, and how to tell failures from best practice.</p>
+      </header>
+
+      <div class="audit">
+        <nav class="a-toc" aria-labelledby="toc-h"><h2 id="toc-h">On this page</h2><ol>${toc.map(t => `<li><a href="#/audit/${t[0]}">${esc(t[1])}</a></li>`).join("")}</ol></nav>
+
+        <div class="a-body">
+        <section aria-labelledby="audit-plan">${H("plan","Plan the audit")}
+          <p>Most weak audits fail before testing starts, because nobody agreed what was being tested. Settle these first and write them at the top of the report.</p>
+          <ul>
+            <li><b>Conformance target.</b> Usually WCAG 2.2 Level AA, which means every A and AA criterion. Note AAA findings separately, if at all.</li>
+            <li><b>Scope.</b> Which site, app, plugin screens or components; which are out of scope (for example third-party payment pages).</li>
+            <li><b>Sample.</b> Following the W3C evaluation method (WCAG-EM): common pages (home, contact, help), one page per template, pages with forms, media, tables or custom widgets, and a few random pages.</li>
+            <li><b>Complete processes.</b> Test whole journeys end to end: sign up, log in, search, add to cart, checkout, change settings. A conformant page inside a broken journey doesn't help anyone.</li>
+            <li><b>States.</b> Logged in and out, empty, loading, error, success, open menus and dialogs, mobile layouts, dark mode.</li>
+            <li><b>Third-party content.</b> Chat widgets, embeds, cookie banners and payment iframes still affect users. Report them, and note who owns the fix.</li>
+          </ul>
+          <p>${extLink("https://www.w3.org/WAI/test-evaluate/conformance/wcag-em/", "WCAG-EM: Website Accessibility Conformance Evaluation Methodology")}</p>
+        </section>
+
+        <section aria-labelledby="audit-setup">${H("setup","Set up your test environment")}
+          <p>Test with at least one desktop and one mobile screen reader combination. Screen readers behave differently in different browsers, so always record the pairing.</p>
+          ${table("Assistive technology and browser pairings", ["Assistive technology","Pair with","Why"], [
+            ["NVDA (Windows)","Chrome or Firefox","Free and widely used; a good default desktop combination"],
+            ["JAWS (Windows)","Chrome","Common in workplaces and enterprise customers"],
+            ["VoiceOver (macOS)","Safari","The combination Apple supports; behaves differently in Chrome"],
+            ["VoiceOver (iOS)","Safari","Main mobile screen reader for iPhone users"],
+            ["TalkBack (Android)","Chrome","Main mobile screen reader for Android users"],
+            ["Voice Control or Dragon","Safari or Chrome","Checks label in name and that every control can be spoken to"],
+            ["Windows contrast themes","Edge or Chrome","Reveals icons, borders and focus rings that vanish in forced-colours mode (best practice check)"]
+          ])}
+          <p style="margin-top:1rem">Before you start: reset browser zoom to 100%, turn off extensions that change pages (ad blockers can hide content), and note browser and AT versions in the report.</p>
+        </section>
+
+        <section aria-labelledby="audit-workflow">${H("workflow","Run the audit in this order")}
+          <p>This order finds the biggest barriers first and stops you re-testing the same thing twice. Each step lists the criteria it mainly covers.</p>
+          <ol class="steps">
+            <li><span><b>Automated scan.</b> Run axe or WAVE on every sampled page and state. Log confirmed violations; treat “needs review” items as a to-do list, not results. <span class="scs">1.1.1, 1.3.1, 1.4.3, 2.4.2, 3.1.1, 4.1.2</span></span></li>
+            <li><span><b>Keyboard pass.</b> Put the mouse away. Tab through each journey: can you reach and operate everything, never get stuck, always see focus, and does focus move in a sensible order and stay unobscured? <span class="scs">2.1.1, 2.1.2, 2.1.4, 2.4.1, 2.4.3, 2.4.7, 2.4.11, 3.2.1, 3.2.2</span></span></li>
+            <li><span><b>Zoom, reflow and spacing.</b> 200% zoom, 400% zoom (or 320px wide), the text spacing bookmarklet, and both orientations on a phone. <span class="scs">1.3.4, 1.4.4, 1.4.10, 1.4.12, 1.4.13</span></span></li>
+            <li><span><b>Visual checks.</b> Text and component contrast in every state, a greyscale pass for colour-only meaning, images of text, sensory-only instructions. <span class="scs">1.3.3, 1.4.1, 1.4.3, 1.4.5, 1.4.11</span></span></li>
+            <li><span><b>Structure and semantics.</b> Page titles, heading outline, landmarks, lists, tables, labels, groups, required fields and autocomplete. <span class="scs">1.3.1, 1.3.2, 1.3.5, 2.4.2, 2.4.6, 3.3.2, 4.1.2</span></span></li>
+            <li><span><b>Screen reader walk-through.</b> Complete each key journey with a screen reader, including triggering errors and success messages. Listen for names, roles, states and announcements. <span class="scs">1.1.1, 2.4.4, 2.5.3, 3.3.1, 3.3.3, 4.1.2, 4.1.3</span></span></li>
+            <li><span><b>Media, motion and time.</b> Captions, audio description, transcripts, autoplay, carousels, timeouts and anything that flashes. <span class="scs">1.2.x, 1.4.2, 2.2.1, 2.2.2, 2.3.1</span></span></li>
+            <li><span><b>Touch and pointer.</b> On a real device: target sizes, gestures, dragging, pointer cancellation. <span class="scs">2.5.1, 2.5.2, 2.5.4, 2.5.7, 2.5.8</span></span></li>
+            <li><span><b>Across pages.</b> Compare templates for consistent navigation, naming and help; check multiple ways to find pages, redundant entry and authentication. <span class="scs">2.4.5, 3.2.3, 3.2.4, 3.2.6, 3.3.4, 3.3.7, 3.3.8</span></span></li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="audit-findings">${H("findings","Write findings developers can act on")}
+          <p>A finding is only useful if a developer can reproduce it, understand why it matters and fix it without asking you. Use the same five fields every time, plus severity.</p>
+          <ul>
+            <li><b>One issue per finding.</b> If the same root cause appears on 30 pages, write one finding and list the instances or the component name.</li>
+            <li><b>Cite the most specific criterion.</b> Add a second criterion only when it's a genuinely separate failure, not to pad the report.</li>
+            <li><b>Make it reproducible.</b> Page URL, element or selector, steps, what you heard or saw, and the browser and AT pairing.</li>
+            <li><b>Describe the user impact</b> in one sentence: who is blocked or slowed, and how.</li>
+            <li><b>Recommend the simplest correct fix,</b> preferring native HTML over ARIA, with a code snippet when it helps.</li>
+          </ul>
+          <div class="examples" style="margin-top:1rem">
+            <div class="ex good"><div class="ex-h">${I.ok}Example finding</div>
+<pre tabindex="0" aria-label="Example finding"><code>${esc(`Issue title: "Add to cart" icon button on product cards has no accessible name
+
+Issue description: On /shop, each product card's cart icon button
+(.product-card button.add-cart) contains only an SVG and no text,
+aria-label or aria-labelledby. NVDA + Chrome 129 announces "button".
+Screen reader and voice control users can't tell what the button
+does or which product it adds.
+Steps: Tab to the first product card's cart icon; listen.
+
+Expected result: The button is announced with its purpose and
+product, e.g. "Add Blue hoodie to cart, button".
+
+SC & Level: 4.1.2 Name, Role, Value (Level A)
+
+Recommendation: Give the button an accessible name and hide the icon:
+<button class="add-cart" aria-label="Add Blue hoodie to cart">
+  <svg aria-hidden="true" focusable="false">...</svg>
+</button>
+
+Severity: High`)}</code></pre></div>
+          </div>
+          <p style="margin-top:1rem"><button type="button" class="linkbtn" data-copy="template">${I.copy} Copy blank finding template</button> <span role="status" class="copy-status"></span></p>
+        </section>
+
+        <section aria-labelledby="audit-severity">${H("severity","Rate severity")}
+          <p>Severity combines how badly a barrier affects people with how important the task is. A contrast issue in the checkout button matters more than the same issue in the footer.</p>
+          ${table("Severity levels", ["Severity","Meaning","Typical examples"], [
+            ["Blocker","Some users can't complete a key task at all, with no workaround","Keyboard trap, unlabelled checkout button, CAPTCHA with no alternative, flashing content"],
+            ["High","The task is possible only with major difficulty, or important information is lost","Missing form labels, errors not announced, no captions on a key video, focus not visible"],
+            ["Medium","Noticeable friction, but a reasonable workaround exists","Low-contrast helper text, confusing focus order in one section, vague link text"],
+            ["Low","Minor annoyance, isolated, or a best-practice recommendation","Skipped heading level, redundant title attribute, 30px targets that pass AA"]
+          ])}
+        </section>
+
+        <section aria-labelledby="audit-fail-or-bp">${H("fail-or-bp","Failure or best practice?")}
+          <p>Credibility depends on this. A failure means the content does not meet a success criterion. A best practice makes things better, but citing an SC for it invites pushback and weakens the real findings. Label best practices clearly and give them Low severity or a separate section.</p>
+          <p>Commonly mis-reported as failures:</p>
+          <ul class="bp">
+            <li><b>No &lt;h1&gt; or skipped heading levels.</b> Best practice, unless the headings don't reflect the real structure (then 1.3.1).</li>
+            <li><b>No skip link.</b> 2.4.1 can also be met with landmarks or headings. Recommend the skip link; fail 2.4.1 only if no bypass method exists.</li>
+            <li><b>Positive tabindex.</b> Fails 2.4.3 only if the resulting order loses meaning or operability.</li>
+            <li><b>Links opening a new tab without warning.</b> Best practice at AA (3.2.5 is AAA).</li>
+            <li><b>Targets between 24 and 44 px.</b> Pass 2.5.8; recommend 44 px (2.5.5 is AAA).</li>
+            <li><b>Low-contrast disabled controls and logos.</b> Exempt from 1.4.3 and 1.4.11.</li>
+            <li><b>Muted autoplay video.</b> Not 1.4.2 (no audio), though it may fail 2.2.2 if it moves for more than 5 seconds with no pause.</li>
+            <li><b>Alt text starting with “image of”.</b> Best practice, unless the alt fails to serve the same purpose.</li>
+            <li><b>axe rules tagged best-practice</b> (region, landmark-one-main, heading-order, page-has-heading-one). Report as best practice, not WCAG failures.</li>
+          </ul>
+          <p>Each criterion page in a11ywallet now has a <b>Best practice</b> section listing recommendations like these for that criterion.</p>
+        </section>
+
+        <section aria-labelledby="audit-pitfalls">${H("pitfalls","Common auditing mistakes")}
+          <ul>
+            <li><b>Trusting the scanner.</b> Automated tools catch only a minority of WCAG issues (estimates are commonly around a third). “No axe violations” never means “accessible”.</li>
+            <li><b>Testing only the homepage</b> or only the happy path. Errors, empty states and logged-in screens hide the worst bugs.</li>
+            <li><b>Screen reader testing with your eyes.</b> Close your eyes or turn the screen off (NVDA screen curtain, VoiceOver screen curtain) for a real walk-through.</li>
+            <li><b>Using one screen reader and browser only.</b> Some bugs appear only in one pairing.</li>
+            <li><b>Recommending ARIA where native HTML would fix it.</b> Bad ARIA often makes things worse.</li>
+            <li><b>Accepting overlays as a fix.</b> Accessibility overlay widgets don't fix the underlying code, and some add new barriers.</li>
+            <li><b>Retesting only the reported element.</b> Check every instance of the component and the pattern it came from.</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="audit-retest">${H("retest","Retest and prevent regressions")}
+          <p>When a fix ships, retest with the same steps and environment as the original finding, then check other instances of the same component. Turn confirmed fixes into automated checks so they stay fixed.</p>
+          <div class="auto"><pre tabindex="0" aria-label="Playwright regression scan"><code>${esc(`import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
+
+const pages = ['/', '/shop', '/cart', '/checkout', '/my-account'];
+
+for (const path of pages) {
+  test('WCAG 2.2 AA automated scan: ' + path, async ({ page }) => {
+    await page.goto(path);
+    const results = await new AxeBuilder({ page })
+      .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+      .analyze();
+    expect(results.violations.map(v => v.id + ': ' + v.nodes.length)).toEqual([]);
+  });
+}`)}</code></pre>
+          <p class="auto-note">Add each fixed manual finding as a targeted test too (like the snippets on each criterion page), so the regression suite covers more than the scanner can.</p></div>
+        </section>
+
+        <section aria-labelledby="audit-checklist">${H("checklist","Audit checklist")}
+          <p class="check-count" id="cc-audit" aria-live="polite">${done.length} of ${AUDIT_CHECK.length} checked</p>
+          <ul class="checklist">${AUDIT_CHECK.map((t, i) => `<li><label><input type="checkbox" data-sc="audit" data-i="${i}"${done.includes(i) ? " checked" : ""}><span>${esc(t)}</span></label></li>`).join("")}</ul>
+          <p><button type="button" class="linkbtn" data-reset-audit>Clear audit checklist</button></p>
+        </section>
+        </div>
+      </div>
+    </div>`;
   }
 
   /* ---------- principle ---------- */
@@ -1780,11 +3880,20 @@ const PRINCIPLES = [
         </div>` : "";
       body += sec(I.code, "Code examples", `<div class="examples">${block("bad", c.ex.bad, c.ex.badNote)}${block("good", c.ex.good, c.ex.goodNote)}</div>`, "wide");
     }
+    if (c.pairs && c.pairs.length){
+      const pb = (kind, title, text, code) => `<div class="ex ${kind}">
+          <div class="ex-h">${kind === "bad" ? I.x + "Fails" : I.ok + "Passes"}${title ? ": " + esc(title) : ""}</div>
+          ${code ? `<pre tabindex="0" aria-label="${kind === "bad" ? "Failing" : "Passing"} example: ${esc(title || k)}"><code>${esc(code)}</code></pre>` : ""}
+          ${text ? `<p>${esc(text)}</p>` : ""}
+        </div>`;
+      body += sec(I.code, "More pass and fail examples", c.pairs.map(pr => `<div class="examples" style="margin-bottom:1rem">${pr.pass || pr.passCode ? pb("good", pr.t, pr.pass, pr.passCode) : ""}${pr.fail || pr.failCode ? pb("bad", pr.t, pr.fail, pr.failCode) : ""}</div>`).join(""), "wide");
+    }
     if (c.auto){
       body += sec(I.robot, "Automate it with Playwright", `<div class="auto"><pre tabindex="0" aria-label="Playwright test for ${k}"><code>${esc(c.auto.code)}</code></pre><p class="auto-note">${esc(c.auto.note)} Snippets use plain <code>test()</code> for readability; move the logic into your page objects, fixtures and assertion helpers.</p></div>`, "wide");
     }
     if (c.tech && c.tech.length) body += sec(I.book, "Sufficient and advisory techniques", `<ul class="techs">${c.tech.map(x => { const u = techUrl(x[0]); return `<li>${u ? `<a class="fcode" href="${u}" target="_blank" rel="noopener">${x[0]}<span class="visually-hidden"> (opens in a new tab)</span></a>` : `<span class="fcode">${x[0]}</span>`} ${esc(x[1])}</li>`; }).join("")}</ul>`);
     if (c.exc && c.exc.length) body += sec(I.gate, "Exceptions and scope", `<ul>${c.exc.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`);
+    if (c.bp && c.bp.length) body += sec(I.star, "Best practice (beyond the requirement)", `<p class="bp-note">Recommend these in an audit, but label them as best practice. On their own they are not failures of ${k}.</p><ul class="bp">${c.bp.map(x => `<li>${esc(x)}</li>`).join("")}</ul>`);
     if (c.tip) body += `<div class="sec callout"><h4>${I.bulb}QA tip</h4><p>${esc(c.tip)}</p></div>`;
 
     const isL = !!learned[k];
@@ -1830,6 +3939,8 @@ const PRINCIPLES = [
           </div>
         </div>
       </div>
+      ${g.note ? `<div class="callout" style="margin-bottom:1.25rem"><h3 style="font-size:1.05rem;margin-bottom:.35rem;display:flex;gap:.5rem;align-items:center">${I.warn}${esc(g.note.title)}</h3><p style="margin:0">${esc(g.note.text)}</p></div>` : ""}
+      ${(g.removed || []).map(r => `<div class="removed"><p class="removed-h"><span class="sc-num">${r.id}</span> <b>${esc(r.title)}</b> <span class="removed-tag">Removed in WCAG 2.2</span></p><p>${esc(r.text)}</p>${r.tip ? `<p><b>Still good practice:</b> ${esc(r.tip)}</p>` : ""}<p style="margin:0">${extLink(UND + r.slug + ".html", "Understanding " + r.id + " (obsolete)")}</p></div>`).join("")}
       <div class="toolbar">
         <div class="grp" role="group" aria-labelledby="lf-${d}">
           <span class="grp-label" id="lf-${d}">Show levels</span>
@@ -1853,7 +3964,7 @@ const PRINCIPLES = [
         <h1 id="p-h1" tabindex="-1"><span class="visually-hidden">Principle ${p.num}: </span>${esc(p.name)}</h1>
         <p class="p-statement">${esc(p.statement)}</p>
         <div class="p-meta">
-          ${all.length ? `<div class="counts">${plural(all.length, "success criterion", "success criteria")}: ${["A","AA","AAA"].map(l => `<span class="badge lvl-${l}">${c[l]} at ${l}</span>`).join(" ")}</div>` : `<div>Study notes for this principle are on the way.</div>`}
+          ${all.length ? `<div class="counts">${plural(all.length, "success criterion", "success criteria")}: ${["A","AA","AAA"].filter(l => c[l]).map(l => `<span class="badge lvl-${l}">${c[l]} at ${l}</span>`).join(" ")}</div>` : `<div>Study notes for this principle are on the way.</div>`}
           ${extLink(SPEC + "#" + p.slug, "Principle " + p.num + " in WCAG 2.2")}
           ${all.length ? `<div class="prog"><span id="p-prog"></span><span class="meter" aria-hidden="true"><i id="p-meter" style="width:0"></i></span></div>` : ""}
         </div>
@@ -1983,6 +4094,22 @@ const PRINCIPLES = [
       return;
     }
 
+    const cp = e.target.closest("[data-copy]");
+    if (cp){
+      const st = cp.parentElement.querySelector(".copy-status");
+      const ok = () => { st.textContent = "Template copied to clipboard"; };
+      const fallback = () => { st.textContent = "Couldn't copy automatically. Select the example finding and copy it instead."; };
+      try { navigator.clipboard.writeText(FINDING_TEMPLATE).then(ok, fallback); } catch(err){ fallback(); }
+      return;
+    }
+    const rs = e.target.closest("[data-reset-audit]");
+    if (rs){
+      checks["audit"] = []; store.set("checks", checks);
+      app.querySelectorAll('input[data-sc="audit"]').forEach(x => { x.checked = false; });
+      document.getElementById("cc-audit").textContent = `0 of ${AUDIT_CHECK.length} checked`;
+      return;
+    }
+
     const ln = e.target.closest("[data-learn]");
     if (ln){
       const k = ln.dataset.learn;
@@ -2004,8 +4131,9 @@ const PRINCIPLES = [
     checks[k] = [...set];
     store.set("checks", checks);
     const c = ALL.find(x => x.id === k);
+    const total = k === "audit" ? AUDIT_CHECK.length : (c ? c.check.length : 0);
     const cc = document.getElementById("cc-" + idf(k));
-    if (cc && c) cc.textContent = `${set.size} of ${c.check.length} checked`;
+    if (cc) cc.textContent = `${set.size} of ${total} checked`;
   });
 
   app.addEventListener("keydown", e => {
@@ -2030,6 +4158,16 @@ const PRINCIPLES = [
     const parts = h.replace(/^#\/?/, "").split("/").filter(Boolean);
     const p = PRINCIPLES.find(x => x.id === parts[0]);
     const sub = parts[1] || "";
+
+    if (parts[0] === "audit"){
+      const same = app.dataset.view === "audit";
+      if (!same){ app.dataset.view = "audit"; renderNav("audit"); renderAudit(); window.scrollTo(0, 0); }
+      document.title = "Audit guide | a11ywallet";
+      const target = sub && document.getElementById("audit-" + sub);
+      if (target){ target.scrollIntoView(); if (!first) target.focus({preventScroll:true}); }
+      else if (!first) document.getElementById("p-h1").focus();
+      first = false; return;
+    }
 
     if (!p){
       if (app.dataset.view !== "home"){ app.dataset.view = "home"; renderNav(""); renderHome(); }
