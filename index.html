@@ -80,7 +80,7 @@ button{font:inherit;color:inherit}
   .mainnav{order:3;flex-basis:100%}
   .tools{margin-left:auto}
   .iconbtn .lbl{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  html{scroll-padding-top:8.5rem}
+  html{scroll-padding-top:11.5rem}
 }
 
 main{display:block;padding-bottom:4rem}
@@ -745,20 +745,45 @@ ul.rg:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .soon-list b{font-family:var(--mono)}
 .soon-list span{color:var(--muted)}
 
-/* search dialog */
+/* dialogs (used by demos) */
 dialog{border:1px solid var(--line);border-radius:16px;padding:0;width:min(40rem,calc(100% - 2rem));background:var(--surface);color:var(--text);box-shadow:0 30px 60px -20px rgba(0,0,0,.5)}
 dialog::backdrop{background:rgba(16,23,19,.55)}
-.dlg-h{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem .25rem}
-.dlg-h h2{font-size:1.2rem}
-.dlg-b{padding:.5rem 1.2rem 1.2rem}
-.dlg-b label{font-weight:600;display:block;margin-bottom:.35rem}
-.dlg-b input{width:100%;font:inherit;padding:.7rem .9rem;border:2px solid var(--muted);border-radius:10px;background:var(--bg);color:var(--text)}
-.dlg-b .hint{font-size:.9rem;color:var(--muted);margin:.4rem 0 0}
-.results{list-style:none;margin:.75rem 0 0;padding:0;max-height:55vh;overflow:auto}
-.results a{display:grid;grid-template-columns:auto 1fr auto;gap:.2rem .75rem;padding:.65rem .5rem;border-radius:8px;text-decoration:none;color:var(--text)}
+
+/* header search (combobox) */
+.hsearch{position:relative;flex:0 1 17rem;min-width:11rem}
+.hsearch-field{position:relative}
+.hsearch-field svg{position:absolute;left:.75rem;top:50%;width:1.05rem;height:1.05rem;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.hsearch input{width:100%;font:inherit;font-size:.95rem;padding:.5rem 2.2rem .5rem 2.2rem;border:1.5px solid var(--muted);border-radius:999px;background:var(--bg);color:var(--text)}
+.hsearch input::-webkit-search-cancel-button{display:none}
+.hsearch input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.hsearch kbd{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-size:.8rem;color:var(--muted);pointer-events:none}
+.hsearch input:focus ~ kbd,.hsearch input:not(:placeholder-shown) ~ kbd{display:none}
+.hs-list{position:absolute;top:calc(100% + .4rem);right:0;width:min(32rem,calc(100vw - 2rem));max-height:min(60vh,30rem);overflow:auto;margin:0;padding:.35rem;list-style:none;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 48px -18px rgba(0,0,0,.45);z-index:60}
+.hs-list[hidden]{display:none}
+.hs-opt{display:grid;grid-template-columns:auto 1fr auto;gap:.15rem .7rem;align-items:baseline;padding:.55rem .6rem;border-radius:8px;cursor:pointer;border:2px solid transparent}
+.hs-opt:hover{background:var(--surface-2)}
+.hs-opt[aria-selected="true"]{background:var(--surface-2);border-color:var(--link)}
+.hs-opt .r-sum{grid-column:2/-1;color:var(--muted);font-size:.88rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hs-opt .r-t{font-weight:700}
+.hs-opt .sc-num{font-size:.85rem}
+.hs-all{display:block;font-weight:700;color:var(--link);text-decoration:underline;text-underline-offset:.2em;border-top:1px solid var(--line);border-radius:0 0 8px 8px;margin-top:.25rem}
+.hs-empty{padding:.6rem;color:var(--muted);font-size:.93rem}
+@media (max-width:760px){
+  .hsearch{order:2;flex:1 1 100%;min-width:0;padding-bottom:.35rem}
+  .hs-list{left:0;right:0;width:auto}
+}
+/* search results page */
+.results{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;gap:.35rem;max-width:52rem}
+.results a{display:grid;grid-template-columns:auto 1fr auto;align-items:baseline;gap:.2rem .75rem;padding:.75rem .7rem;border-radius:10px;text-decoration:none;color:var(--text);border:1px solid var(--line);background:var(--surface)}
 .results a:hover{background:var(--surface-2)}
-.results .r-sum{grid-column:2/-1;color:var(--muted);font-size:.9rem}
+.results .r-sum{grid-column:2/-1;color:var(--muted);font-size:.93rem}
 .results .r-t{font-weight:700;text-decoration:underline;text-underline-offset:.2em;text-decoration-color:var(--line)}
+.results a:hover .r-t{text-decoration-color:currentColor}
+.sr-form{display:flex;flex-wrap:wrap;gap:.5rem;align-items:end;margin-top:1rem;max-width:36rem}
+.sr-form label{flex-basis:100%;font-weight:600}
+.sr-form input{flex:1;min-width:12rem;font:inherit;padding:.6rem .85rem;border:2px solid var(--muted);border-radius:10px;background:var(--bg);color:var(--text)}
+.sr-form button{padding:.6rem 1.1rem}
+.sr-empty{margin-top:1.25rem;color:var(--muted)}
 
 footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);font-size:.95rem}
 footer p{max-width:70ch}
@@ -773,11 +798,19 @@ footer p{max-width:70ch}
       <span>a11ywallet</span>
     </a>
     <nav class="mainnav" aria-label="Main"><ul id="navlist"></ul></nav>
+    <search class="hsearch" aria-label="Site">
+      <form id="hs-form" role="none" novalidate>
+        <label for="hs-input" class="visually-hidden">Search a11ywallet</label>
+        <div class="hsearch-field">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="hs-input" type="search" role="combobox" autocomplete="off" spellcheck="false" placeholder="Search" aria-autocomplete="list" aria-expanded="false" aria-controls="hs-list" aria-describedby="hs-status" aria-keyshortcuts="/" enterkeyhint="search">
+          <kbd aria-hidden="true">/</kbd>
+        </div>
+        <ul id="hs-list" class="hs-list" role="listbox" aria-label="Suggestions" hidden></ul>
+        <p class="visually-hidden" id="hs-status" role="status" aria-live="polite"></p>
+      </form>
+    </search>
     <div class="tools">
-      <button class="iconbtn" id="search-open" type="button" aria-haspopup="dialog" aria-keyshortcuts="/">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <span class="lbl">Search</span>
-      </button>
       <button class="iconbtn" id="theme-toggle" type="button" aria-pressed="false">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>
         <span class="lbl">Dark mode</span>
@@ -791,22 +824,6 @@ footer p{max-width:70ch}
 </main>
 
 
-<dialog id="search-dialog" aria-labelledby="search-title">
-  <div class="dlg-h">
-    <h2 id="search-title">Search a11ywallet</h2>
-    <button class="iconbtn" type="button" id="search-close">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg>
-      <span>Close</span>
-    </button>
-  </div>
-  <div class="dlg-b">
-    <label for="search-input">Criterion number, name, keyword or pattern</label>
-    <input id="search-input" type="search" autocomplete="off" aria-describedby="search-hint search-status">
-    <p class="hint" id="search-hint">Try “1.4.3”, “alt text”, “zoom” or “accordion”.</p>
-    <p class="visually-hidden" id="search-status" role="status" aria-live="polite"></p>
-    <ul class="results" id="search-results"></ul>
-  </div>
-</dialog>
 <script>
 /* =========================================================
    a11ywallet data
@@ -3297,7 +3314,7 @@ document.querySelector('.toast-region').textContent = 'Blue hoodie added to cart
       goodNote:"The region is in the page from the start; text is swapped in and announced politely."
     },
     tech:[["ARIA22","role=status to present status messages"],["ARIA19","role=alert or live regions for errors"],["ARIA23","role=log for sequential updates"],["G199","Success feedback when data is submitted"]],
-    tip:"This site's search dialog uses a role=\"status\" region for its result count. Open it with / and try it with a screen reader."
+    tip:"This site's header search uses a role=\"status\" region for its suggestion count. Press / to jump to it and try it with a screen reader."
   }
   ]
 }
@@ -7513,6 +7530,15 @@ Severity: High`)}</code></pre></div>
       if (!first) document.getElementById("home-h1").focus();
       first = false; return;
     }
+    if (parts[0] === "search"){
+      const term = decodeURIComponent(h.replace(/^#\/search\/?/, "")).trim();
+      const view = "search:" + term;
+      const same = app.dataset.view === view;
+      if (!same){ app.dataset.view = view; renderNav(""); renderSearchPage(term); window.scrollTo(0, 0); }
+      document.title = (term ? `Search results for “${term}”` : "Search") + " | a11ywallet";
+      if (!first && !same) document.getElementById("p-h1").focus();
+      first = false; return;
+    }
     if (parts[0] === "audit"){
       const same = app.dataset.view === "audit";
       if (!same){ app.dataset.view = "audit"; renderNav("audit"); renderAudit(); window.scrollTo(0, 0); }
@@ -7565,42 +7591,128 @@ Severity: High`)}</code></pre></div>
   });
   mq.addEventListener && mq.addEventListener("change", syncTheme);
 
-  /* ---------- search dialog ---------- */
-  const dlg = document.getElementById("search-dialog");
-  const q = document.getElementById("search-input");
-  const list = document.getElementById("search-results");
-  const status = document.getElementById("search-status");
-  function doSearch(){
-    const t = q.value.trim().toLowerCase();
-    if (!t){ list.innerHTML = ""; status.textContent = ""; return; }
+  /* ---------- search ---------- */
+  function searchAll(raw){
+    const t = raw.trim().toLowerCase();
+    if (!t) return [];
     const words = t.split(/\s+/);
-    const pats = Object.keys(APG_PATTERNS).map(k => ({slug:k, p:APG_PATTERNS[k]})).filter(x => {
-      const hay = ("apg pattern " + x.slug + " " + x.p.name + " " + x.p.summary + " " + x.p.kw).toLowerCase();
-      return words.every(w => hay.includes(w));
-    });
-    const scs = ALL.filter(c => {
-      const hay = (c.id + " " + c.title + " " + c.s + " " + (c.kw || "") + " level " + c.level).toLowerCase();
-      return words.every(w => hay.includes(w));
-    });
-    const pracs = PRAC_ORDER.filter(k => { const pr = PRACTICES[k]; const hay = ("apg practice guide " + k + " " + pr.name + " " + pr.summary + " " + pr.sections.map(x => x.title).join(" ")).toLowerCase(); return words.every(w => hay.includes(w)); });
-    const res = [...pats.map(x => ({pat:x})), ...pracs.map(k => ({prac:k})), ...scs.map(c => ({sc:c}))].slice(0, 15);
-    list.innerHTML = res.map(r => r.prac
-      ? `<li><a href="#/apg/practices/${r.prac}"><span class="sc-num">Guide</span><span class="r-t">${esc(PRACTICES[r.prac].name)}</span><span></span><span class="r-sum">${esc(PRACTICES[r.prac].summary)}</span></a></li>`
-      : r.pat
-      ? `<li><a href="#/apg/${r.pat.slug}"><span class="sc-num">APG</span><span class="r-t">${esc(r.pat.p.name)} pattern</span><span></span><span class="r-sum">${esc(r.pat.p.summary)}</span></a></li>`
-      : `<li><a href="#/${r.sc._p.id}/${r.sc.id}"><span class="sc-num">${r.sc.id}</span><span class="r-t">${esc(r.sc.title)}</span><span class="badge lvl-${r.sc.level}">${r.sc.level}</span><span class="r-sum">${esc(r.sc.s)}</span></a></li>`).join("");
-    status.textContent = res.length ? plural(res.length, "result", "results") : "Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.";
-    if (!res.length) list.innerHTML = `<li style="padding:.6rem .5rem;color:var(--muted)">Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.</li>`;
+    const hit = hay => words.every(w => hay.includes(w));
+    const pats = Object.keys(APG_PATTERNS).filter(k => { const p = APG_PATTERNS[k]; return hit(("apg pattern " + k + " " + p.name + " " + p.summary + " " + p.kw).toLowerCase()); });
+    const pracs = PRAC_ORDER.filter(k => { const pr = PRACTICES[k]; return hit(("apg practice guide " + k + " " + pr.name + " " + pr.summary + " " + pr.sections.map(x => x.title).join(" ")).toLowerCase()); });
+    const scs = ALL.filter(c => hit((c.id + " " + c.title + " " + c.s + " " + (c.kw || "") + " level " + c.level).toLowerCase()));
+    return [
+      ...pats.map(k => ({href:"#/apg/" + k, tag:"APG", title:APG_PATTERNS[k].name + " pattern", sum:APG_PATTERNS[k].summary})),
+      ...pracs.map(k => ({href:"#/apg/practices/" + k, tag:"Guide", title:PRACTICES[k].name, sum:PRACTICES[k].summary})),
+      ...scs.map(c => ({href:`#/${c._p.id}/${c.id}`, tag:c.id, title:c.title, sum:c.s, level:c.level}))
+    ];
   }
-  q.addEventListener("input", doSearch);
-  function openSearch(){ if (!dlg.open){ dlg.showModal(); q.select(); doSearch(); } }
-  document.getElementById("search-open").addEventListener("click", openSearch);
-  document.getElementById("search-close").addEventListener("click", () => dlg.close());
-  list.addEventListener("click", e => { if (e.target.closest("a")) dlg.close(); });
-  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+  const resultInner = r => `<span class="sc-num">${esc(r.tag)}</span><span class="r-t">${esc(r.title)}</span>${r.level ? `<span class="badge lvl-${r.level}">${r.level}</span>` : "<span></span>"}<span class="r-sum">${esc(r.sum)}</span>`;
+  const searchHref = term => "#/search/" + encodeURIComponent(term.trim());
+  const NOTHING = "Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.";
+
+  function renderSearchPage(term){
+    const res = searchAll(term);
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">Search</span></li></ol></nav>
+      <h1 id="p-h1" tabindex="-1" class="mt-ph2">${term ? `Search results for “${esc(term)}”` : "Search"}</h1>
+      <p class="mt-pcount">${term ? (res.length ? plural(res.length, "result", "results") : "No results") : "Type a criterion number, name, keyword or pattern."}</p>
+      <form class="sr-form" id="sr-form" role="search" aria-label="Search again">
+        <label for="sr-input">Criterion number, name, keyword or pattern</label>
+        <input id="sr-input" type="search" autocomplete="off" value="${esc(term)}" aria-describedby="sr-hint">
+        <button class="iconbtn" type="submit">Search</button>
+        <p class="hs-empty" id="sr-hint" style="flex-basis:100%;padding:0">Try “1.4.3”, “alt text”, “zoom” or “accordion”.</p>
+      </form>
+      ${term ? (res.length ? `<ul class="results">${res.map(r => `<li><a href="${r.href}">${resultInner(r)}</a></li>`).join("")}</ul>` : `<p class="sr-empty">${NOTHING}</p>`) : ""}
+    </div>`;
+    document.getElementById("sr-form").addEventListener("submit", e => {
+      e.preventDefault();
+      const v = document.getElementById("sr-input").value.trim();
+      if (v) location.hash = searchHref(v);
+    });
+    hsInput.value = term;
+  }
+
+  /* header combobox: suggestions as you type, Enter opens the results page */
+  const hsForm = document.getElementById("hs-form");
+  const hsInput = document.getElementById("hs-input");
+  const hsList = document.getElementById("hs-list");
+  const hsStatus = document.getElementById("hs-status");
+  const MAX_SUGGEST = 8;
+  let hsOpts = [], hsActive = -1, statusTimer;
+
+  function hsClose(){
+    hsList.hidden = true; hsList.innerHTML = ""; hsOpts = []; hsActive = -1;
+    hsInput.setAttribute("aria-expanded", "false");
+    hsInput.removeAttribute("aria-activedescendant");
+  }
+  function hsSetActive(i){
+    hsOpts.forEach((o, n) => o.setAttribute("aria-selected", n === i ? "true" : "false"));
+    hsActive = i;
+    if (i < 0){ hsInput.removeAttribute("aria-activedescendant"); return; }
+    hsInput.setAttribute("aria-activedescendant", hsOpts[i].id);
+    hsOpts[i].scrollIntoView({block:"nearest"});
+  }
+  function hsUpdate(){
+    const term = hsInput.value.trim();
+    clearTimeout(statusTimer);
+    if (!term){ hsClose(); hsStatus.textContent = ""; return; }
+    const res = searchAll(term);
+    const shown = res.slice(0, MAX_SUGGEST);
+    hsList.innerHTML = shown.length
+      ? shown.map((r, i) => `<li class="hs-opt" role="option" id="hs-opt-${i}" aria-selected="false" data-href="${r.href}">${resultInner(r)}</li>`).join("")
+        + `<li class="hs-opt hs-all" role="option" id="hs-opt-all" aria-selected="false" data-href="${searchHref(term)}">See all ${plural(res.length, "result", "results")} for “${esc(term)}”</li>`
+      : `<li class="hs-empty" role="presentation">${NOTHING}</li>`;
+    hsOpts = [...hsList.querySelectorAll(".hs-opt")];
+    hsActive = -1;
+    hsInput.removeAttribute("aria-activedescendant");
+    hsList.hidden = false;
+    hsInput.setAttribute("aria-expanded", "true");
+    statusTimer = setTimeout(() => {
+      hsStatus.textContent = res.length ? `${plural(res.length, "result", "results")}. Use the down arrow to browse, or press Enter to see them all.` : NOTHING;
+    }, 400);
+  }
+  function hsGo(href, keepValue){
+    hsClose();
+    if (!keepValue) hsInput.value = "";
+    if (location.hash === href) route(); else location.hash = href;
+  }
+
+  hsInput.addEventListener("input", hsUpdate);
+  hsInput.addEventListener("focus", () => { if (hsInput.value.trim() && hsList.hidden) hsUpdate(); });
+  hsInput.addEventListener("keydown", e => {
+    const open = !hsList.hidden && hsOpts.length;
+    if (e.key === "ArrowDown"){
+      e.preventDefault();
+      if (hsList.hidden) hsUpdate();
+      if (hsOpts.length) hsSetActive(hsActive < hsOpts.length - 1 ? hsActive + 1 : 0);
+    } else if (e.key === "ArrowUp"){
+      e.preventDefault();
+      if (open) hsSetActive(hsActive > 0 ? hsActive - 1 : hsOpts.length - 1);
+    } else if (e.key === "Escape"){
+      e.preventDefault();
+      if (!hsList.hidden) hsClose(); else hsInput.value = "";
+    } else if (e.key === "Enter"){
+      e.preventDefault();
+      if (open && hsActive > -1){
+        const o = hsOpts[hsActive];
+        hsGo(o.dataset.href, o.classList.contains("hs-all"));
+      } else if (hsInput.value.trim()){
+        hsGo(searchHref(hsInput.value), true);
+      }
+    } else if (e.key === "Tab"){
+      hsClose();
+    }
+  });
+  hsForm.addEventListener("submit", e => e.preventDefault());
+  hsList.addEventListener("mousedown", e => e.preventDefault());     // keep focus in the input
+  hsList.addEventListener("click", e => {
+    const o = e.target.closest(".hs-opt");
+    if (o) hsGo(o.dataset.href, o.classList.contains("hs-all"));
+  });
+  hsInput.addEventListener("blur", () => setTimeout(() => { if (document.activeElement !== hsInput) hsClose(); }, 0));
   document.addEventListener("keydown", e => {
-    if (e.key === "/" && !dlg.open && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable){
-      e.preventDefault(); openSearch();
+    if (e.key === "/" && document.activeElement !== hsInput && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName) && !document.activeElement.isContentEditable){
+      e.preventDefault(); hsInput.focus(); hsInput.select();
     }
   });
 
