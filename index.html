@@ -593,8 +593,8 @@ ul.rg:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .mt-gh3{font-size:1.15rem;margin:1.25rem 0 .6rem;color:var(--muted)}
 .new-tag{font-size:.78rem;font-weight:700;border:1.5px solid var(--lvl-aa);color:var(--link);border-radius:999px;padding:.05rem .5rem}
 .mt-example{margin-bottom:1rem}
-.mt-example h5{font-size:1rem;display:flex;gap:.4rem;align-items:center;margin-bottom:.3rem}
-.mt-example h5 svg{width:1rem;height:1rem}
+.mt-example h4,.mt-example h5{font-size:1rem;display:flex;gap:.4rem;align-items:center;margin-bottom:.3rem}
+.mt-example h4 svg,.mt-example h5 svg{width:1rem;height:1rem}
 .mt-roles{font-size:.93rem;color:var(--muted);margin:0 0 1rem}
 .mt-type{margin-top:1.25rem}
 .mt-th{font-size:1.05rem;display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;padding-bottom:.35rem;border-bottom:2px solid var(--line)}
@@ -714,6 +714,10 @@ ul.rg:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .soon-mini{font-size:.8rem;color:var(--muted)}
 .chooser th[scope="row"]{font-weight:600}
 .chooser td a{font-weight:700}
+.mt-back{margin:.75rem 0 0;font-size:.93rem}
+.mh-count{font-size:.8rem;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 .45rem;margin-left:.3rem}
+.toolgrid code{font-weight:800}
+.mt-principle .mt-phead{margin-top:1.5rem}
 /* coming soon principle */
 .soon-list{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.75rem}
 .soon-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
@@ -6466,13 +6470,80 @@ a{color:#1D5C8F}
     return blocks.map(b => `<div class="mt-block">${b.sit ? `<p class="mt-sit"><span class="mt-sit-l">Situation</span> ${esc(b.sit)}</p>` : ""}${b.g.map(g => `${g.h ? `<p class="mt-gh">${esc(g.h)}</p>` : ""}${g.i.length ? meetItems(g.i) : ""}`).join("")}</div>`).join("");
   }
 
-  function renderMeet(){
+  function renderMeetHome(){
+    const refs = pnum => { const ids = new Set(), n = {suf:0, adv:0, fail:0};
+      MEET_SC.filter(s => s.id.startsWith(pnum + ".")).forEach(s => ["suf","adv","fail"].forEach(k => s[k].forEach(b => b.g.forEach(g => { const w = items => items.forEach(it => { (it.t.match(/\{[A-Z]+\d+\}/g) || []).forEach(m => { ids.add(m); n[k]++; }); if (it.s) w(it.s); }); w(g.i); }))));
+      return {ids, n}; };
+    const all = [1,2,3,4].map(refs);
+    const tot = {suf:0, adv:0, fail:0}; all.forEach(r => Object.keys(tot).forEach(k => tot[k] += r.n[k]));
+    const uniq = new Set(all.flatMap(r => [...r.ids])).size;
+    const cards = PRINCIPLES.map((p, i) => {
+      const n = MEET_SC.filter(s => s.id.startsWith(p.num + ".")).length;
+      return `<li style="--d:${i}"><a class="card" style="--d:${i}" href="#/meet/${p.id}"><span class="c-num" aria-hidden="true">${p.num}</span><span class="c-name">${esc(p.name)}</span><span class="c-meta">${n} criteria · ${all[i].ids.size} techniques</span></a></li>`;
+    }).join("");
+    const codes = [["G","General","Works in any technology: the idea behind the fix."],["H","HTML","Uses HTML elements and attributes."],["C","CSS","Uses CSS for layout, spacing and presentation."],["ARIA","WAI-ARIA","Adds roles, states and properties."],["SCR","Client-side script","JavaScript behaviour in the browser."],["SVR","Server-side script","Handled on the server, such as redirects and headers."],["SM","SMIL","Synchronised multimedia presentations."],["PDF","PDF","Tagging and settings in PDF documents."],["T","Plain text","Formatting conventions for text files."],["F","Failure","A documented way to fail the criterion."]];
+    const codeCount = pre => [...new Set(all.flatMap(r => [...r.ids]))].filter(x => new RegExp("^\\{" + pre + "\\d").test(x)).length;
+    const roleCount = r => MEET_SC.filter(s => s.tags[r] && s.tags[r].length).length;
+
+    app.innerHTML = `
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">How to meet</span></li></ol></nav>
+      <section class="hero" aria-labelledby="home-h1">
+        <div>
+          <h1 id="home-h1" tabindex="-1">How to meet WCAG 2.2</h1>
+          <p class="tag">What each criterion requires, and the ways to meet it, one principle at a time.</p>
+          <p class="intro">Every criterion from the W3C Quick Reference with its conditions and exceptions, the sufficient techniques for each situation, advisory techniques and known failures, all in plain language with examples.</p>
+          <div class="btn-row">
+            <a class="btn" href="#/meet/perceivable">Start with Perceivable</a>
+            ${extLink("https://www.w3.org/WAI/WCAG22/quickref/", "W3C Quick Reference").replace('class="ext"', 'class="btn ghost ext"')}
+          </div>
+        </div>
+        <div class="wallet">
+          <ul class="cards" aria-label="Principles">${cards}</ul>
+          <div class="pocket" aria-hidden="true"><span>how to meet</span></div>
+        </div>
+      </section>
+    </div>
+    <section class="home-sec" aria-labelledby="mh-entry"><div class="wrap">
+      <h2 id="mh-entry">How each entry is organised</h2>
+      <p>Every criterion opens in the same order, so you always know where to look.</p>
+      <ol class="chain">
+        <li><b>What it requires</b><span>The rule in plain words, with every condition, exception and note</span></li>
+        <li><b>Example</b><span>One concrete case of meeting it</span></li>
+        <li><b>Sufficient techniques</b><span>Grouped by situation: pick the one that fits your content</span></li>
+        <li><b>Advisory techniques</b><span>Extra good practice</span></li>
+        <li><b>Failures</b><span>Mistakes that fail it outright</span></li>
+      </ol>
+    </div></section>
+    <section class="home-sec" aria-labelledby="mh-types"><div class="wrap">
+      <h2 id="mh-types">Three kinds of technique</h2>
+      <p>Across all ${MEET_SC.length} criteria there are ${uniq} different techniques and failures, referenced ${tot.suf + tot.adv + tot.fail} times.</p>
+      <div class="levels">
+        <div><span class="badge" style="background:#1E6A45">Sufficient · ${tot.suf}</span><p>Recognised ways to meet a criterion. One that fits your situation is enough; other ways can also work.</p></div>
+        <div><span class="badge" style="background:#6E5310">Advisory · ${tot.adv}</span><p>Good practice that improves accessibility but doesn't meet the criterion on its own.</p></div>
+        <div><span class="badge" style="background:#A3261B">Failures · ${tot.fail}</span><p>Known mistakes. If one happens, the criterion fails whatever else you've done.</p></div>
+      </div>
+    </div></section>
+    <section class="home-sec" aria-labelledby="mh-codes"><div class="wrap">
+      <h2 id="mh-codes">Technique codes</h2>
+      <p>Each technique has a code whose letters tell you the technology. Every code in these notes links to the full W3C technique.</p>
+      <ul class="toolgrid">${codes.map(c => `<li><b><code>${c[0]}</code> ${esc(c[1])}</b> <span class="mh-count">${codeCount(c[0])}</span><p>${esc(c[2])}</p></li>`).join("")}</ul>
+    </div></section>
+    <section class="home-sec" aria-labelledby="mh-roles"><div class="wrap">
+      <h2 id="mh-roles">Browse by role</h2>
+      <p>W3C tags each criterion with the roles it matters most to. Choose a role to open Perceivable with that filter on; it stays on as you move between principles.</p>
+      <ul class="toolgrid">${MEET_ROLES.map(r => `<li><a href="#/meet/perceivable" data-set-role="${r[0]}"><b>${esc(r[1])}</b></a> <span class="mh-count">${roleCount(r[0])} criteria</span></li>`).join("")}</ul>
+    </div></section>`;
+    app.querySelectorAll("[data-set-role]").forEach(a => a.addEventListener("click", () => { meetState.roles = new Set([a.dataset.setRole]); }));
+  }
+
+  function renderMeet(onlyP){
     const scTitle = id => { const c = ALL.find(x => x.id === id); return c ? c.title : (id === "4.1.1" ? "Parsing" : id); };
     const topics = [...new Set(MEET_SC.flatMap(s => Object.values(s.tags).flat()))].sort();
     const chip = (group, val, label, on) => `<button type="button" class="chip" data-mf="${group}" data-v="${val}" aria-pressed="${on}">${I.tick}${esc(label)}</button>`;
     let body = "";
     const lvlCounts = list => { const c = {A:0, AA:0, AAA:0}; list.forEach(s => { if (c[s.lv] !== undefined && s.id !== "4.1.1") c[s.lv]++; }); return c; };
-    PRINCIPLES.forEach(p => {
+    [onlyP].forEach(p => {
       const pscs = MEET_SC.filter(s => s.id.startsWith(p.num + "."));
       const pc = lvlCounts(pscs);
       let toc = "", main = "";
@@ -6482,7 +6553,7 @@ a{color:#1D5C8F}
         toc += `<li class="mt-toc-g" data-tg="${g.id}"><span class="mt-toc-gt">${g.id} ${esc(g.name)}</span><ol>${scs.map(s => `<li data-ts="${s.id}"><a href="#/meet/${s.id}"><span class="mt-toc-n">${s.id}</span> ${esc(scTitle(s.id))}</a></li>`).join("")}</ol></li>`;
         main += `<section class="mt-guideline" data-g="${g.id}" aria-labelledby="mtg-${gd}">
           <div class="mt-ghead">
-            <h3 id="mtg-${gd}" class="mt-gh3"><span class="mt-gnum">${g.id}</span> ${esc(g.name)}</h3>
+            <h2 id="mtg-${gd}" class="mt-gh3"><span class="mt-gnum">${g.id}</span> ${esc(g.name)}</h2>
             ${g.desc ? `<p class="mt-gdesc">${esc(g.desc)}</p>` : ""}
             <p class="mt-gcount">${scs.length} ${scs.length === 1 ? "criterion" : "criteria"}: ${["A","AA","AAA"].filter(l => gc[l]).map(l => `<span class="badge lvl-${l}">${gc[l]} ${l}</span>`).join(" ")}${scs.some(s => s.id === "4.1.1") ? ' <span class="removed-tag">1 obsolete</span>' : ""} ${extLink(UND + g.slug + ".html", "Understanding " + g.id)}</p>
           </div>
@@ -6494,64 +6565,46 @@ a{color:#1D5C8F}
           const c = ALL.find(x => x.id === s.id);
           const R = MEET_REQ[s.id];
           main += `<article class="sc mt-sc" id="mt-${d}" data-id="${s.id}" data-level="${removed ? "removed" : s.lv}" data-roles="${roles.join(" ")}" data-topics="${esc(allTags.join(" "))}" data-text="${esc((s.id + " " + scTitle(s.id) + " " + s.how[0] + " " + (R ? R.r : "")).toLowerCase())}">
-            <h4 class="sc-h"><button type="button" class="sc-toggle mt-toggle" aria-expanded="false" aria-controls="mtb-${d}">
+            <h3 class="sc-h"><button type="button" class="sc-toggle mt-toggle" aria-expanded="false" aria-controls="mtb-${d}">
               <span class="sc-num">${s.id}</span><span class="sc-title">${esc(scTitle(s.id))}</span>
-              <span class="sc-flags">${removed ? '<span class="removed-tag">Obsolete</span>' : `<span class="badge lvl-${s.lv}">Level ${s.lv}</span>`}${s.added ? `<span class="new-tag">New in ${s.added}</span>` : ""}</span>${I.chev}</button></h4>
+              <span class="sc-flags">${removed ? '<span class="removed-tag">Obsolete</span>' : `<span class="badge lvl-${s.lv}">Level ${s.lv}</span>`}${s.added ? `<span class="new-tag">New in ${s.added}</span>` : ""}</span>${I.chev}</button></h3>
             <p class="sc-sum">${esc(s.how[0])}</p>
             <div class="sc-body mt-body" id="mtb-${d}" hidden>
-              ${R ? `<div class="mt-req"><h5 class="mt-rh">${I.gate}What it requires</h5><p class="mt-rtxt">${esc(R.r)}</p>${R.c.length ? `<ul class="mt-conds">${R.c.map(x => `<li><b>${esc(x[0])}:</b> ${esc(x[1])}</li>`).join("")}</ul>` : ""}${R.n.length ? `<ul class="mt-notes">${R.n.map(n => `<li><span class="mt-note-l">Note</span> ${esc(n)}</li>`).join("")}</ul>` : ""}</div>` : ""}
-              <div class="callout mt-example"><h5>${I.bulb}Example</h5><p>${esc(s.how[1])}</p></div>
+              ${R ? `<div class="mt-req"><h4 class="mt-rh">${I.gate}What it requires</h4><p class="mt-rtxt">${esc(R.r)}</p>${R.c.length ? `<ul class="mt-conds">${R.c.map(x => `<li><b>${esc(x[0])}:</b> ${esc(x[1])}</li>`).join("")}</ul>` : ""}${R.n.length ? `<ul class="mt-notes">${R.n.map(n => `<li><span class="mt-note-l">Note</span> ${esc(n)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+              <div class="callout mt-example"><h4>${I.bulb}Example</h4><p>${esc(s.how[1])}</p></div>
               <div class="sc-links">${c ? `<a href="#/${c._p.id}/${s.id}">Study notes for ${s.id}</a>` : ""}${extLink(UND + (c ? c.slug : "parsing") + ".html", "Understanding " + s.id)}${extLink("https://www.w3.org/WAI/WCAG22/quickref/#" + (c ? c.slug : "parsing"), "Quick Reference entry")}</div>
               ${roles.length ? `<p class="mt-roles"><b>Mostly for:</b> ${roles.map(r => MEET_ROLES.find(x => x[0] === r)[1]).join(", ")}${allTags.length ? ` · <b>Topics:</b> ${esc([...new Set(allTags)].map(t => t.replace(/-/g, " ")).join(", "))}` : ""}</p>` : ""}
-              ${s.suf.length ? `<div class="mt-type" data-type="suf"><h5 class="mt-th mt-th-suf">${I.ok}Sufficient techniques <span class="mt-th-note">(any one that fits your situation meets it)</span></h5>${meetBlocks(s.suf)}</div>` : ""}
-              ${s.adv.length ? `<div class="mt-type" data-type="adv"><h5 class="mt-th mt-th-adv">${I.star}Advisory techniques <span class="mt-th-note">(good practice, not enough on their own)</span></h5>${meetBlocks(s.adv)}</div>` : ""}
-              ${s.fail.length ? `<div class="mt-type" data-type="fail"><h5 class="mt-th mt-th-fail">${I.x}Failures <span class="mt-th-note">(if any of these happens, it fails)</span></h5>${meetBlocks(s.fail)}</div>` : ""}
+              ${s.suf.length ? `<div class="mt-type" data-type="suf"><h4 class="mt-th mt-th-suf">${I.ok}Sufficient techniques <span class="mt-th-note">(any one that fits your situation meets it)</span></h4>${meetBlocks(s.suf)}</div>` : ""}
+              ${s.adv.length ? `<div class="mt-type" data-type="adv"><h4 class="mt-th mt-th-adv">${I.star}Advisory techniques <span class="mt-th-note">(good practice, not enough on their own)</span></h4>${meetBlocks(s.adv)}</div>` : ""}
+              ${s.fail.length ? `<div class="mt-type" data-type="fail"><h4 class="mt-th mt-th-fail">${I.x}Failures <span class="mt-th-note">(if any of these happens, it fails)</span></h4>${meetBlocks(s.fail)}</div>` : ""}
             </div></article>`;
         });
         main += `</div></section>`;
       });
-      body += `<div role="tabpanel" class="mt-principle tabpanel" id="mtpanel-${p.num}" aria-labelledby="mttab-${p.num}" tabindex="0" data-p="${p.num}"${p.num === "1" ? "" : " hidden"}>
+      body += `<div class="mt-principle" data-p="${p.num}">
         <div class="mt-phead">
           <span class="p-num mt-pnum" aria-hidden="true">${p.num}</span>
-          <div><h2 id="mtp-${p.num}" class="mt-ph2">${esc(p.name)}</h2>
+          <div><h1 id="p-h1" tabindex="-1" class="mt-ph2"><span class="visually-hidden">How to meet: </span>${esc(p.name)}</h1>
           <p class="mt-pstate">${esc(p.statement)}</p>
           <p class="mt-pcount">${pscs.length} criteria: ${["A","AA","AAA"].map(l => `<span class="badge lvl-${l}">${pc[l]} at ${l}</span>`).join(" ")} ${extLink(SPEC + "#" + p.slug, "Principle " + p.num + " in WCAG 2.2")}</p></div>
         </div>
         <div class="audit mt-layout">
-          <nav class="a-toc mt-toc" aria-labelledby="mttoc-${p.num}"><h3 id="mttoc-${p.num}">In ${esc(p.name)}</h3><ol>${toc}</ol></nav>
+          <nav class="a-toc mt-toc" aria-labelledby="mttoc-${p.num}"><h2 id="mttoc-${p.num}" class="wc-toc-h">In ${esc(p.name)}</h2><ol>${toc}</ol></nav>
           <div class="a-body mt-main">${main}<p class="empty mt-pempty" hidden>No criteria in ${esc(p.name)} match these filters. Try another tab, add a level back, or reset the filters.</p></div>
         </div>
       </div>`;
     });
-    const tabs = `<div class="tablist mt-tabs" role="tablist" aria-label="WCAG principles">${PRINCIPLES.map(p => `<button type="button" role="tab" class="tab" id="mttab-${p.num}" aria-controls="mtpanel-${p.num}" aria-selected="${p.num === "1"}" tabindex="${p.num === "1" ? 0 : -1}" data-mtab="${p.num}"><span class="t-id">${p.num}</span><span class="t-name">${esc(p.name)}</span><span class="t-count" data-mcount="${p.num}"></span></button>`).join("")}</div>`;
 
     app.innerHTML = `<div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">How to meet</span></li></ol></nav>
-      <header class="p-hero" style="grid-template-columns:1fr">
-        <h1 id="p-h1" tabindex="-1">How to meet WCAG 2.2</h1>
-        <p class="p-statement">Every success criterion with what it requires, the ways W3C recognises to meet it, the advisory techniques and the known failures, all explained in plain language with examples. Based on the W3C Quick Reference.</p>
-        <div class="p-meta">${extLink("https://www.w3.org/WAI/WCAG22/quickref/", "W3C Quick Reference")} ${extLink("https://www.w3.org/WAI/WCAG22/Understanding/understanding-techniques", "Understanding techniques")}</div>
-      </header>
-
-      <div class="apg-intro mt-intro">
-        <div class="callout"><h2 class="ci-h">${I.bulb}How to read each entry</h2>
-          <dl class="mt-key">
-            <dt>${I.gate} What it requires</dt><dd>The criterion in plain words, with every condition, exception and official note.</dd>
-            <dt>${I.ok} Sufficient techniques</dt><dd>Recognised ways to meet it. One that fits your situation is enough; other ways can also work.</dd>
-            <dt>Situations</dt><dd>Some criteria depend on what your content is. Pick the matching situation, then use its techniques.</dd>
-            <dt>${I.star} Advisory techniques</dt><dd>Extra good practice that doesn't meet the criterion by itself.</dd>
-            <dt>${I.x} Failures</dt><dd>Known mistakes. If one happens, the criterion fails.</dd>
-          </dl></div>
-        <div class="g-aside"><h2 class="ci-h" style="font-size:1rem">Technique codes</h2>
-          <ul class="mt-codes"><li><b>G</b> General</li><li><b>H</b> HTML</li><li><b>C</b> CSS</li><li><b>ARIA</b> WAI-ARIA</li><li><b>SCR</b> Client script</li><li><b>SVR</b> Server script</li><li><b>SM</b> SMIL media</li><li><b>PDF</b> PDF</li><li><b>T</b> Plain text</li><li><b>F</b> Failure</li></ul>
-          <p style="margin:.6rem 0 0;font-size:.93rem;color:var(--muted)">Each code links to the full W3C technique.</p></div>
-      </div>
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/meet">How to meet</a></li><li><span aria-current="page">${onlyP.num}. ${esc(onlyP.name)}</span></li></ol></nav>
+      <nav class="subnav" aria-label="Principles"><ul>${PRINCIPLES.map(x => `<li><a href="#/meet/${x.id}"${x.id === onlyP.id ? ' aria-current="page"' : ""}>${x.num}. ${esc(x.name)}</a></li>`).join("")}</ul></nav>
+      <p class="mt-back"><a href="#/meet">How to read these entries</a></p>
 
       <div class="mt-filterbar">
         <button type="button" class="linkbtn mt-ftoggle" id="mf-toggle" aria-expanded="false" aria-controls="mf-panel">${I.wrench}<span id="mf-toggle-l">Filters</span></button>
         <p class="status" id="mf-status" role="status" style="margin:0"></p>
         <span class="spacer"></span>
-        <button type="button" class="linkbtn" id="mf-expand">Expand all in this tab</button>
+        <button type="button" class="linkbtn" id="mf-expand">Expand all</button>
       </div>
       <div class="mt-filters" id="mf-panel" role="search" aria-label="Filter criteria" hidden>
         <div class="grp" role="group" aria-labelledby="mf-role"><span class="grp-label" id="mf-role">Role</span>${MEET_ROLES.map(r => chip("role", r[0], r[1], false)).join("")}</div>
@@ -6567,9 +6620,10 @@ a{color:#1D5C8F}
         <div class="grp"><p class="mt-role-note">Role filters show criteria W3C tags as mainly relevant to that role; most involve several roles. With no role selected, all are shown.</p><span class="spacer"></span><button type="button" class="linkbtn" id="mf-reset">Reset filters</button></div>
       </div>
 
-      <div class="mt-results">${tabs}${body}</div>
+      <div class="mt-results">${body}</div>
     </div>`;
 
+    { const ph = app.querySelector(".mt-phead"); ph.after(app.querySelector(".mt-filterbar"), app.querySelector(".mt-filters")); }
     const activeFilters = () => meetState.roles.size + (3 - meetState.levels.size) + (3 - meetState.types.size) + (MEET_TECHS.length - meetState.techs.size) + (meetState.topic ? 1 : 0) + (meetState.q ? 1 : 0);
     const ft = document.getElementById("mf-toggle"), fp = document.getElementById("mf-panel");
     ft.addEventListener("click", () => { const open = ft.getAttribute("aria-expanded") !== "true"; ft.setAttribute("aria-expanded", String(open)); fp.hidden = !open; });
@@ -6597,21 +6651,9 @@ a{color:#1D5C8F}
         const c = app.querySelector(`[data-mcount="${p.dataset.p}"]`);
         if (c) c.textContent = n === total ? `${total} criteria` : `${n} of ${total} criteria`;
       });
-      document.getElementById("mf-status").textContent = `Showing ${shown} of ${MEET_SC.length} criteria across all four principles`;
+      document.getElementById("mf-status").textContent = `Showing ${shown} of ${app.querySelectorAll(".mt-sc").length} criteria in ${onlyP.name}`;
     };
     const setOpen = (a, open) => { const b = a.querySelector(".mt-toggle"); b.setAttribute("aria-expanded", String(open)); a.querySelector(".mt-body").hidden = !open; a.classList.toggle("is-open", open); };
-    const mtabs = [...app.querySelectorAll("[data-mtab]")];
-    const selectMTab = (num, focus) => {
-      mtabs.forEach(t => { const on = t.dataset.mtab === num; t.setAttribute("aria-selected", String(on)); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute("aria-controls")).hidden = !on; if (on && focus) t.focus(); });
-      meetState.tab = num;
-    };
-    app.querySelector(".mt-tabs").addEventListener("click", e => { const t = e.target.closest("[data-mtab]"); if (t){ selectMTab(t.dataset.mtab); history.replaceState(null, "", "#/meet"); } });
-    app.querySelector(".mt-tabs").addEventListener("keydown", e => {
-      const i = mtabs.indexOf(document.activeElement); let n = null;
-      if (e.key === "ArrowRight") n = (i + 1) % mtabs.length; else if (e.key === "ArrowLeft") n = (i - 1 + mtabs.length) % mtabs.length; else if (e.key === "Home") n = 0; else if (e.key === "End") n = mtabs.length - 1;
-      if (n !== null){ e.preventDefault(); selectMTab(mtabs[n].dataset.mtab, true); }
-    });
-    selectMTab(meetState.tab || "1");
     app.querySelector(".mt-results").addEventListener("click", e => {
       const b = e.target.closest(".mt-toggle"); if (!b) return;
       const a = b.closest(".mt-sc"), open = b.getAttribute("aria-expanded") !== "true";
@@ -6631,7 +6673,7 @@ a{color:#1D5C8F}
       const vis = [...app.querySelectorAll(".mt-principle:not([hidden]) .mt-sc:not([hidden])")];
       const anyClosed = vis.some(a => a.querySelector(".mt-toggle").getAttribute("aria-expanded") !== "true");
       vis.forEach(a => setOpen(a, anyClosed));
-      e.target.textContent = anyClosed ? "Collapse all in this tab" : "Expand all in this tab";
+      e.target.textContent = anyClosed ? "Collapse all" : "Expand all";
     });
     document.getElementById("mf-reset").addEventListener("click", () => {
       meetState.roles.clear(); meetState.levels = new Set(["A","AA","AAA"]); meetState.types = new Set(["suf","adv","fail"]); meetState.techs = new Set(MEET_TECHS.map(t => t[0])); meetState.topic = ""; meetState.q = "";
@@ -6643,7 +6685,7 @@ a{color:#1D5C8F}
     app.querySelectorAll("[data-mf]").forEach(c => { const set = {role:meetState.roles, lvl:meetState.levels, type:meetState.types, tech:meetState.techs}[c.dataset.mf]; c.setAttribute("aria-pressed", String(set.has(c.dataset.v))); });
     document.getElementById("mf-topic").value = meetState.topic; document.getElementById("mf-q").value = meetState.q;
     apply();
-    return { open: id => { const a = document.getElementById("mt-" + idf(id)); if (!a) return null; selectMTab(id.split(".")[0]); if (a.hidden){ meetState.levels = new Set(["A","AA","AAA"]); meetState.roles.clear(); meetState.topic = ""; meetState.q = ""; document.getElementById("mf-reset").click(); } setOpen(a, true); return a; } };
+    return { open: id => { const a = document.getElementById("mt-" + idf(id)); if (!a) return null; if (a.hidden){ meetState.levels = new Set(["A","AA","AAA"]); meetState.roles.clear(); meetState.topic = ""; meetState.q = ""; document.getElementById("mf-reset").click(); } setOpen(a, true); return a; } };
   }
 
   /* ---------- audit guide ---------- */
@@ -7096,11 +7138,16 @@ Severity: High`)}</code></pre></div>
       first = false; return;
     }
     if (parts[0] === "meet"){
-      if (app.dataset.view !== "meet"){ app.dataset.view = "meet"; renderNav("meet"); window.__meet = renderMeet(); window.scrollTo(0, 0); }
-      document.title = "How to meet WCAG 2.2 | a11ywallet";
-      const target = parts[1] && window.__meet && window.__meet.open(parts[1]);
+      const sub = parts[1] || "";
+      const isSC = /^\d\.\d+\.\d+$/.test(sub);
+      const mp = isSC ? PRINCIPLES[+sub[0] - 1] : PRINCIPLES.find(x => x.id === sub);
+      const view = mp ? "meet:" + mp.id : "meet";
+      const same = app.dataset.view === view;
+      if (!same){ app.dataset.view = view; renderNav("meet"); if (mp) window.__meet = renderMeet(mp); else { window.__meet = null; renderMeetHome(); } window.scrollTo(0, 0); }
+      document.title = (mp ? mp.name + " | How to meet" : "How to meet WCAG 2.2") + " | a11ywallet";
+      const target = isSC && window.__meet && window.__meet.open(sub);
       if (target){ requestAnimationFrame(() => { target.scrollIntoView({block:"start"}); if (!first) target.querySelector(".mt-toggle").focus({preventScroll:true}); }); }
-      else if (!first) document.getElementById("p-h1").focus();
+      else if (!first && !same) (document.getElementById("p-h1") || document.getElementById("home-h1")).focus();
       first = false; return;
     }
     if (parts[0] === "wcag"){
