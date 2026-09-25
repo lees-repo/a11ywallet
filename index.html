@@ -718,6 +718,27 @@ ul.rg:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 .mh-count{font-size:.8rem;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:0 .45rem;margin-left:.3rem}
 .toolgrid code{font-weight:800}
 .mt-principle .mt-phead{margin-top:1.5rem}
+.wallet-7{height:33rem}
+.wallet-7 .card{height:11rem}
+.wallet-7 li:nth-child(1) .card{--r:-.9deg;--y:-17.4rem;background:#E8C35A;z-index:1}
+.wallet-7 li:nth-child(2) .card{--r:.7deg;--y:-14.5rem;background:#9EC4B3;z-index:2}
+.wallet-7 li:nth-child(3) .card{--r:-.6deg;--y:-11.6rem;background:#E0B3AC;z-index:3}
+.wallet-7 li:nth-child(4) .card{--r:.8deg;--y:-8.7rem;background:#B3C0DE;z-index:4}
+.wallet-7 li:nth-child(5) .card{--r:-.7deg;--y:-5.8rem;background:#D2BFE6;z-index:5}
+.wallet-7 li:nth-child(6) .card{--r:.6deg;--y:-2.9rem;background:#F0C796;z-index:6}
+.wallet-7 li:nth-child(7) .card{--r:-.4deg;--y:0rem;background:#A9D3E5;z-index:7}
+@media (max-width:700px){.wallet-7{height:31rem}}
+.az{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));gap:.5rem 1.25rem}
+.az li{display:flex;flex-wrap:wrap;align-items:baseline;gap:.2rem .6rem;padding:.45rem .6rem;border-bottom:1px solid var(--line)}
+.az a{font-weight:700}
+.az-cat{font-size:.82rem;color:var(--muted);margin-left:auto}
+.pr-grid .pc-h{font-size:1.1rem}
+.pat-hero{padding:1rem 0 1.75rem}
+.pat-hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.02em;max-width:22ch}
+.pr-table td,.pr-table th{vertical-align:top}
+.warn-line{border-left:4px solid var(--brass);padding:.5rem .8rem;background:var(--surface-2);border-radius:0 8px 8px 0}
+.chips-line{font-family:var(--mono);font-size:.9rem;background:var(--surface-2);padding:.6rem .8rem;border-radius:8px}
+.pr-pager{display:flex;justify-content:space-between;gap:1rem;margin-top:2.5rem;padding-top:1rem;border-top:1px solid var(--line);font-weight:700}
 /* coming soon principle */
 .soon-list{list-style:none;padding:0;margin:1rem 0 0;display:grid;gap:.75rem}
 .soon-list li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:1rem 1.2rem;display:flex;gap:1rem;align-items:baseline;flex-wrap:wrap}
@@ -5271,6 +5292,264 @@ const APG_CHOOSER = [
   ["Show a short hint on hover or focus","tooltip"],
   ["Let users resize two panes","windowsplitter"]
 ];
+/* =========================================================
+   APG Practices: plain-language study notes on the seven
+   W3C practice guides (https://www.w3.org/WAI/ARIA/apg/practices/)
+   ========================================================= */
+const PRAC_BASE = "https://www.w3.org/WAI/ARIA/apg/practices/";
+const PT = (caption, head, rows) => ({caption, head, rows});
+const PRACTICES = {
+
+/* ================================================== landmark regions */
+"landmark-regions":{
+  name:"Landmark Regions", short:"Landmarks",
+  summary:"How HTML sectioning elements and ARIA landmark roles turn a page's visual layout into structure that assistive technology users can see and jump through.",
+  intro:"Sighted users understand a page's layout at a glance: the header, the menu, the main content, a sidebar, the footer. Landmark roles give that same map to assistive technology. Screen readers use landmarks for keyboard navigation between sections, skip links can target them, and browser extensions use them to move around faster.",
+  sections:[
+    {id:"html", title:"HTML elements that create landmarks", table:PT("HTML elements and the landmark each creates",["HTML element","Landmark role","Condition"],[
+      ["<header>","banner","Only when it belongs to the page (not inside article, aside, main, nav or section)"],
+      ["<footer>","contentinfo","Only when it belongs to the page (same nesting rule as header)"],
+      ["<main>","main","Always"],
+      ["<nav>","navigation","Always"],
+      ["<aside>","complementary","Always"],
+      ["<section>","region","Only when it has an accessible name (aria-labelledby, aria-label or title)"],
+      ["<form>","form","Only when it has an accessible name"],
+      ["<search>","search","Always"]])},
+    {id:"design", title:"Designing landmarks in three steps", html:`<ol class="steps">
+      <li><span><b>Identify the structure.</b> Break the page into the areas designers show with alignment and spacing, and split those into sub-areas if needed (for example, a portlet in a portal).</span></li>
+      <li><span><b>Assign a role to each area</b> based on its content. banner, main, complementary and contentinfo should be top-level landmarks. Other landmarks can be nested to show parent and child relationships. Don't wrap a modal dialog's content in a landmark: it's only perceivable while open, and the dialog already has a name and boundaries.</span></li>
+      <li><span><b>Label the areas.</b> Give each repeated landmark type a unique label. A landmark used only once may not need one. If the area starts with a heading, point aria-labelledby at it; otherwise use aria-label. Never put the role in the label: a nav labelled “Site navigation” is read as “Site navigation navigation”, so label it just “Site”.</span></li></ol>
+      <p>The one time identical labels help: when two landmarks have the same content and purpose, such as matching pagination above and below search results, both labelled “Search results”.</p>
+      <p><b>Goal:</b> every piece of perceivable content sits inside a landmark with a meaningful role, so nothing is overlooked.</p>`},
+    {id:"roles", title:"Each landmark role", table:PT("Landmark roles: purpose, rules and how to create them",["Role","What it's for","Rules","Create it with"],[
+      ["banner","Site-wide content at the top: logo, site name, site search","One per page; top level; if more than one (for example in iframes), label each","<header> in the body, else role=\"banner\""],
+      ["navigation","Groups of links for navigating the site or page","Label each if there's more than one; identical link sets share a label","<nav>, else role=\"navigation\""],
+      ["main","The page's primary content","One per page; top level; label each if there's more than one","<main>, else role=\"main\""],
+      ["complementary","Supporting content that still makes sense on its own","Top level; if it's unrelated to the main content, use region instead; label each if more than one","<aside>, else role=\"complementary\""],
+      ["contentinfo","Page-end information: copyright, privacy and accessibility links","One per page; top level; label each if more than one","<footer> in the body, else role=\"contentinfo\""],
+      ["form","A collection of controls that together form a form, when no other landmark fits","Needs a visible label (ideally a heading); use search for search forms; label each if more than one; use native controls inside","<form> with a name, or role=\"form\" on the region (never on individual fields)"],
+      ["search","Search functionality for the site or page","Use instead of form for search; label each if more than one","<search>, else role=\"search\""],
+      ["region","A section important enough that users will want to jump to it, when no named landmark fits","Must have a label; label each uniquely","<section> with a name, else role=\"region\""]])},
+    {id:"nested-docs", title:"Frames and nested documents", html:"<p>A page that contains nested document or application roles (usually through iframes) can have one banner, one main and one contentinfo landmark in each of those documents. When a page ends up with more than one of any of these, give each a unique label.</p>"}
+  ],
+  mistakes:[["Role in the label","“Main navigation” is announced as “Main navigation navigation”."],["No main landmark","Users can't jump straight to the content."],["Several navs with no labels","The landmarks list shows identical, useless entries."],["Content outside every landmark","Landmark navigation can't reach it."],["Unlabelled <section> or <form> expected to be a landmark","Without a name, no landmark is created."],["Landmark around modal dialog content","Adds nothing; the dialog is its own labelled container."]],
+  wcag:[["1.3.1","Page regions are programmatically determinable."],["2.4.1","Landmarks are a way to bypass repeated blocks."],["4.1.2","Landmarks have the right roles and names."]],
+  related:[["landmarks","Landmarks pattern (with live demo)"]]
+},
+
+/* ================================================== names and descriptions */
+"names-and-descriptions":{
+  name:"Providing Accessible Names and Descriptions", short:"Names and descriptions",
+  summary:"What accessible names and descriptions are, which elements need them, every technique for providing them, and how browsers calculate them.",
+  intro:"Giving elements good names, and descriptions where they help, is one of the most important jobs in accessible development. It's usually simple, but mistakes that completely block assistive technology users are easy to make and common. This guide covers what names and descriptions are, when you need them, how browsers work them out, and how to write names people can actually use.",
+  sections:[
+    {id:"what", title:"What names and descriptions are", html:`<p>An <b>accessible name</b> is a short label, usually one to three words, such as “User ID” for a field or “Submit” for a button. It does two jobs: it says what the element is for, and it tells it apart from other elements on the page.</p>
+      <p>ARIA and WCAG require a name on <b>every focusable, interactive element</b>. Dialogs and some containers, such as tables and regions, also need one. Many other elements can be named, but whether that helps depends on context, and for some it's possible but a bad idea (see the role table below).</p>
+      <p>An <b>accessible description</b> is extra information linked to an element, such as instructions or a required format. Screen readers present it differently: they usually announce the name and role first, then the state, then the description. For example, a switch named “Mute conversation” that's off might be read as “Mute conversation, switch, off”, with any description after that.</p>`},
+    {id:"rules", title:"Five cardinal rules", html:`<ol class="steps">
+      <li><span><b>Heed the warnings and test.</b> Some coding patterns are prohibited or not fully specified. They may seem to work in one browser but won't be consistent, especially as browsers improve. Always check the name that's actually calculated.</span></li>
+      <li><span><b>Prefer visible text.</b> Using text that's already on screen makes maintenance and translation easier and avoids names that go stale when the design changes. If a control has no visible label, consider adding one: it helps many people who don't use assistive technology too.</span></li>
+      <li><span><b>Prefer native techniques.</b> In HTML, use &lt;label&gt; for form controls and &lt;caption&gt; for tables where you can. They're simpler and more robust than ARIA.</span></li>
+      <li><span><b>Avoid browser fallback.</b> If you don't provide a name, browsers try title or placeholder. Those attributes weren't designed for naming, so the result is usually poor.</span></li>
+      <li><span><b>Write brief, useful names.</b> Long, vague or duplicated names make an interface hard or impossible to use by ear.</span></li></ol>`},
+    {id:"content", title:"Naming with child content", html:`<p>Some roles take their name from the text inside them. <code>&lt;a href="/"&gt;Home&lt;/a&gt;</code> is named “Home”. For these elements the name is the only thing users perceive, unlike a text field or table, where the name is a label shown in addition to the content.</p>
+      <p><b>Roles named from their content:</b> button, cell, checkbox, columnheader, gridcell, heading, link, menuitem, menuitemcheckbox, menuitemradio, option, radio, row, rowheader, switch, tab, tooltip, treeitem.</p>
+      <p>The browser walks through all the descendants and joins their text. Two exceptions: a treeitem ignores its child group, and a menuitem ignores its child menu. So in a tree where “Fruits” contains “Apples, Bananas, Oranges”, the first item is named just “Fruits”.</p>
+      <p class="warn-line"><b>Warning:</b> putting aria-label or aria-labelledby on one of these roles hides its content from assistive technology (unless aria-labelledby references that content). Only do this in the rare case where hiding the content is actually helpful.</p>`},
+    {id:"aria-label", title:"Naming with aria-label", html:`<p>aria-label names an element with a string that isn't shown on screen, for example <code>&lt;button aria-label="Close"&gt;X&lt;/button&gt;</code>. Use it when there's no visible text that would work as the name.</p>
+      <p>Its effect depends on the role. On roles named from content, it <b>replaces</b> the content. On most other elements, screen readers announce both: <code>&lt;nav aria-label="Product"&gt;</code> is read as “Product navigation”, and users can then read the links inside.</p>
+      <ul><li>Don't use it to override content on roles named from content, except in rare cases.</li><li>Don't use it on elements that shouldn't be named, such as paragraphs and list items.</li><li>Test with assistive technology, because you can't see the result.</li><li>Translate aria-label values along with the rest of the interface.</li></ul>`},
+    {id:"labelledby", title:"Naming with aria-labelledby", html:`<p>aria-labelledby builds a name from other elements on the page, referenced by id: <code>&lt;span id="nm"&gt;Night mode&lt;/span&gt; &lt;span role="switch" aria-labelledby="nm" …&gt;</code>.</p>
+      <p>Unlike &lt;label for&gt;, clicking the referenced text doesn't activate the control; you'd have to script that. Where possible, a native checkbox with role="switch" and a real &lt;label&gt; is more robust.</p>
+      <p><b>Why it's so useful:</b></p>
+      <ul><li>It has the <b>highest precedence</b>: it overrides content, aria-label and every other naming source.</li><li>It can <b>join several elements</b> into one name, in the order listed, separated by single spaces. A button referencing itself and a span gives “Download PDF, 2.4 MB”.</li><li>It includes <b>hidden content</b> (the hidden attribute, display: none, visibility: hidden).</li><li>It includes the <b>value of inputs</b> it references.</li><li>It can reference the element itself plus a heading, so “Read more…” becomes “Read more… 7 ways you can help save the bees”.</li></ul>
+      <p><b>Warnings:</b> references don't chain (aria-labelledby on a referenced element is ignored); an element referenced twice is only used once; don't use it on paragraphs or list items; on roles named from content it hides any content it doesn't reference; test the result.</p>`},
+    {id:"native", title:"Native naming: label, legend and captions", html:`<p><b>&lt;label&gt; for form controls.</b> The most widely supported way is <b>explicit</b>: <code>&lt;label for="id"&gt;</code>. Wrapping the control inside the label (<b>implicit</b>) works too, but some browser and screen reader combinations don't pick it up. Native labels have a bonus: clicking the label activates the control, making the target bigger.</p>
+      <p><b>&lt;legend&gt; for fieldsets.</b> Grouping radio buttons in a fieldset with a legend ties the question to its answers (“Select your starter class”). Without it, screen reader users can reach the options without knowing the question. It works for other groups too, like separate Shipping address and Billing address fieldsets.</p>
+      <p><b>&lt;caption&gt; for tables and &lt;figcaption&gt; for figures.</b> A table's caption becomes its name unless aria-label or aria-labelledby is used, in which case the caption becomes its description. A figure's figcaption becomes its name the same way, but if it isn't used as the name it does <b>not</b> automatically become the description; reference it with aria-describedby if you want that. Screen readers read figcaption content either way.</p>`},
+    {id:"fallback", title:"Fallback names from title and placeholder", html:`<p>If nothing else names an element, browsers fall back to the <b>title</b> attribute (on any element) and, for inputs and textareas, the <b>placeholder</b>. These make poor names: title only appears as a hover tooltip, which keyboard and touch users can't reach, and placeholder text disappears when you start typing. Use a proper label instead.</p>`},
+    {id:"composing", title:"Writing names people can use", html:`<ul>
+      <li><b>Describe the function, not the form.</b> An “X” that closes a dialog is named “Close”; a sidebar nav of product pages is “Product”, not “Left”.</li>
+      <li><b>Put the most distinctive word first</b>, often a verb: “Edit John Doe”, “Delete John Doe”, “Actions for John Doe”, rather than “John Doe edit”.</li>
+      <li><b>Be concise.</b> One to three words is often enough.</li>
+      <li><b>Don't include the role.</b> No “button” in a button's name, “image” in an image's, or “navigation” in a nav's; the screen reader already says it.</li>
+      <li><b>Make names unique</b> for elements with the same role, unless they really are identical (links to the same place, identical navs).</li>
+      <li><b>Start with a capital letter and don't end with a full stop</b>; capitals help some screen readers' inflection, and names aren't sentences.</li></ul>`},
+    {id:"by-role", title:"Naming guidance by role", html:`<p>W3C groups every ARIA role by how much it needs a name. Use this as a quick check when you audit.</p>`,
+      table:PT("Accessible name guidance by role",["Naming","Roles","What to do"],[
+        ["Required","alertdialog, application, combobox, dialog, grid, img, listbox, meter, progressbar, radiogroup, region, searchbox, slider, spinbutton, table, tabpanel, textbox, tree, treegrid","Always name them. Use the native way where there is one (label for inputs, select and meter; caption for tables and grids built on <table>; alt for img). Otherwise aria-labelledby if there's a visible label, or aria-label if not. A tabpanel is named by pointing aria-labelledby at its tab."],
+        ["Required only if content isn't enough","button, cell, checkbox, columnheader, gridcell, heading, link, menuitem, menuitemcheckbox, menuitemradio, option, radio, rowheader, switch, tab, tooltip, treeitem","Named from their visible content. Adding aria-label or aria-labelledby hides that content, so avoid it. For native checkboxes, radios and switches, use a <label>. Empty cells don't need names. A th's abbr attribute can give a short form of a header."],
+        ["Required only if content isn't enough, for focusable rows in a treegrid","row","Screen readers read the whole row when navigating by row, which is usually right. Occasionally a name that reorders the cells helps."],
+        ["Recommended","article, complementary, definition, feed, figure, form, math, menu, menubar, navigation, search, tablist, toolbar","Name them to tell them apart and explain their purpose. A definition is named by the term it defines (aria-labelledby to role=\"term\"). A menu is named by the button or item that opens it. A figure is named by its figcaption. Naming is required when there's more than one toolbar, complementary region and so on."],
+        ["Discretionary","alert, banner, blockquote, contentinfo, directory, document, group, list, log, main, marquee, note, scrollbar, separator, status, timer","Optional; depends on context. Needed when there are two banners or two footers. A name on alert, log, status or timer is read before its content, like a prefix. Naming a list can add noise, especially inside an already-named container. Don't name the group created by <details>; name the <summary>."],
+        ["Do not name","listitem, rowgroup, term, time","Assistive technology doesn't support names here (or, for term, it would be confusing). Put the needed text in the content."],
+        ["Prohibited","caption, code, deletion, emphasis, generic, insertion, mark, none, paragraph, presentation, strong, subscript, superscript","Never add aria-label or aria-labelledby. For none and presentation, the element isn't in the accessibility tree at all."]])},
+    {id:"name-calc", title:"How browsers calculate a name", html:`<p>Browsers try each source in order and use the first one that produces a name:</p>
+      <ol class="steps"><li><span><b>aria-labelledby</b></span></li><li><span><b>aria-label</b></span></li><li><span><b>Native HTML naming</b>: value on button-type inputs; alt on img, area and image inputs; legend for fieldset; associated label for form controls; figcaption for figure; caption for table.</span></li><li><span><b>Content</b>, for roles named from content.</span></li><li><span><b>Fallbacks</b>: title (then placeholder for text inputs and textareas); a localised “Submit” or “Reset” for those input types; title for image buttons.</span></li></ol>
+      <p><b>A worked example</b> with one input, adding one thing at a time:</p>
+      <ul><li><code>&lt;input name="code"&gt;</code>: no name at all (don't do this).</li><li>Add <code>placeholder="One-time code"</code>: the placeholder becomes a weak fallback name.</li><li>Add <code>title="One-time code"</code>: title wins over placeholder, but it's still a fallback.</li><li>Wrap it in <code>&lt;label&gt;One-time code …&lt;/label&gt;</code> (recommended): the label is the name, and title becomes the description.</li><li>Add <code>aria-label</code>: it overrides the label (only worth it if it adds clarity).</li><li>Add <code>aria-labelledby</code>: it overrides everything, including aria-label (so remove the aria-label).</li></ul>
+      <p><b>The calculation is recursive.</b> <code>&lt;button&gt;Move to &lt;img alt="trash"&gt;&lt;/button&gt;</code> is named “Move to trash”, because the browser works out each child's name and joins them. When following aria-labelledby, a reference is never followed twice, which avoids loops: a delete button inside a meeting row can reference the row, use its own aria-label (“Remove meeting:”) on the second visit, and end up named “Remove meeting: Daily status report”.</p>`},
+    {id:"describing", title:"Describing techniques", html:`<p><b>aria-describedby</b> works like aria-labelledby, but for descriptions: <code>&lt;button aria-describedby="trash-desc"&gt;Move to trash&lt;/button&gt; … &lt;p id="trash-desc"&gt;Items in the trash are removed after 30 days.&lt;/p&gt;</code>.</p>
+      <ul><li>Descriptions are flattened to plain text; images inside contribute their alt text.</li><li>It can reference hidden content, for example help text that a “?” disclosure button can also reveal on request.</li></ul>
+      <p><b>Captions as descriptions.</b> If a table is named with aria-label or aria-labelledby (say, by a preceding heading), its caption becomes the description. A figure's figcaption is never automatically the description; add aria-describedby if you want it to be.</p>
+      <p><b>title as description.</b> If there's no aria-describedby or native description, title is used. A visible description with aria-describedby is better, because title isn't available to sighted keyboard and touch users. A good use: a pattern-restricted input whose title explains the format (“A digit followed by three capital letters”), which browsers also show in validation messages.</p>
+      <p><b>Description calculation</b> follows the same algorithm as names, but uses aria-describedby first, then native sources that weren't already used for the name (button-type input values, a summary's content, a table's caption), then title.</p>`}
+  ],
+  mistakes:[["aria-label on a link or button that has visible text","Hides the visible text; voice users can't match it (also 2.5.3)."],["Relying on placeholder or title","Weak fallback names that disappear or can't be reached."],["Role word in the name","“Submit button, button”."],["Names that don't distinguish","Ten links all named “Edit”."],["aria-labelledby pointing at a missing or duplicate id","The name silently breaks."],["Naming prohibited roles","aria-label on a paragraph, list item or generic div has no reliable effect."]],
+  wcag:[["4.1.2","Every control has a name."],["1.1.1","Images and icons have text alternatives."],["2.5.3","Visible label text is included in the name."],["1.3.1","Labels and groups are associated in code."],["2.4.6","Labels describe their purpose."]],
+  related:[["button","Button"],["link","Link"],["dialog-modal","Dialog (Modal)"]]
+},
+
+/* ================================================== keyboard interface */
+"keyboard-interface":{
+  name:"Developing a Keyboard Interface", short:"Keyboard interface",
+  summary:"Focus conventions, the tab sequence, roving tabindex and aria-activedescendant, focus versus selection, disabled controls, and designing keyboard shortcuts.",
+  intro:"Browsers give native form controls keyboard support for free, but not widgets you build with ARIA. That keyboard support is your job. This guide covers how focus should move between and within components, how to keep focus visible and predictable, and how to add keyboard shortcuts without clashing with the operating system, browser or assistive technology.",
+  sections:[
+    {id:"conventions", title:"The fundamental convention", html:`<p>ARIA patterns borrow keyboard conventions from desktop platforms (Windows, macOS, GNOME), so users can apply what they already know. A screen reader user in a tree expects Right Arrow to expand a node, just like in a desktop app.</p>
+      <p><b>The core rule: Tab and Shift+Tab move between components; other keys, mainly the arrows, move within a component.</b> The path Tab follows is the tab sequence. A radio group, for example, is one stop: Tab lands on a radio, arrows move between radios, and Tab leaves the group.</p>
+      <p>A component with several focusable parts is a <b>composite widget</b>, and controlling focus inside it is <b>managing focus</b>. APG patterns that do this: combobox, grid, listbox, menu and menubar, radio group, tabs, toolbar, treegrid and tree view.</p>`},
+    {id:"predictable", title:"Visible and predictable focus", html:`<ul>
+      <li><b>Visible focus.</b> Users must be able to spot the focus indicator easily. Keyboard users press a key and watch for movement; subtle changes get lost. Prefer the browser's default indicator. Colours and gradients can vanish in high-contrast modes. Focus and selection must look different.</li>
+      <li><b>Focus must never disappear.</b> There should always be an active element (not null or the body) with a visible indicator. When a dialog closes or an item is deleted, move focus deliberately (back to the trigger, or to the next item), or browsers drop it on the body and users lose their place.</li>
+      <li><b>Predictable movement.</b> Follow the reading order of the language (left to right, then down, for English). Cover a whole section before moving to the next. Avoid big jumps that feel backwards. Keep patterns consistent across the site.</li>
+      <li><b>Don't set focus on page load</b>, unless the page has one main function nearly everyone uses straight away and people use the page often.</li></ul>`},
+    {id:"focus-selection", title:"Focus versus selection", html:`<p>Sometimes it looks as if two things have focus: a selected option in a listbox while focus is on another option, or a selected tab while focus has moved on. They're different things. <b>Focus is like a mouse pointer</b>: there's exactly one, and all actions happen there. <b>Selection is a state</b> some widgets support, and there can be several selected items.</p>
+      <p>For developers: the focused element is <code>document.activeElement</code>; selected elements have <code>aria-selected="true"</code>. The focus indicator must always be visible, and selection must look different from focus.</p>
+      <p><b>Should selection follow focus?</b> In single-select widgets (tabs, single-select listbox) it often helps: three presses of Right Arrow shows the fourth tab. But if showing a panel triggers a network request or page reload, it's devastating: every arrow press means waiting, and a reload means finding the tab list again. In that case, don't let selection follow focus; let users choose with Enter or Space.</p>`},
+    {id:"tabindex", title:"The tab sequence and tabindex", html:`<p>Every interactive component must be reachable: either in the tab sequence itself, or reachable from a composite that is. By default only links and form controls are in the tab sequence (on macOS, only form controls unless the user changes a keyboard setting). The order is DOM order, which is also screen reader reading order, so keep them aligned. To change the order, move elements in the DOM, not tabindex.</p>`,
+      table:PT("What each tabindex value does",["tabindex","Effect"],[["Not set, or invalid","Default behaviour: only form controls and links with href are in the tab sequence"],["0","In the tab sequence, at its DOM position"],["-1","Not in the tab sequence, but focusable with element.focus()"],["1 or more","Strongly discouraged. Jumps ahead of everything else in numeric order; elements with 0 and native ones come after"]])},
+    {id:"inside", title:"Moving focus inside components", html:`<p>Only one element of a composite should be in the tab sequence. You choose the keys inside, but use the same ones as similar desktop components (as the APG patterns do). Where focus lands when the user tabs in depends on the widget:</p>`,
+      table:PT("Where focus lands when tabbing into a composite",["Lands on","Typical widgets"],[["The element focused last time (or the first, the first time)","Grid, treegrid"],["The selected element (or the first if none; for radios, the checked one)","Radio group, tabs, listbox, tree"],["The first element","Menubar, toolbar"]]),
+      after:`<p>There are two ways to manage focus inside, described next.</p>`},
+    {id:"roving", title:"Technique 1: roving tabindex", html:`<p>The element in the tab sequence has <code>tabindex="0"</code>; every other focusable element in the composite has <code>tabindex="-1"</code>.</p>
+      <ol class="steps"><li><span>When the component is created, set tabindex="0" on the element that should be in the tab sequence and -1 on the rest.</span></li><li><span>When an arrow key moves focus: set -1 on the current element, 0 on the new one, then call <code>focus()</code> on the new one.</span></li><li><span>If a specific element should get focus next time the user tabs in, make sure it holds tabindex="0" when the component loses focus.</span></li></ol>
+      <p><b>Advantage:</b> the browser scrolls the newly focused element into view automatically.</p>`},
+    {id:"activedescendant", title:"Technique 2: aria-activedescendant", html:`<p>Only the container is focusable. Its <code>aria-activedescendant</code> holds the id of the “active” child, which assistive technology treats as focused, even though DOM focus stays on the container.</p>
+      <ol class="steps"><li><span>Make the container focusable (in the tab sequence, or part of a roving tabindex) and set aria-activedescendant to the child that should be active.</span></li><li><span>When the container gets focus, draw a visible focus indicator on the active child and <b>scroll it into view yourself</b>.</span></li><li><span>When an arrow key moves: update aria-activedescendant, move the visual indicator and scroll if needed.</span></li><li><span>If a specific child should be active next time, set aria-activedescendant to it when the container loses focus.</span></li></ol>
+      <p><b>The referenced element must be related to the container</b> in one of these ways: it's a DOM descendant of the container; or the container lists it in aria-owns; or the container is a combobox, textbox or searchbox whose aria-controls points at a popup that contains (or owns) it.</p>
+      <p><b>Don't forget pointer users.</b> When someone clicks or taps an item, update tabindex or aria-activedescendant the same way, or mixing mouse and keyboard gets confusing.</p>`},
+    {id:"disabled", title:"Should disabled controls be focusable?", html:`<p>The disabled attribute removes a control from the tab sequence; <code>aria-disabled="true"</code> keeps it focusable while showing it's unavailable. Skipping disabled items saves key presses, but screen reader users mostly discover things by moving focus, so they may never learn a skipped control exists.</p>
+      <ul><li><b>Remove it from focus (disabled)</b> when users can infer it's there from nearby controls: a disabled “Previous” next to a focusable “Next” on page 1; a disabled “Up” when “Down” is available.</li><li><b>Keep it focusable (aria-disabled)</b> when it must stay discoverable: Cut, Copy and Paste in a toolbar before anything is selected; options in a listbox; items in a menu or menubar; tabs; items in a tree.</li></ul>
+      <p>Keyboard shortcuts can soften the cost of extra focus stops.</p>`},
+    {id:"common-keys", title:"Conventional keys for common functions", table:PT("Common function keys by platform",["Function","Windows and Linux","macOS"],[["Open context menu","Shift + F10","Shift + F10"],["Copy","Ctrl + C","Cmd + C"],["Paste","Ctrl + V","Cmd + V"],["Cut","Ctrl + X","Cmd + X"],["Undo","Ctrl + Z","Cmd + Z"],["Redo","Ctrl + Y","Cmd + Shift + Z"]]), after:"<p>Using the macOS keys on Macs is more intuitive and can avoid conflicts.</p>"},
+    {id:"shortcuts", title:"Designing keyboard shortcuts", html:`<p><b>Shortcuts add to navigation; they never replace it.</b> Everything a shortcut reaches must also be reachable with Tab and the arrows. Shortcuts are discovered mainly on the elements themselves; documentation only helps people who know it exists and have time to learn it; and not every keyboard-like device supports shortcuts.</p>
+      <p><b>Choose the behaviour:</b></p>
+      <ul><li><b>Move focus</b> when the goal is faster navigation: to a text box, toolbar, listbox, tree, grid, menubar, or a page section.</li><li><b>Act without moving focus</b> when the action applies where the user already is: for example, a “move option” shortcut while focus stays in the listbox, so screen reader users hear the result and can repeat it.</li><li><b>Move focus and act</b> when the target has one function in its own context: opening a menu or dialog, toggling a checkbox, following a link.</li></ul>
+      <p>Get basic keyboard operation right first; shortcuts can't fix a clumsy layout, and in simple interfaces they may be unnecessary. When choosing keys, use mnemonics (Ctrl+S for Save) or logical patterns, and allow for localisation.</p>`},
+    {id:"conflicts", title:"Avoiding key conflicts", table:PT("Key combinations to avoid",["Clashes with","Avoid"],[["The operating system","Any modifier + Tab, Enter, Space or Escape; the Windows or Command key + another key; Alt + a function key. Also keep zoom and copy/paste working."],["Assistive technology","Caps Lock + anything; Insert + anything; Scroll Lock + anything; on macOS, Control + Option + anything"],["The browser","Shortcuts for the address bar, notification bar, refresh, bookmarks and history, and find"]]),
+      after:`<p><b>A deliberate conflict can be acceptable</b> when all of these are true: the app has a frequent function similar to a browser function; users will often want the app's version; they rarely need the browser's; and there's another efficient way to reach the browser function.</p>
+      <p>W3C marks a few parts of this guide as still being written, so check the live page for updates.</p>`}
+  ],
+  mistakes:[["Every item in a composite is a Tab stop","Use roving tabindex or aria-activedescendant."],["Positive tabindex values","Creates a confusing order; rearrange the DOM instead."],["Focus lost after closing or deleting","Focus falls to the body and users lose their place."],["aria-activedescendant item not scrolled into view","The browser won't do it for you."],["Selection follows focus with slow panels","Every arrow press means a wait or reload."],["Shortcuts that clash with screen readers","Insert or Caps Lock combinations break assistive technology."]],
+  wcag:[["2.1.1","Everything works by keyboard."],["2.1.2","Users can always move focus away."],["2.4.3","Focus order keeps meaning."],["2.4.7","Focus is visible."],["2.1.4","Single-key shortcuts can be turned off or remapped."]],
+  related:[["tabs","Tabs"],["grid","Grid"],["listbox","Listbox"],["toolbar","Toolbar"]]
+},
+
+/* ================================================== grid and table properties */
+"grid-and-table-properties":{
+  name:"Grid and Table Properties", short:"Grid and table properties",
+  summary:"The ARIA properties that describe a table's or grid's real size, which rows and columns are shown, cell spans, and sort order.",
+  intro:"Roles tell assistive technology what's a row, header or cell. But users also need to know how big the table really is, which rows and columns are hidden, whether a cell spans several, and how the data is sorted. Browsers work out the size from the DOM, but that fails when only part of a big data set is rendered, and they can't know about skipped columns or sorting. These properties fill the gap.",
+  sections:[
+    {id:"props", title:"The properties", table:PT("Grid and table properties",["Property","What it says","Goes on"],[
+      ["aria-rowcount","Total number of rows, including header rows (-1 if unknown)","table, grid or treegrid"],
+      ["aria-colcount","Total number of columns (-1 if unknown)","table, grid or treegrid"],
+      ["aria-rowindex","A row's position in the full set (starts at 1)","Rows (or cells)"],
+      ["aria-colindex","A cell's column position in the full set (starts at 1)","Rows (if contiguous) or cells"],
+      ["aria-rowspan","How many rows a cell spans","Cells in non-HTML tables"],
+      ["aria-colspan","How many columns a cell spans","Cells in non-HTML tables"],
+      ["aria-sort","Whether and how a column or row is sorted","Column or row headers"]])},
+    {id:"rows", title:"aria-rowcount and aria-rowindex", html:`<p>Use them when the DOM holds only some of the rows, for example a class list of 463 students with four rows rendered. Put aria-rowcount on the grid or table (use -1 if the total is unknown but more rows exist). Then give <b>every</b> row, including header rows, an aria-rowindex that is:</p>
+      <ul><li>1 or more;</li><li>greater than the previous row's index;</li><li>the index of the first row, for cells spanning several rows;</li><li>no more than the total.</li></ul>
+      <p class="warn-line"><b>Warning:</b> missing or inconsistent values can make screen readers skip rows or stop reading the table altogether. Set it on all rows or none.</p>`,
+      code:String.raw`<table role="grid" aria-rowcount="463" aria-label="Student roster for History 101">
+  <thead><tr aria-rowindex="1"><th>Last name</th><th>First name</th></tr></thead>
+  <tbody>
+    <tr aria-rowindex="8"><td>Chen</td><td>Wei</td></tr>
+    <tr aria-rowindex="9"><td>Das</td><td>Priya</td></tr>
+  </tbody>
+</table>`},
+    {id:"cols", title:"aria-colcount and aria-colindex", html:`<p>Use them when only some columns are in the DOM. Put aria-colcount on the grid or table (-1 if unknown). aria-colindex values must be 1 or more, increase across a row, point at the first column for spanning cells, and not exceed the total. The same warning applies: partial or inconsistent values break table reading.</p>
+      <ul><li><b>Contiguous columns</b> (for example columns 2 to 5 of 16 shown): put aria-colindex once on each <b>row</b>, set to the first visible column; the browser numbers the cells.</li><li><b>Non-contiguous columns</b> (for example a grade book showing columns 1 and 2, then 10 to 13): put aria-colindex on <b>every cell</b>.</li></ul>`},
+    {id:"spans", title:"Cell spans", html:`<p>For tables built with HTML table elements, use the native rowspan and colspan attributes. For tables built from other elements, use:</p>
+      <ul><li><b>aria-colspan</b>: an integer of 1 or more, small enough not to overlap the next cell in the row.</li><li><b>aria-rowspan</b>: an integer of 0 or more, where 0 means “span all remaining rows in this row group”, small enough not to overlap the next cell in the column.</li></ul>
+      <p>Example: a two-row header where the first two headers span both rows and the next six columns are grouped in pairs under headers spanning two columns each.</p>`},
+    {id:"sort", title:"Sort order with aria-sort", table:PT("aria-sort values",["Value","Meaning"],[["ascending","Sorted in ascending order"],["descending","Sorted in descending order"],["other","Sorted by some other algorithm"],["none","Not sorted (the default)"]]),
+      after:"<p>ARIA can't express several sort levels (sort by surname, then first name), so there's little point setting a value other than none on more than one header. Put aria-sort on the header of the column (or row) that's sorted, for example “Quiz 2” sorted highest to lowest gets aria-sort=\"descending\".</p>"}
+  ],
+  mistakes:[["aria-rowindex on some rows but not others","Screen readers skip rows or stop working."],["Wrong total in aria-rowcount","“Row 5 of 20” when there are 463."],["aria-colindex on the row when columns aren't contiguous","Cells get the wrong column numbers."],["aria-rowspan or aria-colspan on HTML tables","Use native rowspan and colspan."],["aria-sort on several columns","ARIA can't show multi-level sorts; users get mixed signals."]],
+  wcag:[["1.3.1","Table structure and relationships are in the code."],["4.1.2","Sort state and positions are exposed."]],
+  related:[["grid","Grid"],["table","Table"],["treegrid","Treegrid"]]
+},
+
+/* ================================================== range widgets */
+"range-related-properties":{
+  name:"Communicating Value and Limits for Range Widgets", short:"Range widgets",
+  summary:"How aria-valuemin, aria-valuemax, aria-valuenow and aria-valuetext work across meters, progress bars, scrollbars, separators, sliders and spinbuttons.",
+  intro:"Six roles are range widgets: they show a value, usually a number, within limits. meter, progressbar, scrollbar, separator (when focusable), slider and spinbutton. A day-of-month spinbutton might allow 1 to 31; a day-of-week spinbutton might store 1 to 7 but show “Monday” to “Sunday”.",
+  sections:[
+    {id:"props", title:"The four properties", table:PT("Range properties",["Property","Meaning"],[["aria-valuemin","The lowest value allowed"],["aria-valuemax","The highest value allowed"],["aria-valuenow","The current value, between min and max"],["aria-valuetext","A text version of the value, when the number alone isn't descriptive enough"]])},
+    {id:"defaults", title:"Defaults and requirements by role", html:`<p>Set aria-valuemin and aria-valuemax to the real limits; some assistive technologies use them to present the value as a percentage. If you don't set them, the defaults below apply, except for spinbutton, which has none. Keep aria-valuenow within the limits. Leave aria-valuenow out when a progressbar or spinbutton value is unknown.</p>`,
+      table:PT("Range widget defaults and requirements",["Role","Default min","Default max","valuenow required?"],[["meter","0","100","Yes"],["progressbar","0","100","No (omit it when indeterminate)"],["scrollbar","0","100","Yes"],["separator (focusable)","0","100","Yes"],["slider","0","100","Yes"],["spinbutton","None","None","No"]])},
+    {id:"valuetext", title:"When to use aria-valuetext", html:`<p>Use it when the values aren't numbers (small, medium, large), or when a number alone isn't enough. It <b>replaces</b> the number in announcements, so only use it when aria-valuenow isn't meaningful by itself.</p>`,
+      code:String.raw`<span id="battery-label">Battery</span>
+<span role="meter" aria-labelledby="battery-label"
+      aria-valuenow="5" aria-valuetext="5%, 18 minutes remaining"></span>`},
+    {id:"per-role", title:"Notes for each role", table:PT("Range properties per role",["Role","What to set","Native HTML"],[
+      ["meter","Always aria-valuenow. Set min and max only if they aren't 0 and 100 (a pH meter might use 7 to 14). valuetext can help: “90% of CPU is being used”.","<meter>"],
+      ["progressbar","aria-valuenow when progress is known; leave it out for an indeterminate spinner (for example an image with role=\"progressbar\" and alt “Loading…”). Min and max only if not 0 and 100.","<progress>"],
+      ["scrollbar","Always aria-valuenow (assistive technology usually shows it as a percentage). It also requires aria-controls pointing at what it scrolls. Min and max only if not 0 and 100.","None"],
+      ["slider","Always aria-valuenow. Min and max only if not 0 and 100 (a thermostat might use 50 to 100). Use valuetext when the number is meaningless: a fan slider with value 1 announces “low”.","<input type=\"range\">"],
+      ["spinbutton","Set min and max only if there's a real range; without them no limits are exposed. Set aria-valuenow only when there is a value. valuetext when useful.","<input type=\"number\">"]])}
+  ],
+  mistakes:[["aria-valuenow outside min and max","Assistive technology reports nonsense."],["aria-valuetext that just repeats the number","Adds nothing, and hides the number."],["Spinbutton assumed to have default limits","It has none; set them if they exist."],["aria-valuenow on an indeterminate progress bar","Users hear a fake value."],["Slider or meter with no aria-valuenow","It's required."]],
+  wcag:[["4.1.2","Role, name and value are exposed."],["1.3.1","The range and value are programmatically determinable."]],
+  related:[["slider","Slider"],["slider-multithumb","Slider (Multi-Thumb)"],["spinbutton","Spinbutton"],["meter","Meter"]]
+},
+
+/* ================================================== structural roles */
+"structural-roles":{
+  name:"Structural Roles", short:"Structural roles",
+  summary:"The ARIA roles that describe page structure (headings, lists, tables and more), their HTML equivalents, and the few cases where ARIA is the better choice.",
+  intro:"Structural roles express the meaning that layout and styling convey: headings, lists, tables, paragraphs. HTML elements already carry these meanings as implied semantics; for example, a <p> is exposed exactly like <div role=\"paragraph\">.",
+  sections:[
+    {id:"when", title:"When to use a structural role", html:`<p>Use the native HTML element wherever you can. Don't add an ARIA role or property if an HTML element with the same meaning exists. ARIA is appropriate only when:</p>
+      <ul><li>the HTML element can't be styled to meet the visual design;</li><li>testing shows browsers or assistive technology support the ARIA version better;</li><li>you're fixing legacy content and changing the DOM to use the right element would cost too much;</li><li>you're building a web component and the element you're extending doesn't carry the right semantics.</li></ul>`},
+    {id:"table", title:"Every structural role and its HTML equivalent", table:PT("Structural roles in ARIA 1.2 and their HTML equivalents",["ARIA role","HTML equivalent"],[
+      ["application","None"],["article","<article>"],["blockquote","<blockquote>"],["caption","<caption>"],["cell","<td>"],["code","<code>"],["columnheader","<th>"],["definition","<dd>"],["deletion","<del>"],["directory","None"],["document","None"],["emphasis","<em>"],["feed","None"],["figure","<figure>"],["generic","<div>, <span>"],["group","None"],["heading (with aria-level 1–6)","<h1> to <h6>"],["insertion","<ins>"],["img","<img>"],["list","<ul>, <ol>"],["listitem","<li>"],["mark","<mark>"],["math","None"],["none","None"],["note","None"],["presentation","None"],["paragraph","<p>"],["row","<tr>"],["rowgroup","<tbody>, <thead>, <tfoot>"],["rowheader","<th>"],["separator (not focusable)","<hr>"],["strong","<strong>"],["subscript","<sub>"],["superscript","<sup>"],["table","<table>"],["term","<dfn>"],["time","<time>"],["toolbar","None"],["tooltip","None"]])}
+  ],
+  mistakes:[["<div role=\"heading\"> where an <h2> would work","More fragile and needs aria-level."],["<div role=\"list\"> styled lists","Use <ul> or <ol> unless one of the four exceptions applies."],["Structural role that contradicts the element","A <table> with role=\"list\" confuses everyone."]],
+  wcag:[["1.3.1","Structure is conveyed in code."],["4.1.2","Roles are correct."]],
+  related:[["table","Table"],["feed","Feed"],["toolbar","Toolbar"]]
+},
+
+/* ================================================== hiding semantics */
+"hiding-semantics":{
+  name:"Hiding Semantics with the presentation Role", short:"presentation role",
+  summary:"What role=\"presentation\" (and its synonym role=\"none\") does, when it's useful, when browsers ignore it, and which roles hide their children's semantics automatically.",
+  intro:"ARIA mostly adds meaning, but sometimes removing it helps. role=\"presentation\" says an element is only there for presentation and has no accessibility meaning. role=\"none\" (ARIA 1.1) means exactly the same.",
+  sections:[
+    {id:"example", title:"The classic example", html:`<p>Tabs built from a list: the <code>&lt;ul&gt;</code> becomes a tablist, so its <code>&lt;li&gt;</code> elements are no longer in a list, and announcing them as list items would confuse people. role="presentation" on each li removes them from the accessibility tree, so the tabs become direct children of the tablist.</p>`,
+      code:String.raw`<ul role="tablist">
+  <li role="presentation"><a role="tab" href="#">Tab 1</a></li>
+  <li role="presentation"><a role="tab" href="#">Tab 2</a></li>
+</ul>`},
+    {id:"uses", title:"Three common uses", html:`<ul><li><b>Hiding a decorative image</b>, the same as alt="".</li><li><b>Removing table semantics</b> from a table used only for layout.</li><li><b>Removing in-between elements</b> in a composite widget's structure, like the li elements in the tablist above, or similar wrappers in menus and trees.</li></ul>`},
+    {id:"effects", title:"What it does", html:`<ol class="steps"><li><span><b>The element's own role, and the states and properties that go with it, are hidden.</b></span></li><li><span><b>Its text, and its descendants' text, stays visible</b> to assistive technology (unless hidden some other way, such as display: none or aria-hidden="true").</span></li><li><span><b>Descendants keep their roles</b>, unless they only make sense inside the hidden element. A presentational ul makes its li children presentational too (list items need a list), but anything inside the li, including nested lists, stays. A presentational table makes its caption, thead, tbody, tfoot, tr, th and td presentational, but content inside the cells, including nested tables, stays.</span></li></ol>
+      <p>So <code>&lt;ul role="presentation"&gt;&lt;li&gt;Date of birth:&lt;/li&gt;&lt;li&gt;1 January 3456&lt;/li&gt;&lt;/ul&gt;</code> is exposed like two plain divs.</p>`},
+    {id:"ignored", title:"When browsers ignore it", html:`<p>role="presentation" has <b>no effect</b> if the element:</p><ul><li>is focusable, natively (a link, an input) or through tabindex; or</li><li>has any global ARIA state or property, such as aria-label.</li></ul>
+      <p>This protects users: a focusable element can't be made meaningless.</p>`},
+    {id:"auto", title:"Roles that hide their children automatically", html:`<p>Some accessibility APIs can only represent text inside certain controls; a button, for example, can't contain a heading. So browsers automatically make <b>all descendants</b> of these roles presentational:</p>
+      <p class="chips-line">button, checkbox, img, meter, menuitemcheckbox, menuitemradio, option, progressbar, radio, scrollbar, separator, slider, switch, tab</p>
+      <p><code>&lt;li role="tab"&gt;&lt;h2&gt;Title of my tab&lt;/h2&gt;&lt;/li&gt;</code> is therefore exposed as a tab containing plain text. The heading doesn't exist for screen reader users, so heading navigation can't find it.</p>`}
+  ],
+  mistakes:[["role=\"presentation\" on a data table","Removes the headers and cell relationships (fails 1.3.1)."],["role=\"presentation\" on a focusable element","Ignored, so it doesn't do what you intended."],["Headings or links inside a button, tab or option","Their semantics are stripped automatically."],["Using it to hide content","It hides meaning, not text; use aria-hidden or hidden to hide content."]],
+  wcag:[["1.3.1","Don't remove semantics that carry meaning (F92)."],["4.1.2","Composite widgets expose the right structure."]],
+  related:[["tabs","Tabs"],["menubar","Menu and Menubar"],["treeview","Tree View"]]
+}
+};
+const PRAC_ORDER = ["landmark-regions","names-and-descriptions","keyboard-interface","grid-and-table-properties","range-related-properties","structural-roles","hiding-semantics"];
 
 const PRINCIPLES = [
   { id:"perceivable", num:"1", name:"Perceivable", slug:"perceivable",
@@ -5441,7 +5720,7 @@ const PRINCIPLES = [
             <span class="chip" aria-hidden="true"></span>
             <span class="pick-k">ARIA APG</span>
             <span class="pick-t">Design pattern notes</span>
-            <span class="pick-d">${nPat} patterns with live demos, keyboard and ARIA tables, audit mistakes and key questions. More on the way.</span>
+            <span class="pick-d">${nPat} patterns with live demos, keyboard and ARIA tables and audit findings, plus the 7 APG practice guides.</span>
           </a></li>
         </ul>
         <p class="land-more"><a href="#/audit">Read the audit guide</a>: how to plan, run and report an accessibility audit.</p>
@@ -5450,90 +5729,164 @@ const PRINCIPLES = [
   }
 
   /* ---------- APG index ---------- */
+  /* ---------- APG: home, categories, practices ---------- */
+  const apgName = slug => (APG_INDEX.find(x => x[0] === slug) || [slug, slug])[1];
+  const apgReady = slug => !!APG_PATTERNS[slug];
+  const apgCatOf = slug => APG_CATS.find(c => c[3].includes(slug));
+  const apgSubnav = current => `<nav class="subnav" aria-label="APG sections"><ul>${APG_CATS.map(c => `<li><a href="#/apg/cat/${c[0]}"${current === c[0] ? ' aria-current="page"' : ""}>${esc(c[1])}</a></li>`).join("")}<li><a href="#/apg/practices"${current === "practices" ? ' aria-current="page"' : ""}>Practices</a></li></ul></nav>`;
+  const apgCard = slug => {
+    const m = APG_META[slug] || ["","",""], ok = apgReady(slug), p = APG_PATTERNS[slug];
+    const sum = ok ? p.summary : (APG_SOON_SUM[slug] || "");
+    return `<li class="pc${ok ? "" : " pc-soon"}">
+      <h3 class="pc-h">${ok ? `<a href="#/apg/${slug}" class="pc-a">${esc(apgName(slug))}</a>` : `${esc(apgName(slug))} <span class="soon-tag">Coming soon</span>`}</h3>
+      <p class="pc-s">${esc(sum)}</p>
+      <dl class="pc-meta">
+        <div><dt>Keys</dt><dd>${esc(m[0])}</dd></div>
+        <div><dt>Roles</dt><dd><code>${esc(m[1])}</code></dd></div>
+        <div><dt>Native HTML</dt><dd>${m[2] ? `<code>${esc(m[2])}</code>` : '<span class="pc-none">None: needs ARIA</span>'}</dd></div>
+      </dl>
+      ${ok ? "" : `<p class="pc-w3c">${extLink(APG + slug + "/", "Read it at W3C")}</p>`}
+    </li>`;
+  };
+
   function renderApgHome(){
-    const nameOf = slug => (APG_INDEX.find(x => x[0] === slug) || [slug, slug])[1];
-    const ready = slug => !!APG_PATTERNS[slug];
-    const nReady = APG_INDEX.filter(x => ready(x[0])).length, nSoon = APG_INDEX.length - nReady;
-    const patLink = slug => ready(slug) ? `<a href="#/apg/${slug}">${esc(nameOf(slug))}</a>` : `${extLink(APG + slug + "/", nameOf(slug))} <span class="soon-mini">notes coming soon</span>`;
-    const card = slug => {
-      const m = APG_META[slug] || ["","",""], ok = ready(slug), p = APG_PATTERNS[slug];
-      const sum = ok ? p.summary : (APG_SOON_SUM[slug] || "");
-      const hay = (nameOf(slug) + " " + sum + " " + m.join(" ") + " " + (ok ? p.kw : "")).toLowerCase();
-      return `<li class="pc${ok ? "" : " pc-soon"}" data-hay="${esc(hay)}">
-        <h3 class="pc-h">${ok ? `<a href="#/apg/${slug}" class="pc-a">${esc(nameOf(slug))}</a>` : `${esc(nameOf(slug))} <span class="soon-tag">Coming soon</span>`}</h3>
-        <p class="pc-s">${esc(sum)}</p>
-        <dl class="pc-meta">
-          <div><dt>Keys</dt><dd>${esc(m[0])}</dd></div>
-          <div><dt>Roles</dt><dd><code>${esc(m[1])}</code></dd></div>
-          <div><dt>Native HTML</dt><dd>${m[2] ? `<code>${esc(m[2])}</code>` : '<span class="pc-none">None: needs ARIA</span>'}</dd></div>
-        </dl>
-        ${ok ? "" : `<p class="pc-w3c">${extLink(APG + slug + "/", "Read it at W3C")}</p>`}
-      </li>`;
-    };
-    const toc = [["start","Before you start"], ...APG_CATS.map(c => ["cat-" + c[0], c[1]]), ["chooser","Which pattern do I need?"]];
-
-    app.innerHTML = `<div class="wrap">
+    const nReady = APG_INDEX.filter(x => apgReady(x[0])).length, nSoon = APG_INDEX.length - nReady;
+    const walletItems = [...APG_CATS.map(c => [`#/apg/cat/${c[0]}`, c[1], `${c[3].length} patterns`]), ["#/apg/practices", "Practices", `${PRAC_ORDER.length} guides`]];
+    const cards = walletItems.map((w, i) => `<li style="--d:${i}"><a class="card" style="--d:${i}" href="${w[0]}"><span class="c-num" aria-hidden="true">${i + 1}</span><span class="c-name">${esc(w[1])}</span><span class="c-meta">${esc(w[2])}</span></a></li>`).join("");
+    const patLink = slug => apgReady(slug) ? `<a href="#/apg/${slug}">${esc(apgName(slug))}</a>` : `${extLink(APG + slug + "/", apgName(slug))} <span class="soon-mini">notes coming soon</span>`;
+    const az = [...APG_INDEX].sort((a, b) => a[1].localeCompare(b[1]));
+    app.innerHTML = `
+    <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">APG patterns</span></li></ol></nav>
-      <header class="apg-hero">
+      <section class="hero" aria-labelledby="home-h1">
         <div>
-          <h1 id="p-h1" tabindex="-1">ARIA design patterns</h1>
-          <p class="p-statement">How common widgets should behave by keyboard, which roles, states and properties they need, and what to look for when you audit them. Study notes on the W3C ARIA Authoring Practices Guide (APG).</p>
-          <p class="apg-links">${extLink(APG, "APG patterns at W3C")} ${extLink("https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/", "APG: Read me first")}</p>
-        </div>
-        <ul class="apg-stats" aria-label="At a glance">
-          <li><b>${nReady}</b><span>patterns with notes and live demos</span></li>
-          <li><b>${APG_CATS.length}</b><span>categories</span></li>
-          <li><b>${nSoon}</b><span>coming soon</span></li>
-        </ul>
-      </header>
-
-      <div class="wc-layout">
-        <nav class="a-toc mt-toc wc-toc" aria-labelledby="apg-toc-h"><h2 id="apg-toc-h" class="wc-toc-h">On this page</h2>
-          <ol class="wc-toc-list">${toc.map(t => `<li><a href="#/apg/${t[0]}">${esc(t[1])}</a></li>`).join("")}</ol></nav>
-        <div class="wc-main">
-          <div class="apg-sec">
-            <h2 id="apg-start" tabindex="-1" class="a-h">Before you start</h2>
-            <ul class="rules">
-              <li><span class="rule-n" aria-hidden="true">1</span><div><h3>Native HTML first</h3><p>If an element like <code>&lt;button&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code> or <code>&lt;input type="checkbox"&gt;</code> does the job, use it. No ARIA is better than bad ARIA.</p></div></li>
-              <li><span class="rule-n" aria-hidden="true">2</span><div><h3>A role is a promise</h3><p>Adding <code>role="tab"</code> or <code>role="menu"</code> tells users which keys will work. If you add the role, you have to build that keyboard behaviour.</p></div></li>
-              <li><span class="rule-n" aria-hidden="true">3</span><div><h3>Audit in four passes</h3><p>Identify the pattern, check its roles and states, test every key in its keyboard table, then listen with a screen reader and map gaps to WCAG (usually 4.1.2, 2.1.1, 2.4.3 or 1.3.1).</p></div></li>
-            </ul>
-          </div>
-
-          <div class="apg-filter">
-            <label for="apg-q" class="grp-label">Find a pattern</label>
-            <input id="apg-q" type="search" class="mt-input" placeholder="e.g. dropdown, toggle, aria-expanded">
-            <p class="status" id="apg-q-st" role="status"></p>
-          </div>
-
-          ${APG_CATS.map(c => `<div class="apg-sec apg-cat" data-cat="${c[0]}">
-            <div class="cat-head"><h2 id="apg-cat-${c[0]}" tabindex="-1" class="a-h">${esc(c[1])}</h2><p>${esc(c[2])}</p></div>
-            <ul class="pc-grid">${c[3].map(card).join("")}</ul>
-          </div>`).join("")}
-          <p class="empty" id="apg-empty" hidden>No patterns match. Try a role name like “tab” or a word like “menu”.</p>
-
-          <div class="apg-sec">
-            <h2 id="apg-chooser" tabindex="-1" class="a-h">Which pattern do I need?</h2>
-            <p>Start from what the user needs to do. Where two patterns are listed, the first is usually the better fit.</p>
-            <div class="tbl" role="region" aria-label="Pattern chooser table" tabindex="0"><table class="chooser">
-              <caption class="visually-hidden">Tasks and the pattern to use</caption>
-              <thead><tr><th scope="col">I need to…</th><th scope="col">Use</th></tr></thead>
-              <tbody>${APG_CHOOSER.map(r => `<tr><th scope="row">${esc(r[0])}</th><td>${r.slice(1).map(patLink).join(" or ")}</td></tr>`).join("")}</tbody>
-            </table></div>
+          <h1 id="home-h1" tabindex="-1">ARIA design patterns</h1>
+          <p class="tag">How widgets should behave, which ARIA they need, and what to check when you audit them.</p>
+          <p class="intro">Study notes on the W3C ARIA Authoring Practices Guide: ${nReady} patterns with live demos, keyboard and ARIA tables and audit findings, plus the ${PRAC_ORDER.length} practice guides on names, keyboard, landmarks and more.</p>
+          <div class="btn-row">
+            <a class="btn" href="#/apg/cat/toggles">Start with buttons and toggles</a>
+            ${extLink(APG, "APG at W3C").replace('class="ext"', 'class="btn ghost ext"')}
           </div>
         </div>
+        <div class="wallet wallet-7">
+          <ul class="cards" aria-label="Pattern categories and practices">${cards}</ul>
+          <div class="pocket" aria-hidden="true"><span>aria patterns</span></div>
+        </div>
+      </section>
+    </div>
+    <section class="home-sec" aria-labelledby="apg-start"><div class="wrap">
+      <h2 id="apg-start" tabindex="-1">Before you start</h2>
+      <ul class="rules">
+        <li><span class="rule-n" aria-hidden="true">1</span><div><h3>Native HTML first</h3><p>If <code>&lt;button&gt;</code>, <code>&lt;details&gt;</code>, <code>&lt;dialog&gt;</code> or a native input does the job, use it. No ARIA is better than bad ARIA.</p></div></li>
+        <li><span class="rule-n" aria-hidden="true">2</span><div><h3>A role is a promise</h3><p>Adding <code>role="tab"</code> or <code>role="menu"</code> tells users which keys will work. Add the role, and you have to build that keyboard behaviour.</p></div></li>
+        <li><span class="rule-n" aria-hidden="true">3</span><div><h3>Audit in four passes</h3><p>Identify the pattern, check roles and states, test every key in its keyboard table, then listen with a screen reader and map gaps to WCAG.</p></div></li>
+      </ul>
+    </div></section>
+    <section class="home-sec" aria-labelledby="apg-az"><div class="wrap">
+      <h2 id="apg-az" tabindex="-1">All patterns A to Z</h2>
+      <div class="apg-filter">
+        <label for="apg-q" class="grp-label">Find a pattern</label>
+        <input id="apg-q" type="search" class="mt-input" placeholder="e.g. dropdown, toggle, aria-expanded">
+        <p class="status" id="apg-q-st" role="status"></p>
       </div>
-    </div>`;
-
+      <ul class="az">${az.map(x => { const m = APG_META[x[0]] || ["","",""], c = apgCatOf(x[0]); const hay = (x[1] + " " + m.join(" ") + " " + (apgReady(x[0]) ? APG_PATTERNS[x[0]].summary + " " + APG_PATTERNS[x[0]].kw : "") + " " + (c ? c[1] : "")).toLowerCase();
+        return `<li data-hay="${esc(hay)}">${apgReady(x[0]) ? `<a href="#/apg/${x[0]}">${esc(x[1])}</a>` : `<span>${esc(x[1])}</span> <span class="soon-mini">coming soon</span>`}<span class="az-cat">${c ? esc(c[1]) : ""}</span></li>`; }).join("")}</ul>
+      <p class="empty" id="apg-empty" hidden>No patterns match. Try a role name like “tab” or a word like “menu”.</p>
+    </div></section>
+    <section class="home-sec" aria-labelledby="apg-chooser"><div class="wrap">
+      <h2 id="apg-chooser" tabindex="-1">Which pattern do I need?</h2>
+      <p>Start from what the user needs to do. Where two patterns are listed, the first is usually the better fit.</p>
+      <div class="tbl" role="region" aria-label="Pattern chooser table" tabindex="0"><table class="chooser">
+        <caption class="visually-hidden">Tasks and the pattern to use</caption>
+        <thead><tr><th scope="col">I need to…</th><th scope="col">Use</th></tr></thead>
+        <tbody>${APG_CHOOSER.map(r => `<tr><th scope="row">${esc(r[0])}</th><td>${r.slice(1).map(patLink).join(" or ")}</td></tr>`).join("")}</tbody>
+      </table></div>
+    </div></section>`;
     const q = document.getElementById("apg-q"), st = document.getElementById("apg-q-st");
     let t;
     q.addEventListener("input", () => { clearTimeout(t); t = setTimeout(() => {
       const v = q.value.trim().toLowerCase(); let n = 0;
-      app.querySelectorAll(".pc").forEach(li => { const ok = !v || v.split(/\s+/).every(w => li.dataset.hay.includes(w)); li.hidden = !ok; if (ok) n++; });
-      app.querySelectorAll(".apg-cat").forEach(s => s.hidden = !s.querySelector(".pc:not([hidden])"));
+      app.querySelectorAll(".az li").forEach(li => { const ok = !v || v.split(/\s+/).every(w => li.dataset.hay.includes(w)); li.hidden = !ok; if (ok) n++; });
       document.getElementById("apg-empty").hidden = n !== 0;
       st.textContent = v ? `${n} ${n === 1 ? "pattern" : "patterns"} found` : "";
     }, 200); });
+  }
+
+  function renderApgCat(id){
+    const c = APG_CATS.find(x => x[0] === id), idx = APG_CATS.indexOf(c);
+    const ready = c[3].filter(apgReady).length;
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li><li><span aria-current="page">${esc(c[1])}</span></li></ol></nav>
+      ${apgSubnav(id)}
+      <div class="mt-phead">
+        <span class="p-num mt-pnum" aria-hidden="true">${idx + 1}</span>
+        <div><h1 id="p-h1" tabindex="-1" class="mt-ph2">${esc(c[1])}</h1>
+        <p class="mt-pstate">${esc(c[2])}</p>
+        <p class="mt-pcount">${c[3].length} patterns${ready < c[3].length ? `: ${ready} with notes, ${c[3].length - ready} coming soon` : ""}</p></div>
+      </div>
+      <div class="wc-layout">
+        <nav class="a-toc mt-toc wc-toc" aria-labelledby="cat-toc-h"><h2 id="cat-toc-h" class="wc-toc-h">In ${esc(c[1])}</h2>
+          <ol class="wc-toc-list">${c[3].map(s => `<li>${apgReady(s) ? `<a href="#/apg/${s}">${esc(apgName(s))}</a>` : `<a href="${APG}${s}/" target="_blank" rel="noopener">${esc(apgName(s))}<span class="visually-hidden"> (W3C, opens in a new tab)</span> <span class="wc-toc-lvl">soon</span></a>`}</li>`).join("")}</ol>
+          <h2 class="wc-toc-h wc-toc-h2">Other categories</h2>
+          <ol class="wc-toc-list">${APG_CATS.filter(x => x[0] !== id).map(x => `<li><a href="#/apg/cat/${x[0]}">${esc(x[1])}</a></li>`).join("")}<li><a href="#/apg/practices">Practices</a></li></ol></nav>
+        <div class="wc-main"><ul class="pc-grid">${c[3].map(apgCard).join("")}</ul>
+          <p class="mt-back" style="margin-top:1.5rem"><a href="#/apg/chooser">Not sure which pattern you need?</a></p></div>
+      </div>
+    </div>`;
+  }
+
+  const pracSection = s => `<section aria-labelledby="pr-${s.id}">
+      <h2 id="pr-${s.id}" tabindex="-1" class="a-h">${esc(s.title)}</h2>
+      ${s.html || ""}
+      ${s.table ? `<div class="tbl" role="region" aria-labelledby="pr-${s.id}-cap" tabindex="0"><table class="demo-grid pr-table"><caption id="pr-${s.id}-cap" class="visually-hidden">${esc(s.table.caption)}</caption><thead><tr>${s.table.head.map(h => `<th scope="col">${esc(h)}</th>`).join("")}</tr></thead><tbody>${s.table.rows.map(r => `<tr>${r.map((c, i) => i === 0 ? `<th scope="row">${esc(c)}</th>` : `<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>` : ""}
+      ${s.after || ""}
+      ${s.code ? `<pre tabindex="0" aria-label="Code example: ${esc(s.title)}"><code>${esc(s.code)}</code></pre>` : ""}
+    </section>`;
+
+  function renderPractices(){
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li><li><span aria-current="page">Practices</span></li></ol></nav>
+      ${apgSubnav("practices")}
+      <div class="mt-phead">
+        <span class="p-num mt-pnum" aria-hidden="true">7</span>
+        <div><h1 id="p-h1" tabindex="-1" class="mt-ph2">APG practices</h1>
+        <p class="mt-pstate">The practice guides sit alongside the patterns. They explain techniques that apply across many widgets: naming, keyboard focus, landmarks, table and range properties, structural roles and hiding semantics.</p>
+        <p class="mt-pcount">${PRAC_ORDER.length} guides ${extLink(PRAC_BASE, "Practices at W3C")}</p></div>
+      </div>
+      <ul class="pc-grid pr-grid">${PRAC_ORDER.map((slug, i) => { const p = PRACTICES[slug]; return `<li class="pc">
+        <h2 class="pc-h"><a href="#/apg/practices/${slug}" class="pc-a">${esc(p.name)}</a></h2>
+        <p class="pc-s">${esc(p.summary)}</p>
+        <dl class="pc-meta"><div><dt>Sections</dt><dd>${p.sections.length}</dd></div><div><dt>WCAG</dt><dd>${p.wcag.map(w => w[0]).join(", ")}</dd></div></dl>
+      </li>`; }).join("")}</ul>
+    </div>`;
+  }
+
+  function renderPractice(slug){
+    const p = PRACTICES[slug], i = PRAC_ORDER.indexOf(slug);
+    const prev = PRAC_ORDER[i - 1], next = PRAC_ORDER[i + 1];
+    const toc = [...p.sections.map(s => [s.id, s.title]), ["mistakes","Common audit findings"], ["wcag","Related WCAG criteria"]];
+    app.innerHTML = `<div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li><li><a href="#/apg/practices">Practices</a></li><li><span aria-current="page">${esc(p.short)}</span></li></ol></nav>
+      <header class="pat-hero">
+        <h1 id="p-h1" tabindex="-1">${esc(p.name)}</h1>
+        <p class="p-statement">${esc(p.summary)}</p>
+        <p class="apg-links">${extLink(PRAC_BASE + slug + "/", "Read the full guide at W3C")}</p>
+      </header>
+      <div class="audit">
+        <nav class="a-toc" aria-labelledby="pr-toc-h"><h2 id="pr-toc-h">On this page</h2><ol>${toc.map(t => `<li><a href="#/apg/practices/${slug}/${t[0]}">${esc(t[1])}</a></li>`).join("")}</ol></nav>
+        <div class="a-body">
+          <div class="callout" style="margin-bottom:2rem"><p style="margin:0">${esc(p.intro)}</p></div>
+          ${p.sections.map(pracSection).join("")}
+          <section aria-labelledby="pr-mistakes"><h2 id="pr-mistakes" tabindex="-1" class="a-h">Common audit findings</h2>
+            <div class="tbl" role="region" aria-labelledby="pr-mis-cap" tabindex="0"><table class="demo-grid"><caption id="pr-mis-cap" class="visually-hidden">Common findings for ${esc(p.short)}</caption><thead><tr><th scope="col">What you find</th><th scope="col">Why it matters</th></tr></thead><tbody>${p.mistakes.map(m => `<tr><th scope="row">${esc(m[0])}</th><td>${esc(m[1])}</td></tr>`).join("")}</tbody></table></div></section>
+          <section aria-labelledby="pr-wcag"><h2 id="pr-wcag" tabindex="-1" class="a-h">Related WCAG criteria</h2>
+            <ul class="wcag-rel">${p.wcag.map(w => `<li><span class="wr-sc">${wcagLink(w[0])}</span><span>${esc(w[1])}</span></li>`).join("")}</ul>
+            ${p.related && p.related.length ? `<p><b>Related patterns:</b> ${p.related.map(r => apgReady(r[0]) ? `<a href="#/apg/${r[0]}">${esc(r[1])}</a>` : esc(r[1])).join(", ")}</p>` : ""}
+          </section>
+          <nav class="pr-pager" aria-label="Other practice guides">${prev ? `<a href="#/apg/practices/${prev}">← ${esc(PRACTICES[prev].short)}</a>` : "<span></span>"}${next ? `<a href="#/apg/practices/${next}">${esc(PRACTICES[next].short)} →</a>` : ""}</nav>
+        </div>
+      </div>
+    </div>`;
   }
 
   /* ---------- APG pattern page ---------- */
@@ -6393,7 +6746,7 @@ a{color:#1D5C8F}
     const H = (id, title) => `<h2 id="apg-${id}" tabindex="-1" class="a-h">${esc(title)}</h2>`;
 
     app.innerHTML = `<div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li><li><span aria-current="page">${esc(p.name)}</span></li></ol></nav>
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/apg">APG patterns</a></li>${apgCatOf(slug) ? `<li><a href="#/apg/cat/${apgCatOf(slug)[0]}">${esc(apgCatOf(slug)[1])}</a></li>` : ""}<li><span aria-current="page">${esc(p.name)}</span></li></ol></nav>
       <header class="p-hero" style="grid-template-columns:1fr">
         <h1 id="p-h1" tabindex="-1">${esc(p.name)}</h1>
         <p class="p-statement">${esc(p.summary)}</p>
@@ -7126,15 +7479,19 @@ Severity: High`)}</code></pre></div>
 
     if (parts[0] !== "apg"){ clearInterval(demoTimer); clearInterval(meterTimer); }
     if (parts[0] === "apg"){
-      const slug = parts[1] && APG_PATTERNS[parts[1]] ? parts[1] : "";
-      const homeSec = !slug && parts[1] ? parts[1] : "";
-      const view = "apg:" + slug;
+      const p1 = parts[1] || "", p2 = parts[2] || "", p3 = parts[3] || "";
+      let view, render, title, targetId = "";
+      if (p1 === "cat" && APG_CATS.some(c => c[0] === p2)){ view = "apg:cat:" + p2; render = () => renderApgCat(p2); title = APG_CATS.find(c => c[0] === p2)[1] + " | APG"; }
+      else if (p1 === "practices" && PRACTICES[p2]){ view = "apg:prac:" + p2; render = () => renderPractice(p2); title = PRACTICES[p2].name + " | APG practices"; if (p3) targetId = "pr-" + p3; }
+      else if (p1 === "practices"){ view = "apg:practices"; render = renderPractices; title = "APG practices"; }
+      else if (APG_PATTERNS[p1]){ view = "apg:" + p1; render = () => renderPattern(p1); title = APG_PATTERNS[p1].name + " pattern | APG"; if (p2) targetId = "apg-" + p2; }
+      else { view = "apg"; render = renderApgHome; title = "APG patterns"; if (p1) targetId = "apg-" + p1; }
       const same = app.dataset.view === view;
-      if (!same){ app.dataset.view = view; renderNav("apg"); slug ? renderPattern(slug) : renderApgHome(); window.scrollTo(0, 0); }
-      document.title = (slug ? APG_PATTERNS[slug].name + " pattern | APG" : "APG patterns") + " | a11ywallet";
-      const target = (slug && parts[2] && document.getElementById("apg-" + parts[2])) || (homeSec && document.getElementById("apg-" + homeSec));
+      if (!same){ app.dataset.view = view; renderNav("apg"); render(); window.scrollTo(0, 0); }
+      document.title = title + " | a11ywallet";
+      const target = targetId && document.getElementById(targetId);
       if (target){ target.scrollIntoView(); if (!first) target.focus({preventScroll:true}); }
-      else if (!first && !same) document.getElementById("p-h1").focus();
+      else if (!first && !same) (document.getElementById("p-h1") || document.getElementById("home-h1")).focus();
       first = false; return;
     }
     if (parts[0] === "meet"){
@@ -7225,8 +7582,11 @@ Severity: High`)}</code></pre></div>
       const hay = (c.id + " " + c.title + " " + c.s + " " + (c.kw || "") + " level " + c.level).toLowerCase();
       return words.every(w => hay.includes(w));
     });
-    const res = [...pats.map(x => ({pat:x})), ...scs.map(c => ({sc:c}))].slice(0, 15);
-    list.innerHTML = res.map(r => r.pat
+    const pracs = PRAC_ORDER.filter(k => { const pr = PRACTICES[k]; const hay = ("apg practice guide " + k + " " + pr.name + " " + pr.summary + " " + pr.sections.map(x => x.title).join(" ")).toLowerCase(); return words.every(w => hay.includes(w)); });
+    const res = [...pats.map(x => ({pat:x})), ...pracs.map(k => ({prac:k})), ...scs.map(c => ({sc:c}))].slice(0, 15);
+    list.innerHTML = res.map(r => r.prac
+      ? `<li><a href="#/apg/practices/${r.prac}"><span class="sc-num">Guide</span><span class="r-t">${esc(PRACTICES[r.prac].name)}</span><span></span><span class="r-sum">${esc(PRACTICES[r.prac].summary)}</span></a></li>`
+      : r.pat
       ? `<li><a href="#/apg/${r.pat.slug}"><span class="sc-num">APG</span><span class="r-t">${esc(r.pat.p.name)} pattern</span><span></span><span class="r-sum">${esc(r.pat.p.summary)}</span></a></li>`
       : `<li><a href="#/${r.sc._p.id}/${r.sc.id}"><span class="sc-num">${r.sc.id}</span><span class="r-t">${esc(r.sc.title)}</span><span class="badge lvl-${r.sc.level}">${r.sc.level}</span><span class="r-sum">${esc(r.sc.s)}</span></a></li>`).join("");
     status.textContent = res.length ? plural(res.length, "result", "results") : "Nothing found. Try a number like 1.4, a word like contrast, or a pattern like accordion.";
