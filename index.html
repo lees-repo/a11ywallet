@@ -228,7 +228,7 @@ main:focus,[tabindex="-1"]:focus{outline:none}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
 
 .sc-body{border-top:1px dashed var(--line);padding:1.5rem 1.2rem 1.75rem}
-.expected-sec{border-left:4px solid var(--leather);padding-left:1rem}.expected{font-weight:600;margin:.2rem 0 .5rem}.expected-note{color:var(--muted);font-size:.93rem;margin:0}
+.expected-sec,.rec-sec{border-left:4px solid var(--leather);padding-left:1rem}.rec{margin:.2rem 0 .5rem}.expected{font-weight:600;margin:.2rem 0 .5rem}.expected-note{color:var(--muted);font-size:.93rem;margin:0}
 .sc-links{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-bottom:1.5rem;font-size:.97rem}
 .sec{margin:0 0 1.9rem;max-width:78ch}
 .sec.wide{max-width:none}
@@ -3575,6 +3575,91 @@ color: #000000;  /* on #FFFFFF = 21:1 */`,
    Best practices per criterion: things a good audit
    recommends, but which are NOT failures on their own.
    ========================================================= */
+/* Common recommendation per success criterion, for audit findings. Criteria whose fix depends on the specific issue (1.1.1, 1.3.1, 2.1.1, 4.1.2) are deliberately left out. */
+const COMMON_RECS = {
+"1.2.1": "Provide a text transcript next to every prerecorded audio-only file, and for video-only content provide either a transcript describing the visual information or an audio track that describes it.",
+"1.2.2": "Add accurate, synchronised captions (for example WebVTT via the <track> element) that include all speech, speaker identification and meaningful sounds. Don't rely on unedited auto-generated captions.",
+"1.2.3": "Provide an audio-described version of the video, or a descriptive transcript placed next to it that includes the important visual information as well as the dialogue.",
+"1.2.4": "Provide real-time captions for live video, using a human captioner (CART) or a live captioning service that is monitored and corrected.",
+"1.2.5": "Provide an audio-described version of every prerecorded video, describing important visual information during natural pauses in the audio.",
+"1.2.6": "Provide a sign language interpretation of the audio, embedded in the video or as a synchronised alternative video.",
+"1.2.7": "Provide an extended audio-described version in which the video pauses where needed so all important visual information can be described.",
+"1.2.8": "Provide a full descriptive transcript for each prerecorded video, including all dialogue and descriptions of important visual information in reading order.",
+"1.2.9": "Provide a real-time text alternative for live audio, such as live captions or a live transcript produced by a captioner.",
+"1.3.2": "Make the DOM order match the logical reading order, and avoid CSS (order, flex-direction: row-reverse, absolute positioning or grid placement) that makes the visual order differ from the source order in a way that changes meaning.",
+"1.3.3": "Reword instructions so they don't rely only on shape, colour, size, position or sound. Also name the element by its visible text label, for example “Select Continue (the green button below)”.",
+"1.3.4": "Remove the orientation lock (for example CSS or the Screen Orientation API forcing portrait) and make sure the layout adapts to both portrait and landscape.",
+"1.3.5": "Add the correct HTML autocomplete token to every field that collects the user's own information, for example autocomplete=\"email\", \"given-name\", \"tel\", \"street-address\" or \"cc-number\".",
+"1.3.6": "Use native HTML elements, landmark roles and autocomplete tokens so the purpose of components, icons and regions can be identified programmatically.",
+"1.4.1": "Add a non-colour cue wherever colour conveys meaning: underline links in body text (or give them 3:1 contrast with surrounding text plus a non-colour cue on hover and focus), add text or an icon to errors and statuses, and use patterns, labels or shapes in charts.",
+"1.4.2": "Don't autoplay audio. If it must autoplay for more than 3 seconds, provide a clearly labelled pause/stop or volume control at the start of the page, operable by keyboard.",
+"1.4.3": "Change the text or background colour so the contrast ratio is at least 4.5:1 for normal text and 3:1 for large text (at least 18pt, or 14pt bold). Check hover, focus, placeholder and disabled-looking states too.",
+"1.4.4": "Use relative units (rem, em, %) for font sizes and containers, avoid fixed heights and overflow: hidden on text containers, and don't disable zoom (no user-scalable=no or maximum-scale in the viewport meta tag).",
+"1.4.5": "Replace images of text with real HTML text styled with CSS (web fonts, colours, effects). Keep images of text only for logos or where the presentation is essential.",
+"1.4.6": "Change the text or background colour so the contrast ratio is at least 7:1 for normal text and 4.5:1 for large text.",
+"1.4.7": "Remove background sounds from speech recordings, lower them to at least 20 dB below the speech, or provide a way to turn them off.",
+"1.4.8": "Let users choose text and background colours (don't hard-code them against user settings), keep lines to 80 characters or fewer, don't justify text, use line spacing of at least 1.5 and paragraph spacing of at least 1.5 times that, and make sure text resizes to 200% without horizontal scrolling.",
+"1.4.9": "Replace images of text with real text styled with CSS, except for logos and purely decorative text.",
+"1.4.10": "Use a responsive layout (flexbox or grid, relative units, max-width: 100% on media, media queries) so content reflows into one column at 320 CSS pixels wide. Allow two-dimensional scrolling only for content that needs it, such as data tables, maps and diagrams, and wrap those in their own scrolling container.",
+"1.4.11": "Give input borders, focus indicators, checkbox and radio states, toggle positions, icons and chart elements at least 3:1 contrast against adjacent colours.",
+"1.4.12": "Avoid fixed heights and widths on text containers and don't clip overflowing text; let containers grow with their content so text survives the WCAG text-spacing overrides (line height 1.5, paragraph spacing 2, letter spacing 0.12, word spacing 0.16).",
+"1.4.13": "Make hover and focus content dismissible with Escape without moving focus or the pointer, keep it open while the pointer is over it (no gap between trigger and popup), and keep it visible until the user moves away or dismisses it (no timers).",
+"2.1.2": "Make sure focus can always leave every component with Tab, Shift+Tab or Escape. For embedded content that needs other keys, tell users how to exit.",
+"2.1.3": "Make all functionality, including path-dependent features, operable through a keyboard interface.",
+"2.1.4": "Add a setting to turn off single-character shortcuts or remap them to include a modifier (Ctrl, Alt, Shift), or make them work only while the relevant component has focus.",
+"2.2.1": "Remove the time limit, or let users turn it off, adjust it to at least 10 times the default, or extend it: warn at least 20 seconds before it expires and let users extend with a simple action such as “Press any key” or an “Extend session” button, at least 10 times.",
+"2.2.2": "Add a visible, keyboard-accessible pause/stop control for moving, blinking, scrolling or auto-updating content (carousels, marquees, animations, tickers), or stop it automatically within 5 seconds. Respect prefers-reduced-motion as well.",
+"2.2.3": "Remove time limits from the activity, except for non-interactive synchronised media and real-time events.",
+"2.2.4": "Let users postpone or turn off non-emergency interruptions such as auto-refresh, promotional pop-ups and alerts, for example with a setting to disable them.",
+"2.2.5": "Save the user's data when an authenticated session expires, and return them to where they were with their data intact after they sign in again.",
+"2.2.6": "Tell users how long they can be inactive before their data is lost, or keep their data for at least 20 hours.",
+"2.3.1": "Remove content that flashes more than three times per second, or reduce it below the general and red flash thresholds (use a tool such as PEAT to check).",
+"2.3.2": "Remove content that flashes more than three times per second.",
+"2.3.3": "Honour prefers-reduced-motion (for example @media (prefers-reduced-motion: reduce) turning off parallax, zoom and slide transitions) and/or provide a setting to disable non-essential motion animation.",
+"2.4.1": "Add a “Skip to main content” link as the first focusable element that moves focus to the main content, and mark up regions with landmarks (header, nav, main, footer) and a logical heading structure.",
+"2.4.2": "Give every page a unique, descriptive <title>, ideally “Page topic | Site name”, and update document.title when single-page app views change.",
+"2.4.3": "Make the DOM order match the visual order, avoid positive tabindex values, move focus into dialogs and menus when they open, and return focus to the trigger when they close.",
+"2.4.4": "Make link text describe the destination or purpose (“Read the pricing guide” instead of “Click here” or “Read more”). If the visible text must stay short, add context with visually hidden text, aria-label or aria-describedby that includes the visible text.",
+"2.4.5": "Provide at least two ways to reach each page, for example main navigation plus site search, a site map or a table of contents.",
+"2.4.6": "Rewrite headings and labels so they describe the topic or purpose of the section or field; avoid generic ones such as “Section 1”, “Details” or a label of just “Name” where several names are asked for.",
+"2.4.7": "Provide a clearly visible focus indicator for every focusable element, for example :focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }, and never remove outlines without a visible replacement.",
+"2.4.8": "Show the user's location, for example with breadcrumbs or by highlighting the current page in navigation and marking it with aria-current=\"page\".",
+"2.4.9": "Make each link's text understandable on its own, without relying on surrounding context.",
+"2.4.10": "Break long content into sections with descriptive headings at the correct levels.",
+"2.4.11": "Make sure sticky headers, footers, cookie banners and chat widgets never completely cover a focused element, for example with scroll-padding-top/bottom on html (or scroll-margin on focusable elements) matching their height, or by letting users dismiss them.",
+"2.4.12": "Make sure no part of a focused element is hidden by author-created content, using scroll-padding or scroll-margin and non-overlapping sticky elements.",
+"2.4.13": "Use a focus indicator at least as large as a 2px solid outline around the component, with at least 3:1 contrast between focused and unfocused states, for example outline: 2px solid with an outline-offset.",
+"2.5.1": "Provide single-pointer alternatives for multipoint and path-based gestures, such as +/− buttons for pinch-zoom and previous/next buttons for swipe.",
+"2.5.2": "Trigger actions on the up-event (click) rather than mousedown or touchstart, so users can abort by moving the pointer away before releasing, or provide a way to undo.",
+"2.5.3": "Make the accessible name include the visible label text, ideally at the start: remove aria-label values that differ from the visible text, or change them to begin with it (visible “Search” → aria-label=\"Search products\").",
+"2.5.4": "Provide on-screen controls for every motion-triggered function (shake to undo, tilt to scroll), and a setting to turn off motion actuation.",
+"2.5.5": "Make pointer targets at least 44 by 44 CSS pixels, for example with min-width and min-height or padding, unless an equivalent large target exists or the link is inline in text.",
+"2.5.6": "Don't restrict input to one modality: support mouse, touch, keyboard and stylus at the same time, and don't disable one when another is detected.",
+"2.5.7": "Provide a single-pointer alternative to every dragging action, such as up/down buttons for reordering, a click on the track for sliders, arrow buttons for map panning, or a file picker next to drag-and-drop upload.",
+"2.5.8": "Make pointer targets at least 24 by 24 CSS pixels (for example with min-width, min-height or padding), or add spacing so a 24px circle centred on each target doesn't overlap another target.",
+"3.1.1": "Add a valid lang attribute to the <html> element that matches the page's main language, for example <html lang=\"en\">.",
+"3.1.2": "Add a lang attribute to elements containing text in a different language from the page, for example <span lang=\"fr\">déjà vu</span>.",
+"3.1.3": "Provide definitions for unusual words, idioms and jargon, for example inline explanations, a linked glossary, or dfn and dl markup.",
+"3.1.4": "Expand abbreviations on first use, for example “Web Content Accessibility Guidelines (WCAG)”, or provide a glossary or abbr element with the expansion.",
+"3.1.5": "Simplify the text to lower secondary reading level, or provide a plain-language summary, illustrations or an alternative easy-read version.",
+"3.1.6": "Provide pronunciation for ambiguous words, for example inline phonetic spelling, a pronunciation glossary or audio.",
+"3.2.1": "Don't change context on focus: trigger navigation, form submission, new windows and focus moves only on explicit activation (click, Enter or a submit button), never on focus.",
+"3.2.2": "Don't change context automatically when a value changes; add an explicit submit or “Go” button, or tell users beforehand what will happen when they change the control.",
+"3.2.3": "Keep navigation that repeats across pages in the same relative order on every page.",
+"3.2.4": "Use the same label, icon and accessible name for components that have the same function across the site (for example always “Search”, not sometimes “Find”).",
+"3.2.5": "Make changes of context happen only on user request: replace automatic redirects with server-side redirects or a link, don't open new windows without warning, and avoid auto-refresh; or provide a way to turn such changes off.",
+"3.2.6": "Place repeated help mechanisms (contact details, contact form link, chat, help link) in the same relative order on every page where they appear, for example always in the footer after the navigation.",
+"3.3.1": "Identify every field in error and describe the error in text next to it (not by colour alone), connect the message with aria-describedby or aria-errormessage and aria-invalid=\"true\", and announce errors on submit, for example by moving focus to an error summary or using a live region.",
+"3.3.2": "Give every field a visible, programmatically associated label, and state required fields, expected formats and constraints before or next to the field, not only in placeholder text.",
+"3.3.3": "When an error is detected and a correction is known, tell the user how to fix it in the error message, for example “Enter a date in DD/MM/YYYY format” or “Choose a size: S, M or L”.",
+"3.3.4": "For legal, financial and data-changing submissions, add at least one safeguard: a review-and-confirm step before final submission, validation with a chance to correct errors, or the ability to undo or cancel the submission.",
+"3.3.5": "Add context-sensitive help for complex fields, such as hint text, examples of valid input or a help link next to the field.",
+"3.3.6": "For every form submission, add a review-and-confirm step, input checking with a chance to correct errors, or a way to reverse the submission.",
+"3.3.7": "Auto-populate information the user already entered earlier in the same process (for example “Billing address same as shipping”), or offer it for selection, instead of asking them to type it again.",
+"3.3.8": "Allow paste and password managers in authentication fields (correct autocomplete tokens, no paste blocking), or offer an alternative that doesn't depend on memory or transcription, such as passkeys, email magic links or OAuth sign-in.",
+"3.3.9": "Provide an authentication method with no cognitive function test at all, such as passkeys, magic links or password-manager-friendly fields; object recognition and personal-content CAPTCHAs don't pass at this level.",
+"4.1.3": "Put status messages in a live region that exists on page load, such as role=\"status\" (polite) for success and result messages or role=\"alert\" for important warnings, and insert the message text with script so it's announced without moving focus."
+};
 /* General expected result (pass condition) for each success criterion, written like a test case expected result */
 const EXPECTED_RESULTS = {
 "1.1.1": "Every non-text item has a text alternative that serves the same purpose: informative images, icons and image links have an accurate name, controls and inputs have a name that says what they do, complex images have a short name plus a longer description, CAPTCHAs are identified and offer another modality, and decorative images are hidden from assistive technology (alt=\"\" or aria-hidden). Nothing meaningful is announced as a file name or \"image\".",
@@ -19532,6 +19617,7 @@ Severity: High`)}</code></pre></div>
       `<ul class="checkref">${c.check.map(t => `<li>${esc(t)}</li>`).join("")}</ul>`);
     body += sec(I.flask, "How to test", `<ol class="steps">${c.how.map(t => `<li><span>${esc(t)}</span></li>`).join("")}</ol>`);
     if (EXPECTED_RESULTS[k]) body += sec(I.ok, "Expected result", `<p class="expected">${esc(EXPECTED_RESULTS[k])}</p><p class="expected-note">If this holds on every page and state you tested, ${k} passes. Anything that contradicts it is a failure of ${k}.</p>`, "expected-sec");
+    if (COMMON_RECS[k]) body += sec(I.wrench, "Common recommendation", `<p class="rec">${esc(COMMON_RECS[k])}</p><p class="expected-note">A general fix you can use in an audit finding for ${k}. Tailor it to the specific issue you found.</p>`, "rec-sec");
     if (c.tools && c.tools.length) body += sec(I.wrench, "Tools", `<ul class="toolchips">${c.tools.map(key => { const t = TOOLS[key]; if (!t) return ""; return `<li>${t.url ? extLink(t.url, t.name) : `<span>${esc(t.name)}</span>`}</li>`; }).join("")}</ul>`);
 
     let f = "";
