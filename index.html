@@ -66,7 +66,7 @@ button{font:inherit;color:inherit}
 .logo svg{width:2rem;height:2rem}
 .mainnav{flex:1;overflow-x:auto;min-width:0}
 .mainnav ul{display:flex;gap:.25rem;list-style:none;margin:0;padding:.25rem}
-.mainnav a,.mainnav .soon{display:block;white-space:nowrap;padding:.45rem .75rem;border-radius:999px;text-decoration:none;color:var(--text);font-weight:600;font-size:.97rem}
+.mainnav a,.mainnav .soon{display:block;white-space:nowrap;padding:.45rem .65rem;border-radius:999px;text-decoration:none;color:var(--text);font-weight:600;font-size:.97rem}
 .mainnav a:hover{background:var(--surface-2)}
 .mainnav a[aria-current="page"]{background:var(--leather);color:#fff}
 .mainnav a[aria-current="page"] .soon-tag{color:#DCE6E0}
@@ -761,7 +761,7 @@ dialog{border:1px solid var(--line);border-radius:16px;padding:0;width:min(40rem
 dialog::backdrop{background:rgba(16,23,19,.55)}
 
 /* header search (combobox) */
-.hsearch{position:relative;flex:0 1 17rem;min-width:11rem}
+.hsearch{position:relative;flex:0 1 13rem;min-width:9rem}
 .hsearch-field{position:relative}
 .hsearch-field svg{position:absolute;left:.75rem;top:50%;width:1.05rem;height:1.05rem;transform:translateY(-50%);color:var(--muted);pointer-events:none}
 .hsearch input{width:100%;font:inherit;font-size:.95rem;padding:.5rem 2.2rem .5rem 2.2rem;border:1.5px solid var(--muted);border-radius:999px;background:var(--bg);color:var(--text)}
@@ -800,6 +800,100 @@ footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--muted);f
 #sitefooter{margin-top:2rem;padding:1.5rem 0 2rem;text-align:center}
 #sitefooter p{margin:0 auto}
 footer p{max-width:70ch}
+/* ---------- Quiz me ---------- */
+.pick-quiz{background:#F0C796}
+.qz{padding-bottom:3rem}
+.qz-lead{max-width:70ch;font-size:1.05rem;margin:.75rem 0 1.5rem}
+.qz-pickers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.25rem;margin-bottom:1.75rem}
+.qz-seg{border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem 1.1rem;margin:0;background:var(--surface);display:grid;gap:.6rem;align-content:start}
+.qz-seg legend{font-weight:800;font-size:1.1rem;padding:0 .4rem}
+#qz-diffs{display:grid;gap:.6rem}
+.qz-chip{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem .85rem;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--bg)}
+.qz-chip:has(input:checked){border-color:var(--link);background:var(--surface-2)}
+.qz-chip input{margin:.25rem 0 0;width:1.15rem;height:1.15rem;accent-color:var(--link);flex:none}
+.qz-chip input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.qz-chip span{display:grid;gap:.15rem;justify-items:start}
+.qz-chip span span{display:inline-block}
+.qz-chip small{font-size:.92rem;color:var(--muted)}
+.qz-track{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:1.25rem 1.25rem 1.5rem}
+.qz-track-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;align-items:flex-end}
+.qz-track-head > div:first-child{flex:1 1 18rem}
+.qz-track h2{font-size:1.5rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.qz-track .btn-row{margin-top:0}
+.qz-prog-t{margin:.5rem 0 .4rem;font-weight:600}
+.qz-bar{height:.6rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;max-width:40rem}
+.qz-bar span{display:block;height:100%;background:var(--pass);border-radius:999px;transition:width .3s}
+.qz-alldone{margin:0;display:flex;gap:.4rem;align-items:center;font-weight:700}
+.qz-alldone svg,.qz-perfect svg{width:1.2rem;height:1.2rem;color:var(--brass-ink)}
+.qz-secs{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,13rem),1fr));gap:.75rem}
+.qz-sec > a,.qz-sec.locked{display:grid;gap:.2rem;padding:.8rem .9rem;border-radius:12px;border:2px solid var(--line);min-height:5.5rem;text-decoration:none;color:var(--text);background:var(--bg)}
+.qz-sec > a:hover .qz-sec-n{text-decoration:underline}
+.qz-sec > a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.qz-sec.passed > a{border-color:var(--pass);background:var(--pass-bg)}
+.qz-sec.current > a{border-color:var(--link);border-style:solid}
+.qz-sec.locked{color:var(--muted);border-style:dashed}
+.qz-sec-n{font-weight:800;display:flex;gap:.35rem;align-items:center}
+.qz-sec-n svg{width:1rem;height:1rem;flex:none}
+.qz-sec.passed .qz-sec-n svg{color:var(--pass)}
+.qz-sec-s{font-size:.92rem;font-weight:600}
+.qz-sec-k{font-size:.82rem;color:var(--muted)}
+.qz-confirm{margin-top:1rem;padding:1rem;border:2px solid var(--fail);border-radius:12px;background:var(--fail-bg)}
+.qz-confirm p{margin:0;font-weight:700}
+.qz-confirm p:focus{outline:none}
+.qz-confirm .btn-row{margin-top:.75rem}
+.btn.qz-danger{background:var(--fail);border-color:var(--fail);color:#fff}
+[data-theme="dark"] .btn.qz-danger{color:#1C2421}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.qz-danger{color:#1C2421}}
+.qz-resetall{margin-top:2.25rem;padding-top:1.25rem;border-top:1px solid var(--line)}
+.qz-resetall h2{font-size:1.25rem}
+.qz-resetall p{margin:.4rem 0 0;color:var(--muted)}
+#qz-ra-confirm:empty{display:none}
+.qz-meta{display:flex;flex-wrap:wrap;gap:.5rem .8rem;align-items:center;margin:.6rem 0 .5rem;font-weight:600}
+.qz-card{margin-top:1.25rem;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:1.25rem 1.35rem 1.4rem;max-width:52rem}
+.qz-kind{margin:0 0 .35rem;font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--brass-ink)}
+.qz-q{font-size:1.25rem;line-height:1.4;font-weight:700}
+.qz-q:focus,#qz-fbh:focus,#qz-rh:focus{outline:none}
+.qz-shot{margin:1rem 0 0}
+.qz-mock{background:#fff;color:#111;border:1px solid #c9c9c9;border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.08);overflow:auto}
+.qz-shot figcaption{font-size:.85rem;color:var(--muted);margin-top:.35rem}
+.qz-code{margin-top:1rem;border-radius:10px;white-space:pre-wrap;word-break:break-word}
+.qz-opts{border:0;padding:0;margin:1.1rem 0 0;display:grid;gap:.6rem;min-width:0}
+.qz-opt{display:grid;grid-template-columns:auto auto 1fr;gap:.25rem .65rem;align-items:start;padding:.75rem .9rem;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--bg);color:var(--text)}
+.qz-opt input{margin:.2rem 0 0;width:1.1rem;height:1.1rem;accent-color:var(--link)}
+.qz-opt input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.qz-opt:has(input:checked){border-color:var(--link);background:var(--surface-2)}
+.qz-opts:disabled .qz-opt{cursor:default}
+.qz-letter{font-weight:800;min-width:1.2rem}
+.qz-otext{overflow-wrap:anywhere}
+.qz-tag{grid-column:3;display:none;gap:.3rem;align-items:center;font-weight:800;font-size:.9rem}
+.qz-tag svg{width:1rem;height:1rem}
+.qz-opt.is-right,.qz-opt.is-right:has(input:checked){border-color:var(--pass);background:var(--pass-bg)}
+.qz-opt.is-right .qz-tag{display:flex;color:var(--pass)}
+.qz-opt.is-wrong,.qz-opt.is-wrong:has(input:checked){border-color:var(--fail);background:var(--fail-bg)}
+.qz-opt.is-wrong .qz-tag{display:flex;color:var(--fail)}
+.qz-err{color:var(--fail);font-weight:700;margin:.6rem 0 0}
+.qz-fb,.qz-result{margin-top:1.25rem;border-radius:16px;padding:1.1rem 1.3rem 1.3rem;max-width:52rem;border:2px solid}
+.qz-fb.ok,.qz-result.ok{background:var(--pass-bg);border-color:var(--pass)}
+.qz-fb.no,.qz-result.no{background:var(--fail-bg);border-color:var(--fail)}
+.qz-fb h2,.qz-result h2{display:flex;gap:.45rem;align-items:center;font-size:1.3rem}
+.qz-fb h2 svg{width:1.3rem;height:1.3rem}
+.qz-fb.ok h2{color:var(--pass)}
+.qz-fb.no h2{color:var(--fail)}
+.qz-fb p,.qz-result p{max-width:70ch}
+.qz-fixh{margin-bottom:0}
+.qz-refs{font-size:.95rem}
+.qz-review{margin-top:2rem;max-width:52rem}
+.qz-review > h2{font-size:1.35rem}
+.qz-review ol{padding-left:1.4rem;display:grid;gap:1.25rem}
+.qz-review li{border-bottom:1px solid var(--line);padding-bottom:1rem}
+.qz-review h3{font-size:1.08rem;line-height:1.4}
+.qz-yours,.qz-right{display:flex;gap:.4rem;align-items:baseline}
+.qz-yours svg,.qz-right svg{width:1rem;height:1rem;flex:none;align-self:center}
+.qz-yours{color:var(--fail)}
+.qz-right{color:var(--pass)}
+.qz-perfect{display:flex;gap:.4rem;align-items:center;font-weight:700;margin-top:1.25rem}
+@media (forced-colors:active){.qz-opt.is-right,.qz-opt.is-wrong,.qz-chip:has(input:checked){border-width:4px}.qz-bar span{background:Highlight}}
+@media (prefers-reduced-motion:reduce){.qz-bar span{transition:none}}
 </style>
 </head>
 <body>
@@ -17902,6 +17996,550 @@ const PRINCIPLES = [
     guidelines: ROBUST_GUIDELINES }
 ];
 
+/* =========================================================
+   Quiz me: hand-written real-world questions
+   Shape: {id, sc, d (0 basic, 1 medium, 2 advanced), k (kind), q,
+           shot (mock screenshot HTML, optional), code (optional),
+           o: [correct answer first, ...wrong answers], e (explanation)}
+   Options are shuffled when shown.
+   ========================================================= */
+const QUIZ_HAND = [
+/* ---------------- Level A ---------------- */
+{id:"cart-icon", sc:"1.1.1", d:0, k:"Spot the issue",
+ q:"A screen reader user tabs to the cart icon in this header and hears only “link”. What's the issue?",
+ shot:`<div style="display:flex;justify-content:space-between;align-items:center;background:#1f2937;color:#fff;padding:12px 16px;border-radius:6px"><b>ShopKart</b><span style="display:flex;gap:16px;font-size:22px"><span>&#128269;</span><span style="outline:3px solid #fbbf24;outline-offset:3px;border-radius:4px">&#128722;</span></span></div>`,
+ o:["The icon link has no accessible name, so its purpose is unknown","The icon is too small to see","The header colour contrast is too low","The link opens in a new window without warning"],
+ e:"An image or icon inside a link is the only content, so its text alternative becomes the link's name. With no alt or aria-label the link reads as just “link”. Fails 1.1.1 (and 4.1.2 / 2.4.4 in many reports). Fix: alt=\"Cart, 2 items\" on the img, or aria-label on the link with aria-hidden on the SVG."},
+{id:"logo-alt", sc:"1.1.1", d:1, k:"Recommended fix",
+ q:"The site logo links to the homepage. Its markup is <a href=\"/\"><img src=\"logo.png\" alt=\"Green leaf logo\"></a>. What's the best alt text?",
+ o:["“Acme home” (the link's purpose)","“Green leaf logo”, it describes the image accurately","alt=\"\" because logos are decorative","“Image of Acme logo, click to go to homepage”"],
+ e:"For a functional image (inside a link or button), the alt describes the action or destination, not the picture. “Acme home” or simply “Acme” works. Don't start with “image of”; screen readers already say “link, graphic”."},
+{id:"divider", sc:"1.1.1", d:0, k:"Recommended fix",
+ q:"A decorative swirl image separates two sections and is announced as “swirl-divider-v2.png”. What's the fix?",
+ o:["Give it an empty alt (alt=\"\") or move it to a CSS background","Write alt=\"decorative swirl\"","Add a title attribute","Wrap it in aria-label=\"divider\""],
+ e:"Decorative images must be ignorable by assistive technology. alt=\"\" (null alt) tells screen readers to skip the image. A non-empty alt like “decorative swirl” adds noise (F39). The file name is a failure (F30)."},
+{id:"captcha", sc:"1.1.1", d:1, k:"Real-world issue",
+ q:"A signup form uses an image CAPTCHA (distorted letters) with alt=\"CAPTCHA\" and no other option. A blind user can't create an account. Which criterion and level?",
+ o:["1.1.1 Non-text Content · Level A","1.4.5 Images of Text · Level AA","3.3.8 Accessible Authentication (Minimum) · Level AA","1.3.3 Sensory Characteristics · Level A"],
+ e:"1.1.1 says a CAPTCHA needs a text alternative that identifies its purpose AND an alternative form in a different modality (audio, or another route). Image-only CAPTCHA blocks blind users."},
+{id:"chart", sc:"1.1.1", d:2, k:"Recommended fix",
+ q:"A quarterly sales bar chart image has alt=\"Sales chart\". The numbers appear nowhere else on the page. What's the recommended solution?",
+ o:["Keep a short alt that names the chart, and give the data as text nearby (a table or summary) or linked","Put every number into the alt attribute, however long","Add aria-hidden=\"true\" to the chart","Use title=\"Sales chart\" instead of alt"],
+ e:"Complex images need a short text alternative plus a longer description. The short alt identifies it (“Bar chart of Q3 sales by region. Data in the table below.”); the full data goes in a table or text so everyone can get it."},
+{id:"podcast", sc:"1.2.1", d:0, k:"Real-world issue",
+ q:"A company blog publishes a weekly podcast (audio only, prerecorded) with no transcript. Which criterion fails?",
+ o:["1.2.1 Audio-only and Video-only (Prerecorded)","1.2.2 Captions (Prerecorded)","1.2.4 Captions (Live)","1.4.2 Audio Control"],
+ e:"Prerecorded audio-only content needs a transcript (1.2.1, Level A). Captions (1.2.2) are for synchronised media, meaning video with audio."},
+{id:"autocaptions", sc:"1.2.2", d:1, k:"Pass or fail?",
+ q:"A product video uses YouTube's auto-generated captions. They miss speaker names, mishear the product name every time, and skip the alarm sound that the presenter reacts to. Pass or fail for 1.2.2?",
+ o:["Fail: captions must be accurate and include speaker identification and meaningful sounds","Pass: captions exist, so the criterion is met","Pass: auto captions are acceptable for prerecorded video","Not applicable: 1.2.2 is only for live video"],
+ e:"Captions must be equivalent to the audio. Inaccurate, unedited auto-captions that miss speakers and meaningful sound effects fail 1.2.2 (F8 covers captions that omit dialogue or important sounds)."},
+{id:"silent-demo", sc:"1.2.1", d:1, k:"Real-world issue",
+ q:"A silent animated product demo (no audio track) shows how to set up the plugin in five steps. There's no text describing what happens. Which criterion fails?",
+ o:["1.2.1 Audio-only and Video-only (Prerecorded)","1.2.2 Captions (Prerecorded)","1.2.5 Audio Description (Prerecorded)","2.2.2 Pause, Stop, Hide"],
+ e:"Prerecorded video-only content needs either a text alternative describing the visual information or an audio track that presents it (1.2.1). Captions don't apply because there is no audio."},
+{id:"no-ad-A", sc:"1.2.3", d:2, k:"Criterion and level",
+ q:"A training video shows on-screen steps (“Click Settings, then Billing”) that the narrator never says aloud. There is no audio description and no full text alternative. Which is the lowest level criterion this fails?",
+ o:["1.2.3 Audio Description or Media Alternative (Prerecorded) · Level A","1.2.5 Audio Description (Prerecorded) · Level AA","1.2.7 Extended Audio Description (Prerecorded) · Level AAA","1.2.2 Captions (Prerecorded) · Level A"],
+ e:"At Level A, 1.2.3 allows either audio description OR a full media alternative (descriptive transcript). Having neither fails it. It would also fail 1.2.5 at AA, which requires audio description specifically."},
+{id:"headings-visual", sc:"1.3.1", d:0, k:"Spot the issue",
+ q:"These section titles look like headings, but the screen reader's headings list is empty. What's failing?",
+ shot:`<div style="font-family:system-ui"><div style="font-size:22px;font-weight:700">Shipping options</div><p style="margin:4px 0 14px">Standard, express and same-day delivery.</p><div style="font-size:22px;font-weight:700">Returns</div><p style="margin:4px 0">Free returns within 30 days.</p></div>`,
+ code:`<div class="title-lg">Shipping options</div>\n<p>Standard, express and same-day delivery.</p>\n<div class="title-lg">Returns</div>`,
+ o:["1.3.1 Info and Relationships: visual headings aren't marked up as headings","2.4.6 Headings and Labels: the headings aren't descriptive","1.4.4 Resize Text: the headings are too large","2.4.2 Page Titled: the page has no title"],
+ e:"Structure conveyed visually must also be in the code. Styled divs that look like headings need <h2>/<h3> (or role=\"heading\" with aria-level). 2.4.6 is about the text being descriptive, which it is."},
+{id:"placeholder-label", sc:"3.3.2", d:0, k:"Spot the issue",
+ q:"Look at this login form. Once the user starts typing, what accessibility issue appears?",
+ shot:`<div style="font-family:system-ui;max-width:260px;display:grid;gap:10px"><div style="border:1px solid #999;padding:8px;border-radius:4px;color:#999">Email address</div><div style="border:1px solid #999;padding:8px;border-radius:4px;color:#999">Password</div><div style="background:#2563eb;color:#fff;padding:8px;text-align:center;border-radius:4px">Sign in</div></div>`,
+ o:["Placeholder used as the only label: it disappears on input and isn't a reliable label","The Sign in button has no accessible name","The fields need autocomplete=\"off\"","The form has no heading"],
+ e:"Placeholder text vanishes once you type, has weak contrast and isn't reliably used as an accessible name. Fields need a visible, persistent label (3.3.2) that's programmatically associated (1.3.1 / 4.1.2)."},
+{id:"table-headers", sc:"1.3.1", d:1, k:"Spot the issue in code",
+ q:"A pricing comparison table is built like this. A screen reader user moving across cells hears “Yes”, “No”, “Yes” with no column names. What's the fix?",
+ code:`<table>\n  <tr><td><b>Feature</b></td><td><b>Free</b></td><td><b>Pro</b></td></tr>\n  <tr><td>Custom domain</td><td>No</td><td>Yes</td></tr>\n</table>`,
+ o:["Mark the header cells as <th> (with scope where needed) so data cells are associated with their headers","Add role=\"presentation\" to the table","Make the bold text larger","Add a title attribute to every cell"],
+ e:"Header cells must be <th> so assistive technology can announce “Pro, Custom domain, Yes”. Bold <td> text is visual-only structure, failing 1.3.1."},
+{id:"radio-group", sc:"1.3.1", d:2, k:"Spot the issue in code",
+ q:"A screen reader announces “Yes, radio button” and “No, radio button” but never the question. What's missing?",
+ code:`<p>Do you want gift wrapping?</p>\n<input type="radio" id="y" name="gift"><label for="y">Yes</label>\n<input type="radio" id="n" name="gift"><label for="n">No</label>`,
+ o:["A <fieldset> with a <legend> (or role=\"radiogroup\" with a label) that groups the radios under the question","aria-checked on each radio","A heading above the paragraph","tabindex=\"0\" on each label"],
+ e:"The question is the group's label. Without fieldset/legend (or radiogroup + aria-labelledby), the relationship is visual only: 1.3.1. Users in forms mode often never hear the paragraph."},
+{id:"reading-order", sc:"1.3.2", d:1, k:"Real-world issue",
+ q:"A product card uses CSS order to show the price above the title visually, but in the DOM the “Add to cart” button comes before the product name. Screen reader users hear “Add to cart, button” before knowing which product. Which criterion?",
+ o:["1.3.2 Meaningful Sequence","1.3.1 Info and Relationships","2.4.6 Headings and Labels","3.2.3 Consistent Navigation"],
+ e:"When the order of content affects meaning, the programmatic (DOM) reading order must preserve it. CSS reordering that creates a confusing reading order fails 1.3.2. Focus order issues would also be 2.4.3."},
+{id:"sensory", sc:"1.3.3", d:0, k:"Real-world issue",
+ q:"Instructions say: “To continue, press the round green button on the right.” The button's text is “Next”. Which criterion does this fail?",
+ o:["1.3.3 Sensory Characteristics","1.4.1 Use of Color","1.4.3 Contrast (Minimum)","2.5.3 Label in Name"],
+ e:"Instructions that rely only on shape, colour, size, position or sound fail 1.3.3. Add the visible text: “Press Next (the green button on the right)”."},
+{id:"color-only-error", sc:"1.4.1", d:0, k:"Spot the issue",
+ q:"After submitting, the invalid field just turns its border red. Nothing else changes. What fails?",
+ shot:`<div style="font-family:system-ui;max-width:280px"><label style="display:block;margin-bottom:4px">Phone number</label><div style="border:2px solid #dc2626;padding:8px;border-radius:4px">98765</div></div>`,
+ o:["1.4.1 Use of Color: the error is shown by colour alone","1.3.3 Sensory Characteristics: the field is rectangular","2.4.7 Focus Visible: there's no focus ring","1.4.12 Text Spacing: the text is cramped"],
+ e:"Colour can't be the only way to convey information. Add an icon and error text (“Enter a 10-digit phone number”). The missing text also fails 3.3.1 Error Identification."},
+{id:"link-underline", sc:"1.4.1", d:1, k:"Spot the issue",
+ q:"Links in this paragraph are blue with no underline. The blue vs body-text contrast ratio is 1.6:1 and there is no other cue until hover. What fails?",
+ shot:`<p style="font-family:system-ui;color:#333;line-height:1.6;max-width:420px">Read our <span style="color:#3b5998">refund policy</span> before placing an order, and check the <span style="color:#3b5998">shipping times</span> for your region.</p>`,
+ o:["1.4.1 Use of Color: links are distinguished by colour alone, with less than 3:1 against the text","1.4.3 Contrast (Minimum): the link colour has less than 4.5:1 against the background","2.4.4 Link Purpose: the link text is unclear","Nothing, colour is fine for links"],
+ e:"Inline links distinguished only by colour need 3:1 contrast with surrounding text plus a non-colour cue on hover/focus, or simply an underline. 1.6:1 with no underline fails 1.4.1 (F73)."},
+{id:"autoplay-audio", sc:"1.4.2", d:0, k:"Real-world issue",
+ q:"A restaurant homepage plays background music automatically for 2 minutes with no pause or volume control. Screen reader users can't hear their reader. Which criterion?",
+ o:["1.4.2 Audio Control","2.2.2 Pause, Stop, Hide","1.4.7 Low or No Background Audio","1.2.1 Audio-only and Video-only (Prerecorded)"],
+ e:"Audio that plays automatically for more than 3 seconds needs a way to pause/stop it or control its volume independently (1.4.2, Level A). 2.2.2 is about moving/blinking visual content."},
+{id:"keyboard-div", sc:"2.1.1", d:0, k:"Spot the issue in code",
+ q:"This “Add to wishlist” control works with a mouse. A keyboard user can't reach or activate it. What's the issue?",
+ code:`<div class="wish" onclick="addToWishlist(42)">♡ Add to wishlist</div>`,
+ o:["A div isn't focusable or keyboard-operable; use a <button>","The heart symbol needs alt text","The onclick should be onmouseover","The text is too long"],
+ e:"Functionality must work with a keyboard (2.1.1). A clickable div has no tab stop or Enter/Space support, and no button role (4.1.2). A native <button type=\"button\"> fixes both."},
+{id:"hover-only-menu", sc:"2.1.1", d:1, k:"Real-world issue",
+ q:"The mega menu opens only on mouse hover. Tabbing moves through the top-level links, but the submenus never open, so keyboard users can't reach any category page. Which criterion?",
+ o:["2.1.1 Keyboard","1.4.13 Content on Hover or Focus","2.4.7 Focus Visible","2.4.3 Focus Order"],
+ e:"If submenu content is only reachable by hover, the functionality isn't keyboard operable: 2.1.1. 1.4.13 is about hover/focus content being dismissible, hoverable and persistent once it appears."},
+{id:"trap", sc:"2.1.2", d:0, k:"Real-world issue",
+ q:"An embedded chat widget grabs focus. Tab and Shift+Tab cycle only inside it, Escape does nothing and there's no close button. Keyboard users are stuck. Which criterion?",
+ o:["2.1.2 No Keyboard Trap","2.1.1 Keyboard","2.4.3 Focus Order","2.2.1 Timing Adjustable"],
+ e:"If focus can move into a component it must be able to move out using standard keys (or the user is told how). This is a keyboard trap (2.1.2). Note: a modal dialog keeping focus inside is fine because it can be closed."},
+{id:"single-key", sc:"2.1.4", d:1, k:"Real-world issue",
+ q:"A webmail app archives the open email when the user presses the single key “e”. Speech-input users find emails getting archived as they dictate. There's no way to turn this off. Which criterion?",
+ o:["2.1.4 Character Key Shortcuts","2.1.1 Keyboard","3.2.1 On Focus","2.5.6 Concurrent Input Mechanisms"],
+ e:"Single-character shortcuts must be able to be turned off, remapped (to include a modifier like Ctrl), or only active when the component has focus. 2.1.4, Level A."},
+{id:"session-timeout", sc:"2.2.1", d:1, k:"Recommended fix",
+ q:"A banking site logs users out after 5 minutes of inactivity with no warning, losing a half-filled transfer form. What does 2.2.1 Timing Adjustable expect?",
+ o:["Warn before time runs out and let the user extend it (at least 10 times, with a simple action, given at least 20 seconds)","Remove all session timeouts on every site","Show a countdown timer in the footer","Save the form only for screen reader users"],
+ e:"For time limits, users must be able to turn off, adjust (to 10×), or extend them (warned with 20+ seconds to act, simple action, at least 10 times). Exceptions exist for real-time events and essential limits over 20 hours."},
+{id:"carousel-autoplay", sc:"2.2.2", d:0, k:"Spot the issue",
+ q:"This hero carousel rotates every 4 seconds forever and has no controls. What fails?",
+ shot:`<div style="font-family:system-ui;position:relative;background:linear-gradient(90deg,#7c3aed,#db2777);color:#fff;padding:28px 18px;border-radius:8px"><div style="font-size:20px;font-weight:700">Summer sale: 40% off</div><div style="opacity:.9">Slide 2 of 5 · auto-advancing</div><div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);display:flex;gap:6px"><i style="width:8px;height:8px;border-radius:50%;background:#fff6;display:block"></i><i style="width:8px;height:8px;border-radius:50%;background:#fff;display:block"></i><i style="width:8px;height:8px;border-radius:50%;background:#fff6;display:block"></i></div></div>`,
+ o:["2.2.2 Pause, Stop, Hide: moving content that starts automatically and lasts over 5 seconds needs a pause control","2.3.1 Three Flashes or Below Threshold","1.4.2 Audio Control","2.2.1 Timing Adjustable only"],
+ e:"Auto-moving content that lasts more than 5 seconds and is shown alongside other content needs a mechanism to pause, stop or hide it. Pausing on hover/focus helps, but a visible pause button is the robust fix."},
+{id:"flash", sc:"2.3.1", d:1, k:"Real-world issue",
+ q:"A game promo banner has a red strobe effect that flashes 6 times per second across a large area of the screen. Which criterion?",
+ o:["2.3.1 Three Flashes or Below Threshold","2.2.2 Pause, Stop, Hide","2.3.3 Animation from Interactions","1.4.1 Use of Color"],
+ e:"Content must not flash more than three times in any one-second period unless the flashes are below the general and red flash thresholds. Large saturated red flashes are especially risky for photosensitive seizures. Level A."},
+{id:"skip-link", sc:"2.4.1", d:0, k:"Real-world issue",
+ q:"Every page starts with 60 header and mega-menu links. There's no skip link, no landmarks and no headings. A keyboard user must tab through all 60 to reach the content. Which criterion?",
+ o:["2.4.1 Bypass Blocks","2.4.3 Focus Order","2.1.1 Keyboard","2.4.5 Multiple Ways"],
+ e:"A mechanism must exist to skip blocks repeated on multiple pages: a skip link, landmarks, or headings. Having none fails 2.4.1."},
+{id:"title", sc:"2.4.2", d:0, k:"Spot the issue in code",
+ q:"Every page of a web app (Dashboard, Settings, Billing) has the same <title>. What's the issue?",
+ code:`<title>MyApp</title>`,
+ o:["2.4.2 Page Titled: titles must describe each page's topic or purpose, e.g. “Billing | MyApp”","3.1.1 Language of Page","2.4.6 Headings and Labels","Nothing; one title per app is fine"],
+ e:"Pages need titles that describe their topic or purpose. Identical titles don't help users tell tabs or history entries apart. Put the unique part first: “Billing | MyApp”."},
+{id:"modal-focus", sc:"2.4.3", d:1, k:"Real-world issue",
+ q:"Clicking “Delete account” opens a confirmation modal, but focus stays on the button behind it. Tabbing moves through the page underneath before eventually reaching the modal. Which criterion?",
+ o:["2.4.3 Focus Order","2.1.2 No Keyboard Trap","2.4.7 Focus Visible","3.2.1 On Focus"],
+ e:"Focus should move into the dialog when it opens and stay within it while it's modal, then return to the trigger on close. A focus order that wanders behind the modal doesn't preserve meaning and operability: 2.4.3."},
+{id:"read-more", sc:"2.4.4", d:0, k:"Spot the issue",
+ q:"A blog listing has ten cards, each ending with a “Read more” link. A screen reader's links list shows “Read more” ten times. Can this pass 2.4.4 Link Purpose (In Context)?",
+ shot:`<div style="font-family:system-ui;display:grid;gap:10px;max-width:360px"><div style="border:1px solid #ddd;padding:10px;border-radius:6px"><b>Alt text that works</b><p style="margin:4px 0">How to write useful image descriptions.</p><span style="color:#1d4ed8;text-decoration:underline">Read more</span></div><div style="border:1px solid #ddd;padding:10px;border-radius:6px"><b>Testing with NVDA</b><p style="margin:4px 0">A beginner's walkthrough.</p><span style="color:#1d4ed8;text-decoration:underline">Read more</span></div></div>`,
+ o:["It can pass if the purpose is determinable from programmatic context (e.g. same list item or heading), but adding the title to the link name is better","It always fails 2.4.4","It always passes because the text is visible","Only fails at Level AAA 2.4.9, never at 2.4.4"],
+ e:"2.4.4 (A) allows link purpose from the link text together with its programmatically determined context, like the enclosing list item or associated heading. 2.4.9 (AAA) requires the link text alone to be clear. Best practice: “Read more about alt text” or aria-describedby."},
+{id:"label-in-name", sc:"2.5.3", d:1, k:"Spot the issue in code",
+ q:"A speech-input user says “click Search” but nothing happens. Look at the code. What fails?",
+ code:`<button aria-label="Find products">Search</button>`,
+ o:["2.5.3 Label in Name: the accessible name doesn't contain the visible label “Search”","4.1.2 Name, Role, Value: the button has no name","2.4.6 Headings and Labels","1.1.1 Non-text Content"],
+ e:"The accessible name (“Find products”) overrides the visible text, so voice commands using the visible word don't match. The name must contain the visible text, ideally at the start: aria-label isn't needed here at all."},
+{id:"pointer-cancel", sc:"2.5.2", d:2, k:"Real-world issue",
+ q:"A “Delete file” button triggers on mousedown/touchstart. Users with tremors who touch it by accident can't slide off to cancel. Which criterion?",
+ o:["2.5.2 Pointer Cancellation","2.5.1 Pointer Gestures","2.5.8 Target Size (Minimum)","3.3.4 Error Prevention (Legal, Financial, Data)"],
+ e:"For single-pointer functionality, the action should complete on the up-event (click), with a way to abort by moving off, or be undoable. Firing on the down-event fails 2.5.2 (Level A)."},
+{id:"pinch", sc:"2.5.1", d:1, k:"Real-world issue",
+ q:"An interactive store map can only be zoomed with a two-finger pinch. There are no + / − buttons. Which criterion?",
+ o:["2.5.1 Pointer Gestures","2.5.7 Dragging Movements","1.4.4 Resize Text","2.1.1 Keyboard only"],
+ e:"Multipoint or path-based gestures need a single-pointer alternative (like zoom buttons) unless the gesture is essential. 2.5.1, Level A. Keyboard access is a separate check under 2.1.1."},
+{id:"motion", sc:"2.5.4", d:2, k:"Real-world issue",
+ q:"A mobile web app undoes the last action when the user shakes the phone. There's no on-screen undo and shaking can't be disabled. Which criterion?",
+ o:["2.5.4 Motion Actuation","2.3.3 Animation from Interactions","2.5.1 Pointer Gestures","2.2.2 Pause, Stop, Hide"],
+ e:"Functionality triggered by device motion needs a UI alternative and a way to disable motion response to avoid accidental activation. 2.5.4, Level A."},
+{id:"lang", sc:"3.1.1", d:0, k:"Spot the issue in code",
+ q:"A Malayalam news site is read by screen readers with an English voice, mangling every word. What's the likely cause?",
+ code:`<html>\n<head><title>വാർത്ത</title></head>`,
+ o:["Missing lang attribute; it should be <html lang=\"ml\">","The title is not in English","There's no meta charset","The font doesn't support Malayalam"],
+ e:"3.1.1 Language of Page requires the default human language to be programmatically determined. lang=\"ml\" lets screen readers choose the right voice and pronunciation rules."},
+{id:"on-focus", sc:"3.2.1", d:1, k:"Real-world issue",
+ q:"When a keyboard user tabs onto the “Country” select, a new page opens immediately before they choose anything. Which criterion?",
+ o:["3.2.1 On Focus","3.2.2 On Input","2.4.3 Focus Order","3.2.5 Change on Request"],
+ e:"Receiving focus must not trigger a change of context (new page, new window, focus jump). This happens on focus, so 3.2.1. If it navigated on choosing an option without warning, that would be 3.2.2."},
+{id:"on-input", sc:"3.2.2", d:1, k:"Real-world issue",
+ q:"A “Sort by” select reloads the page as soon as an option is chosen with the arrow keys, so keyboard users can't get past the first option. No warning is given. Which criterion?",
+ o:["3.2.2 On Input","3.2.1 On Focus","2.1.2 No Keyboard Trap","4.1.2 Name, Role, Value"],
+ e:"Changing a setting must not automatically change context unless the user was told beforehand. Navigating on select change fails 3.2.2. Fix: add an “Apply” button, or only act on confirm."},
+{id:"error-id", sc:"3.3.1", d:0, k:"Spot the issue",
+ q:"After submitting, a red banner says “There was an error with your submission.” Nothing says which field is wrong. Which criterion?",
+ shot:`<div style="font-family:system-ui;max-width:340px"><div style="background:#fee2e2;color:#991b1b;padding:8px 10px;border-radius:4px;margin-bottom:10px">There was an error with your submission.</div><label>Name</label><div style="border:1px solid #999;padding:6px;margin:2px 0 8px">Lee</div><label>Email</label><div style="border:1px solid #999;padding:6px;margin-top:2px">lee@</div></div>`,
+ o:["3.3.1 Error Identification: the field in error must be identified and the error described in text","3.3.2 Labels or Instructions","1.4.3 Contrast (Minimum)","2.4.2 Page Titled"],
+ e:"If an input error is automatically detected, identify the item in error and describe it in text: “Email: enter a full address like name@example.com”. 3.3.3 (AA) then adds suggesting the correction."},
+{id:"required-star", sc:"3.3.2", d:1, k:"Spot the issue",
+ q:"Some fields have a red asterisk, but nowhere on the form explains what it means, and the asterisk isn't in the label's accessible name. What's the best fix?",
+ shot:`<div style="font-family:system-ui;max-width:280px;display:grid;gap:8px"><div>First name <span style="color:#dc2626">*</span><div style="border:1px solid #999;height:28px;margin-top:2px"></div></div><div>Company<div style="border:1px solid #999;height:28px;margin-top:2px"></div></div></div>`,
+ o:["Explain “* Required” at the top of the form, include it in the label, and add required/aria-required","Make the asterisk bigger and bolder","Change the asterisk to green","Remove the asterisk and rely on the error message after submit"],
+ e:"3.3.2 needs labels or instructions when input is required. Explaining the asterisk and exposing “required” programmatically (required attribute) lets everyone know before they submit."},
+{id:"name-role-value", sc:"4.1.2", d:1, k:"Spot the issue in code",
+ q:"A custom toggle switch is built like this. Screen readers announce “Dark mode” with no role or on/off state. What fails?",
+ code:`<span class="switch on" tabindex="0" onclick="toggle()">Dark mode</span>`,
+ o:["4.1.2 Name, Role, Value: it needs role=\"switch\" (or a button with aria-pressed / a checkbox) and an exposed state","1.4.1 Use of Color","2.4.7 Focus Visible","1.3.5 Identify Input Purpose"],
+ e:"Custom controls must expose name, role and state. Use <button aria-pressed>, <input type=\"checkbox\" role=\"switch\">, or role=\"switch\" with aria-checked that updates. Also handle Enter/Space."},
+{id:"aria-expanded", sc:"4.1.2", d:2, k:"Spot the issue in code",
+ q:"The FAQ toggles open and closed, but screen readers always announce “collapsed”. What's wrong?",
+ code:`<button aria-expanded="false" aria-controls="a1">Do you ship abroad?</button>\n<div id="a1" class="open">Yes, to 40 countries.</div>\n<script>btn.onclick = () => panel.classList.toggle("open");<\/script>`,
+ o:["aria-expanded is never updated when the panel opens, so the state is stale","aria-controls is invalid on a button","The button needs role=\"link\"","The panel needs aria-hidden=\"false\" only"],
+ e:"State must stay in sync with what's shown. Update aria-expanded to \"true\" when the panel opens (4.1.2). A static state is worse than none: it actively lies."},
+{id:"aria-hidden-focus", sc:"4.1.2", d:2, k:"Spot the issue in code",
+ q:"A closed off-canvas menu is hidden like this. Keyboard users tab into invisible links and screen readers say nothing. What's the issue?",
+ code:`<nav class="offcanvas" aria-hidden="true" style="transform:translateX(-100%)">\n  <a href="/shop">Shop</a> <a href="/about">About</a>\n</nav>`,
+ o:["Focusable elements inside aria-hidden=\"true\" are still in the tab order; hide it with display:none, hidden or inert","aria-hidden should be on each link instead","The nav needs aria-label","transform should be left instead"],
+ e:"aria-hidden removes content from the accessibility tree but not from the tab order, creating “ghost” focus stops with no name. Use hidden/display:none/visibility:hidden or inert when closed."},
+{id:"role-button-link", sc:"4.1.2", d:2, k:"Recommended fix",
+ q:"An <a href=\"#\" onclick=\"openFilters()\">Filters</a> opens a panel on the same page. What's the most robust fix?",
+ o:["Use <button type=\"button\" aria-expanded=\"false\"> since it performs an action, not navigation","Add role=\"link\"","Add tabindex=\"0\"","Change href to \"javascript:void(0)\""],
+ e:"Links navigate; buttons act. A button gets the right role, Space key support and can carry aria-expanded. Screen reader users expect a link to take them somewhere."},
+{id:"input-type-image", sc:"1.1.1", d:1, k:"Spot the issue in code",
+ q:"What does this image submit button need?",
+ code:`<input type="image" src="go-arrow.png">`,
+ o:["An alt attribute describing its action, e.g. alt=\"Search\"","A title attribute","aria-hidden=\"true\"","role=\"img\""],
+ e:"Image inputs are buttons; their alt becomes the accessible name (technique H36). Without it, they're announced as “button” or the file name."},
+{id:"svg-icon", sc:"1.1.1", d:2, k:"Spot the issue in code",
+ q:"Which version of this icon-only “Delete” button is correct?",
+ code:`<!-- A -->\n<button><svg>…trash…</svg></button>\n<!-- B -->\n<button aria-label="Delete"><svg aria-hidden="true" focusable="false">…</svg></button>\n<!-- C -->\n<button><svg role="img">…</svg> <span hidden>Delete</span></button>`,
+ o:["B: the button gets a name, the decorative SVG is hidden","A: the SVG path is enough","C: hidden text still names the button","None; icon buttons are not allowed"],
+ e:"B names the button with aria-label and hides the SVG. In C, the hidden attribute removes the text from the accessibility tree (unless referenced by aria-labelledby), so the button has no name."},
+{id:"video-player-kb", sc:"2.1.1", d:2, k:"Real-world issue",
+ q:"A custom video player's play, volume and fullscreen controls are divs with click handlers. Space scrolls the page instead of playing. Which TWO criteria would you log?",
+ o:["2.1.1 Keyboard and 4.1.2 Name, Role, Value","1.2.2 Captions and 1.4.2 Audio Control","2.2.2 Pause, Stop, Hide and 2.4.7 Focus Visible","1.4.11 Non-text Contrast and 2.5.8 Target Size"],
+ e:"The controls can't be operated by keyboard (2.1.1) and expose no role or name (4.1.2). Using <button> elements fixes both at once."},
+{id:"iframe-title", sc:"4.1.2", d:1, k:"Spot the issue in code",
+ q:"A page embeds a YouTube video and a Google Map. Screen readers announce each as just “frame”. What should be added?",
+ code:`<iframe src="https://www.youtube.com/embed/abc"></iframe>\n<iframe src="https://maps.google.com/…"></iframe>`,
+ o:["A title attribute on each iframe describing its content, e.g. title=\"Product demo video\"","alt attributes on each iframe","role=\"presentation\"","aria-hidden=\"true\" on both"],
+ e:"Frames need an accessible name; the title attribute is the standard way (H64). It helps users decide whether to enter the frame."},
+{id:"duplicate-id", sc:"1.3.1", d:2, k:"Spot the issue in code",
+ q:"Two fields share the same id. Which accessibility problem does this cause?",
+ code:`<label for="email">Work email</label><input id="email">\n<label for="email">Personal email</label><input id="email">`,
+ o:["The second label points to the first input, so the second field has no label","Nothing; ids can repeat","Only an HTML validity warning with no user impact","The page title breaks"],
+ e:"for/id associations (and aria-labelledby/describedby) resolve to the first matching id. The second input ends up unlabelled (1.3.1 / 4.1.2). 4.1.1 Parsing is obsolete in WCAG 2.2, but the real-world impact still fails other criteria."},
+{id:"parsing-obsolete", sc:"4.1.2", d:1, k:"WCAG 2.2 change",
+ q:"In WCAG 2.2, what happened to 4.1.1 Parsing?",
+ o:["It was made obsolete and removed; it's always considered satisfied","It moved to Level AA","It merged into 1.3.1","It now requires HTML validation on every page"],
+ e:"WCAG 2.2 marks 4.1.1 Parsing obsolete because modern browsers and assistive tech handle parsing consistently. Real issues like duplicate ids are caught under 1.3.1 or 4.1.2."},
+{id:"autofill-email", sc:"1.3.5", lv:"AA", d:1, k:"Spot the issue in code",
+ q:"A checkout's shipping name, email and phone fields have no autocomplete attributes. Which criterion and level?",
+ code:`<input id="email" type="email">\n<input id="tel" type="tel">`,
+ o:["1.3.5 Identify Input Purpose · Level AA","1.3.6 Identify Purpose · Level AAA","3.3.2 Labels or Instructions · Level A","3.3.7 Redundant Entry · Level A"],
+ e:"Fields collecting information about the user need the matching autocomplete token (email, tel, name, street-address…) so browsers can autofill and tools can add icons. 1.3.5, Level AA."},
+{id:"redundant-entry", sc:"3.3.7", d:1, k:"Real-world issue",
+ q:"Step 3 of a checkout asks for the billing address again, after the user typed the same address as the shipping address in step 1. There's no “same as shipping” option or prefill. Which criterion?",
+ o:["3.3.7 Redundant Entry · Level A","3.3.8 Accessible Authentication (Minimum) · Level AA","1.3.5 Identify Input Purpose · Level AA","3.3.4 Error Prevention · Level AA"],
+ e:"New in WCAG 2.2: information the user already entered in the same process must be auto-populated or available to select, unless re-entry is essential (like confirming a password) or for security."},
+{id:"consistent-help", sc:"3.2.6", d:1, k:"Real-world issue",
+ q:"On the product pages the “Chat with us” link is in the header. On checkout pages it moves to the bottom of the footer. Which WCAG 2.2 criterion?",
+ o:["3.2.6 Consistent Help · Level A","3.2.3 Consistent Navigation · Level AA","3.3.5 Help · Level AAA","2.4.5 Multiple Ways · Level AA"],
+ e:"If help mechanisms (contact details, chat, self-help) are repeated across pages, they must appear in the same relative order. 3.2.6 is new in 2.2, at Level A."},
+
+/* ---------------- Level AA ---------------- */
+{id:"grey-text", sc:"1.4.3", d:0, k:"Spot the issue",
+ q:"Light grey body text (#999999) on white has a contrast ratio of 2.8:1. What fails?",
+ shot:`<p style="font-family:system-ui;color:#999999;background:#fff;font-size:15px;max-width:380px;padding:8px">Free shipping on orders over ₹999. Delivery in 3–5 business days.</p>`,
+ o:["1.4.3 Contrast (Minimum): normal text needs at least 4.5:1","1.4.11 Non-text Contrast: needs 3:1","1.4.6 Contrast (Enhanced) only","Nothing; grey text is a design choice"],
+ e:"Normal-size text needs 4.5:1 at AA; large text (24px, or 18.66px bold) needs 3:1. #767676 is the lightest grey that passes on white."},
+{id:"large-text", sc:"1.4.3", d:1, k:"Pass or fail?",
+ q:"A 28px bold heading uses #8A8A8A on white (3.4:1). Pass or fail at AA?",
+ o:["Pass: large text needs only 3:1 at AA","Fail: all text needs 4.5:1","Fail: headings need 7:1","Pass: headings are exempt from contrast"],
+ e:"Large text (at least 24px regular or 18.66px bold) needs 3:1 under 1.4.3. It would fail 1.4.6 (AAA), which needs 4.5:1 for large text."},
+{id:"placeholder-contrast", sc:"1.4.3", d:2, k:"Pass or fail?",
+ q:"Placeholder text (“e.g. 560001”) in a PIN code field has 2.2:1 contrast. The field also has a proper visible label above it. Pass or fail 1.4.3?",
+ o:["Fail: placeholder text is text and needs 4.5:1","Pass: placeholders are exempt as incidental text","Pass: because the field has a label","Not applicable: 1.4.3 only covers body copy"],
+ e:"Placeholder text is still text that conveys information, so it needs 4.5:1. Only disabled controls, pure decoration, invisible text, and logos are exempt."},
+{id:"input-border", sc:"1.4.11", d:1, k:"Spot the issue",
+ q:"These input fields have a very light border (#E0E0E0 on white, 1.3:1) and no other boundary. What fails?",
+ shot:`<div style="font-family:system-ui;max-width:280px;display:grid;gap:8px;background:#fff;padding:8px"><label>Full name<div style="border:1px solid #E0E0E0;height:30px;margin-top:2px;border-radius:4px"></div></label><label>City<div style="border:1px solid #E0E0E0;height:30px;margin-top:2px;border-radius:4px"></div></label></div>`,
+ o:["1.4.11 Non-text Contrast: visual information needed to identify the control needs 3:1","1.4.3 Contrast (Minimum): the label text is too light","1.4.1 Use of Color","2.4.7 Focus Visible"],
+ e:"UI component boundaries needed to identify the control need 3:1 against adjacent colours. A field you can't see as a field fails 1.4.11."},
+{id:"icon-contrast", sc:"1.4.11", d:2, k:"Pass or fail?",
+ q:"A search icon button shows only a light-blue magnifying glass (#9CC9F5) on white (1.8:1). Pass or fail?",
+ o:["Fail 1.4.11: graphical objects needed to understand the control need 3:1","Pass: icons are decorative","Fail 1.4.3: icons need 4.5:1","Pass: 1.4.11 only covers borders"],
+ e:"Icons that are the only indicator of a control's purpose are graphical objects required to understand content, so they need 3:1 against adjacent colours."},
+{id:"focus-none", sc:"2.4.7", d:0, k:"Spot the issue in code",
+ q:"This CSS is in the global stylesheet and nothing replaces it. What fails?",
+ code:`*:focus { outline: none; }`,
+ o:["2.4.7 Focus Visible: keyboard users can't see where focus is","2.1.1 Keyboard","2.4.3 Focus Order","1.4.11 Non-text Contrast only"],
+ e:"Removing the focus outline without a visible replacement fails 2.4.7 (F78). Use :focus-visible with a clear outline instead."},
+{id:"zoom", sc:"1.4.4", d:1, k:"Real-world issue",
+ q:"At 200% browser zoom, the navigation text overlaps itself and the “Checkout” button label gets cut off. Which criterion?",
+ o:["1.4.4 Resize Text","1.4.10 Reflow","1.4.12 Text Spacing","1.3.4 Orientation"],
+ e:"Text must resize up to 200% without loss of content or functionality. Clipped and overlapping text fails 1.4.4. Reflow (1.4.10) is about 320 CSS px width / 400% zoom without two-dimensional scrolling."},
+{id:"viewport-noscale", sc:"1.4.4", d:2, k:"Spot the issue in code",
+ q:"On mobile, users can't pinch-zoom this page. What's the cause and criterion?",
+ code:`<meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no">`,
+ o:["user-scalable=no / maximum-scale=1 block zoom; fails 1.4.4 Resize Text","Missing initial-scale; fails 1.3.4","The viewport tag fails 1.4.10 only","Nothing; this is required for responsive sites"],
+ e:"Disabling zoom prevents users from enlarging text. Remove user-scalable=no and maximum-scale limits. (Some browsers ignore it, but it's still a failure.)"},
+{id:"reflow", sc:"1.4.10", d:1, k:"Spot the issue",
+ q:"At 320 CSS px wide (400% zoom on a 1280px screen), the article text requires scrolling both horizontally and vertically to read each line. Which criterion?",
+ shot:`<div style="font-family:system-ui;width:220px;overflow:hidden;border:2px dashed #888;padding:6px;white-space:nowrap">Accessibility testing helps everyone use your product more easily →→→</div><div style="font:12px system-ui;color:#555;margin-top:4px">↔ horizontal scrollbar appears</div>`,
+ o:["1.4.10 Reflow","1.4.4 Resize Text","1.4.12 Text Spacing","1.3.4 Orientation"],
+ e:"Content must reflow into a single column at 320 CSS px without two-dimensional scrolling, except parts that need 2D layout (maps, data tables, toolbars)."},
+{id:"text-spacing", sc:"1.4.12", d:1, k:"Real-world issue",
+ q:"With a text-spacing bookmarklet applied (line height 1.5, letter spacing 0.12em, word spacing 0.16em, paragraph spacing 2em), button labels get cut off because the buttons have a fixed height and overflow:hidden. Which criterion?",
+ o:["1.4.12 Text Spacing","1.4.4 Resize Text","1.4.8 Visual Presentation","1.4.10 Reflow"],
+ e:"When users override text spacing to those values, no content or functionality may be lost. Fixed heights with hidden overflow are the classic failure. Use min-height and let containers grow."},
+{id:"tooltip-hover", sc:"1.4.13", d:1, k:"Real-world issue",
+ q:"A tooltip appears when hovering over an info icon, but it vanishes as soon as the pointer moves toward it, and Escape does nothing. Screen magnifier users can't read it. Which criterion?",
+ o:["1.4.13 Content on Hover or Focus","2.1.1 Keyboard","1.4.4 Resize Text","3.2.1 On Focus"],
+ e:"Hover/focus content must be dismissible (e.g. Escape) without moving focus, hoverable (the pointer can move over it), and persistent until dismissed or no longer relevant."},
+{id:"headings-labels", sc:"2.4.6", d:1, k:"Real-world issue",
+ q:"Every section on a long settings page is headed “Details”. The headings are proper <h2> elements. Which criterion?",
+ o:["2.4.6 Headings and Labels","1.3.1 Info and Relationships","2.4.10 Section Headings","2.4.2 Page Titled"],
+ e:"Headings and labels must describe the topic or purpose. Correctly marked-up but meaningless headings pass 1.3.1 and fail 2.4.6."},
+{id:"multiple-ways", sc:"2.4.5", d:1, k:"Real-world issue",
+ q:"A 300-page documentation site can only be explored through its top navigation. There's no search, sitemap or table of contents. Which criterion?",
+ o:["2.4.5 Multiple Ways","2.4.1 Bypass Blocks","2.4.8 Location","3.2.3 Consistent Navigation"],
+ e:"More than one way must be available to locate a page within a set of pages (search, sitemap, TOC, related links), except pages that are steps in a process."},
+{id:"consistent-nav", sc:"3.2.3", d:1, k:"Real-world issue",
+ q:"On the Shop pages the main navigation order is Home, Shop, Blog, Contact. On Blog pages it's Blog, Contact, Home, Shop. Which criterion?",
+ o:["3.2.3 Consistent Navigation","3.2.4 Consistent Identification","2.4.5 Multiple Ways","3.2.6 Consistent Help"],
+ e:"Navigation repeated on multiple pages must occur in the same relative order each time, unless the user changes it."},
+{id:"consistent-id", sc:"3.2.4", d:1, k:"Real-world issue",
+ q:"The same download icon is labelled “Download” on one page, “Save file” on another and “Export” on a third, all doing the same thing. Which criterion?",
+ o:["3.2.4 Consistent Identification","3.2.3 Consistent Navigation","2.4.6 Headings and Labels","2.5.3 Label in Name"],
+ e:"Components with the same function across a set of pages must be identified consistently (same accessible name and alt)."},
+{id:"error-suggestion", sc:"3.3.3", d:1, k:"Recommended fix",
+ q:"A date field shows “Invalid date” when the user types 31/02/2025. The system knows the expected format and valid range. What does 3.3.3 Error Suggestion expect?",
+ o:["Suggest how to fix it, e.g. “February has 28 days in 2025. Enter a date like 28/02/2025.”","Clear the field automatically","Show the error only to screen readers","Highlight the field red and nothing more"],
+ e:"If an error is detected and suggestions are known, provide them (unless it would compromise security or purpose). 3.3.1 identifies the error; 3.3.3 helps fix it."},
+{id:"error-prev", sc:"3.3.4", d:2, k:"Real-world issue",
+ q:"Clicking “Pay ₹24,999” immediately charges the card. There's no review step, no confirmation and no way to cancel or reverse. Which criterion and level?",
+ o:["3.3.4 Error Prevention (Legal, Financial, Data) · Level AA","3.3.6 Error Prevention (All) · Level AAA","3.3.1 Error Identification · Level A","2.5.2 Pointer Cancellation · Level A"],
+ e:"For legal commitments, financial transactions or changes to user data, submissions must be reversible, checked for errors with a chance to correct, or confirmed before finalising."},
+{id:"status-msg", sc:"4.1.3", d:1, k:"Real-world issue",
+ q:"After clicking “Add to cart”, a small “Added to cart (3 items)” message appears near the header. Focus stays on the button and screen readers say nothing. Which criterion?",
+ o:["4.1.3 Status Messages","3.3.1 Error Identification","4.1.2 Name, Role, Value","2.4.3 Focus Order"],
+ e:"Status messages that don't take focus must be programmatically exposed so AT can announce them. Use role=\"status\" (aria-live=\"polite\") on a container that exists before the text is injected."},
+{id:"live-region-late", sc:"4.1.3", d:2, k:"Spot the issue in code",
+ q:"The search results count isn't announced. Why?",
+ code:`// after search finishes:\nconst p = document.createElement("p");\np.setAttribute("role", "status");\np.textContent = "12 results";\nresults.before(p);`,
+ o:["The live region is created and filled at the same moment; it should already be in the DOM before its text changes","role=\"status\" isn't a valid role","Status messages must use role=\"alert\"","textContent can't be used for live regions"],
+ e:"Many screen readers only announce changes to live regions they already know about. Put an empty role=\"status\" container in the page on load, then update its text."},
+{id:"orientation", sc:"1.3.4", d:1, k:"Real-world issue",
+ q:"A banking web app shows “Please rotate your device” and blocks content in landscape. A user with a wheelchair-mounted tablet fixed in landscape can't use it. Which criterion?",
+ o:["1.3.4 Orientation","1.4.10 Reflow","2.5.4 Motion Actuation","1.4.4 Resize Text"],
+ e:"Content must not restrict display to one orientation unless it's essential (like a piano app or a bank cheque deposit). 1.3.4, Level AA."},
+{id:"images-of-text", sc:"1.4.5", d:1, k:"Real-world issue",
+ q:"A sale banner's heading “Diwali Sale: Flat 50% off” is a JPEG with that text as its alt. The same look could be made with web fonts and CSS. Which criterion?",
+ o:["1.4.5 Images of Text","1.1.1 Non-text Content","1.4.3 Contrast (Minimum)","1.4.9 Images of Text (No Exception)"],
+ e:"At AA, if technology can present the visual, use real text rather than images of text (logos and essential cases excepted). The alt satisfies 1.1.1, but 1.4.5 still fails. 1.4.9 is the stricter AAA version."},
+{id:"focus-obscured", sc:"2.4.11", d:1, k:"Spot the issue",
+ q:"As a keyboard user tabs down the page, the focused link ends up completely hidden behind a sticky cookie banner. Which WCAG 2.2 criterion?",
+ shot:`<div style="font-family:system-ui;position:relative;height:120px;border:1px solid #ccc;overflow:hidden;background:#fff"><p style="margin:8px">Our story</p><p style="margin:8px">Careers</p><p style="margin:8px;outline:3px solid #2563eb">Privacy policy (focused)</p><div style="position:absolute;bottom:0;left:0;right:0;background:#111;color:#fff;padding:14px 10px">We use cookies. <b style="text-decoration:underline">Accept</b></div></div>`,
+ o:["2.4.11 Focus Not Obscured (Minimum) · Level AA","2.4.7 Focus Visible · Level AA","2.4.12 Focus Not Obscured (Enhanced) · Level AAA","2.4.3 Focus Order · Level A"],
+ e:"When a component receives focus, it must not be entirely hidden by author-created content like sticky headers, footers or banners. Fix with scroll-padding or by not overlaying. Partly hidden passes AA but fails 2.4.12 (AAA)."},
+{id:"dragging", sc:"2.5.7", d:1, k:"Real-world issue",
+ q:"A Kanban board lets users move cards between columns only by dragging. There's no “Move to…” menu or buttons. A user with a hand tremor can't use it. Which criterion?",
+ o:["2.5.7 Dragging Movements · Level AA","2.5.1 Pointer Gestures · Level A","2.1.1 Keyboard · Level A only","2.5.8 Target Size (Minimum) · Level AA"],
+ e:"New in 2.2: functionality that uses dragging must be achievable with a single pointer without dragging (e.g. tap card, tap column), unless dragging is essential. Keyboard support alone doesn't satisfy it."},
+{id:"target-size", sc:"2.5.8", d:1, k:"Spot the issue",
+ q:"These pagination links are 14×14 CSS px and only 2px apart. Which criterion and level?",
+ shot:`<div style="font:11px system-ui;display:flex;gap:2px">${[1,2,3,4,5].map(n=>`<span style="display:inline-block;width:14px;height:14px;line-height:14px;text-align:center;border:1px solid #2563eb;color:#2563eb">${n}</span>`).join("")}</div>`,
+ o:["2.5.8 Target Size (Minimum) · Level AA: targets need 24×24 CSS px or enough spacing","2.5.5 Target Size (Enhanced) · Level A","1.4.4 Resize Text · Level AA","2.4.7 Focus Visible · Level AA"],
+ e:"2.5.8 needs pointer targets of at least 24×24 CSS px, or undersized targets spaced so a 24px circle on each doesn't overlap another target. Inline text links and essential cases are exempt. 2.5.5 (AAA) asks for 44×44."},
+{id:"cognitive-auth", sc:"3.3.8", d:2, k:"Real-world issue",
+ q:"A login page blocks paste in the password field and disables browser autofill, so users must type a long password from memory. Which criterion?",
+ o:["3.3.8 Accessible Authentication (Minimum) · Level AA","3.3.7 Redundant Entry · Level A","1.3.5 Identify Input Purpose · Level AA","3.3.2 Labels or Instructions · Level A"],
+ e:"Authentication can't rely on a cognitive function test (remembering, transcribing) unless there's an alternative or assistance, such as allowing paste and password managers. Blocking paste fails 3.3.8."},
+{id:"lang-parts", sc:"3.1.2", d:1, k:"Spot the issue in code",
+ q:"An English page quotes a French phrase. A screen reader reads it with English pronunciation. What's missing?",
+ code:`<p>Their motto is <q>Liberté, égalité, fraternité</q>.</p>`,
+ o:["lang=\"fr\" on the quote, so 3.1.2 Language of Parts is met","lang=\"fr\" on the <html> element","An abbr element","Nothing; proper names are exempt"],
+ e:"Passages in a different language need their language identified so AT can switch pronunciation. Proper names, technical terms and words that became part of the surrounding language are exempt."},
+{id:"live-captions", sc:"1.2.4", d:1, k:"Real-world issue",
+ q:"A company streams its live product launch webinar with no captions of any kind. Which criterion and level?",
+ o:["1.2.4 Captions (Live) · Level AA","1.2.2 Captions (Prerecorded) · Level A","1.2.9 Audio-only (Live) · Level AAA","1.2.6 Sign Language (Prerecorded) · Level AAA"],
+ e:"Live synchronised media needs captions at AA (CART or real-time captioning). Prerecorded captions are 1.2.2 at A."},
+{id:"ad-aa", sc:"1.2.5", d:2, k:"Pass or fail?",
+ q:"A prerecorded explainer video offers a full descriptive transcript but no audio description track. Important information is shown only visually. Pass or fail at AA?",
+ o:["Fail 1.2.5: AA requires audio description; the transcript alone only satisfies 1.2.3 at A","Pass: the transcript covers both 1.2.3 and 1.2.5","Pass: audio description is only AAA","Fail 1.2.2: captions are missing"],
+ e:"1.2.3 (A) accepts audio description OR a media alternative. 1.2.5 (AA) specifically requires audio description for prerecorded video. A transcript doesn't satisfy AA here."},
+{id:"focus-visible-low", sc:"2.4.7", d:2, k:"Pass or fail?",
+ q:"The focus indicator is a 1px dotted line in #D3D3D3 on white. It's visible if you look closely. Pass or fail 2.4.7 Focus Visible?",
+ o:["Pass 2.4.7 (some visible indicator exists), but likely fails 1.4.11 contrast and AAA 2.4.13 Focus Appearance","Fail 2.4.7: focus must be 3px thick","Fail 2.4.11: focus is obscured","Pass everything; no other criterion applies to focus"],
+ e:"2.4.7 only requires a visible indicator. Its contrast is checked under 1.4.11 (the indicator is visual information needed to identify state) and its size/contrast under 2.4.13 (AAA)."},
+{id:"reflow-table", sc:"1.4.10", d:2, k:"Pass or fail?",
+ q:"At 320px wide, an article reflows into one column, but a 10-column data table inside it scrolls horizontally in its own container. Pass or fail 1.4.10?",
+ o:["Pass: data tables are content that requires two-dimensional layout","Fail: nothing may scroll horizontally at 320px","Fail: the table must be converted to images","Pass only if the table is under 5 columns"],
+ e:"1.4.10 exempts parts of content that need two-dimensional layout for usage or meaning, like data tables, maps and diagrams. The table scrolling in its own region is acceptable; the rest of the page must reflow."},
+
+/* ---------------- Level AAA ---------------- */
+{id:"contrast-enh", sc:"1.4.6", d:0, k:"Pass or fail?",
+ q:"Body text has a 5.2:1 contrast ratio. Is it enough for 1.4.6 Contrast (Enhanced)?",
+ o:["No: AAA needs 7:1 for normal text (4.5:1 for large)","Yes: 4.5:1 is the AAA requirement","Yes: AAA has no contrast requirement","No: AAA needs 10:1"],
+ e:"1.4.6 raises the ratios to 7:1 for normal text and 4.5:1 for large text. 5.2:1 passes AA 1.4.3 only."},
+{id:"target-44", sc:"2.5.5", d:0, k:"Pass or fail?",
+ q:"Icon buttons in a toolbar are 32×32 CSS px. Do they meet 2.5.5 Target Size (Enhanced)?",
+ o:["No: 2.5.5 needs at least 44×44 CSS px","Yes: 24×24 is the AAA minimum","Yes: toolbars are exempt","No: targets need 64×64"],
+ e:"AAA 2.5.5 asks for 44×44 CSS px targets (with exceptions for equivalents, inline links, user-agent controls and essential). 32×32 passes AA 2.5.8."},
+{id:"link-only", sc:"2.4.9", d:1, k:"Pass or fail?",
+ q:"Product cards have links reading “View details” inside a list item that contains the product name. Pass or fail at 2.4.9 Link Purpose (Link Only)?",
+ o:["Fail at AAA: the link text alone must identify its purpose","Pass: the list item context is enough at AAA","Pass: 2.4.9 doesn't apply to cards","Fail at Level A 2.4.4 too"],
+ e:"2.4.4 (A) accepts context; 2.4.9 (AAA) needs the link text (accessible name) alone to make sense, like “View details: Blue hoodie”."},
+{id:"section-headings", sc:"2.4.10", d:1, k:"Real-world issue",
+ q:"A long privacy policy is one wall of text with no headings dividing its 12 topics. Which criterion?",
+ o:["2.4.10 Section Headings · Level AAA","2.4.6 Headings and Labels · Level AA","1.3.1 Info and Relationships · Level A","3.1.5 Reading Level · Level AAA"],
+ e:"2.4.10 asks for section headings to organise content. 2.4.6 only applies when headings exist (they must be descriptive); 1.3.1 applies when visual headings exist but aren't coded."},
+{id:"focus-appearance", sc:"2.4.13", d:2, k:"Criterion and level",
+ q:"A team wants a focus indicator that's at least as large as a 2 CSS px perimeter around the control and has 3:1 contrast between focused and unfocused states. Which criterion defines this?",
+ o:["2.4.13 Focus Appearance · Level AAA","2.4.7 Focus Visible · Level AA","2.4.11 Focus Not Obscured (Minimum) · Level AA","1.4.11 Non-text Contrast · Level AA"],
+ e:"2.4.13 (new in 2.2, AAA) sets minimum size (area of a 2px perimeter) and 3:1 change-of-contrast for focus indicators."},
+{id:"focus-enh", sc:"2.4.12", d:1, k:"Pass or fail?",
+ q:"A sticky header covers the top half of the focused link, but part of it is still visible. Pass or fail 2.4.12 Focus Not Obscured (Enhanced)?",
+ o:["Fail: at AAA no part of the focused component may be hidden","Pass: some of it is visible","Pass: sticky headers are exempt","Not applicable to links"],
+ e:"2.4.11 (AA) fails only if the focused item is entirely hidden. 2.4.12 (AAA) requires that no part of it is hidden by author-created content."},
+{id:"kb-no-exc", sc:"2.1.3", d:2, k:"Real-world issue",
+ q:"A freehand signature pad can only be used with a mouse or finger. At AA this is allowed because the path is essential. Which AAA criterion still fails?",
+ o:["2.1.3 Keyboard (No Exception)","2.5.7 Dragging Movements","2.1.1 Keyboard","2.5.6 Concurrent Input Mechanisms"],
+ e:"2.1.1 exempts functions that depend on the path of the user's movement. 2.1.3 (AAA) removes that exception: all functionality must be keyboard operable."},
+{id:"no-timing", sc:"2.2.3", d:1, k:"Real-world issue",
+ q:"An online quiz (not a real-time event) gives users 60 seconds per question with no way to extend. Which AAA criterion fails even if it meets 2.2.1?",
+ o:["2.2.3 No Timing","2.2.6 Timeouts","2.2.4 Interruptions","2.2.5 Re-authenticating"],
+ e:"2.2.3 says timing must not be an essential part of the event or activity, except non-interactive synchronised media and real-time events."},
+{id:"interrupt", sc:"2.2.4", d:1, k:"Real-world issue",
+ q:"A news site pops up “Breaking news” alerts over the article every few minutes, with no setting to postpone or turn them off. Which AAA criterion?",
+ o:["2.2.4 Interruptions","2.2.2 Pause, Stop, Hide","3.2.5 Change on Request","2.2.1 Timing Adjustable"],
+ e:"Interruptions must be able to be postponed or suppressed by the user, except those involving an emergency."},
+{id:"reauth", sc:"2.2.5", d:2, k:"Real-world issue",
+ q:"A long job application times out after 30 minutes. After logging in again, everything typed is lost. Which AAA criterion?",
+ o:["2.2.5 Re-authenticating","2.2.6 Timeouts","3.3.7 Redundant Entry","2.2.1 Timing Adjustable"],
+ e:"When a session expires, users must be able to continue without losing data after re-authenticating."},
+{id:"timeouts", sc:"2.2.6", d:2, k:"Real-world issue",
+ q:"A shopping site deletes cart contents after 1 hour of inactivity, and nothing tells users about this. Which AAA criterion?",
+ o:["2.2.6 Timeouts","2.2.5 Re-authenticating","2.2.1 Timing Adjustable","3.3.4 Error Prevention"],
+ e:"Users must be warned of the duration of inactivity that could cause data loss, unless data is kept for more than 20 hours."},
+{id:"three-flash", sc:"2.3.2", d:1, k:"Pass or fail?",
+ q:"A small animation flashes 4 times per second, but it's tiny and below the general flash threshold. Pass or fail 2.3.2 Three Flashes?",
+ o:["Fail at AAA: 2.3.2 allows no more than three flashes per second, with no threshold exception","Pass: it's below the threshold","Pass: 2.3.2 only applies to red flashes","Fail at Level A 2.3.1 as well"],
+ e:"2.3.1 (A) has a threshold exception for small/low-intensity flashes; 2.3.2 (AAA) removes it."},
+{id:"anim-interact", sc:"2.3.3", d:1, k:"Real-world issue",
+ q:"Scrolling the homepage triggers heavy parallax and zooming effects. There's no way to turn them off and prefers-reduced-motion is ignored. Users with vestibular disorders feel nauseous. Which criterion?",
+ o:["2.3.3 Animation from Interactions · Level AAA","2.2.2 Pause, Stop, Hide · Level A","2.3.1 Three Flashes · Level A","2.5.4 Motion Actuation · Level A"],
+ e:"Motion animation triggered by interaction must be disable-able unless essential. Honour prefers-reduced-motion. 2.2.2 is for content that moves automatically."},
+{id:"location", sc:"2.4.8", d:1, k:"Real-world issue",
+ q:"Deep inside a 5-level documentation site there's no breadcrumb, no highlighted nav item, and nothing showing where the page sits. Which AAA criterion?",
+ o:["2.4.8 Location","2.4.5 Multiple Ways","2.4.2 Page Titled","3.2.3 Consistent Navigation"],
+ e:"Information about the user's location within a set of pages should be available (breadcrumbs, site map, highlighted navigation)."},
+{id:"unusual", sc:"3.1.3", d:1, k:"Real-world issue",
+ q:"A legal help page uses terms like “estoppel” and “mesne profits” with no definitions anywhere. Which AAA criterion?",
+ o:["3.1.3 Unusual Words","3.1.4 Abbreviations","3.1.5 Reading Level","3.1.6 Pronunciation"],
+ e:"A mechanism should identify definitions of words used in an unusual or restricted way, including idioms and jargon (glossary, inline definitions, links)."},
+{id:"abbr", sc:"3.1.4", d:0, k:"Real-world issue",
+ q:"A report uses “NPS”, “CSAT” and “ARR” without ever expanding them. Which AAA criterion?",
+ o:["3.1.4 Abbreviations","3.1.3 Unusual Words","3.1.5 Reading Level","2.4.6 Headings and Labels"],
+ e:"Provide a way to find the expanded form of abbreviations: expand on first use, a glossary, or <abbr title> (with care, since title isn't announced reliably)."},
+{id:"reading-level", sc:"3.1.5", d:1, k:"Recommended fix",
+ q:"A government benefits page needs a university reading level to understand. What does 3.1.5 Reading Level (AAA) ask for?",
+ o:["Supplemental content or a simpler version when text needs more than lower secondary education reading ability","Rewrite all content for primary school level","Add audio for every paragraph","Increase the font size"],
+ e:"When text requires reading ability beyond lower secondary education (after removing proper names and titles), provide supplementary content, illustrations or a simpler version."},
+{id:"pronunciation", sc:"3.1.6", d:2, k:"Real-world issue",
+ q:"In a Malayalam learning app, a word's meaning depends on pronunciation but there's no audio or phonetic hint. Which AAA criterion?",
+ o:["3.1.6 Pronunciation","3.1.2 Language of Parts","3.1.3 Unusual Words","1.2.1 Audio-only and Video-only"],
+ e:"A mechanism should be available to identify pronunciation where meaning is ambiguous without it (phonetic text, audio, ruby annotations)."},
+{id:"change-request", sc:"3.2.5", d:1, k:"Real-world issue",
+ q:"Every link in an article opens a new window without warning, and the page auto-refreshes every 5 minutes. Which AAA criterion?",
+ o:["3.2.5 Change on Request","3.2.2 On Input","2.2.4 Interruptions","3.2.1 On Focus"],
+ e:"Changes of context should only happen at the user's request, or a mechanism to turn them off should exist. Unexpected new windows and auto-refresh fail 3.2.5."},
+{id:"help", sc:"3.3.5", d:1, k:"Real-world issue",
+ q:"A complex tax form gives no examples, hints or help for fields like “Assessment year” or “TAN”. Which AAA criterion?",
+ o:["3.3.5 Help","3.3.2 Labels or Instructions","3.2.6 Consistent Help","3.1.3 Unusual Words"],
+ e:"Context-sensitive help (hints, examples, help links) should be available. 3.3.2 (A) only needs basic labels/instructions."},
+{id:"errprev-all", sc:"3.3.6", d:2, k:"Criterion and level",
+ q:"A team wants every form that submits user information (even a newsletter signup) to be reversible, checked or confirmable. Which criterion requires this?",
+ o:["3.3.6 Error Prevention (All) · Level AAA","3.3.4 Error Prevention (Legal, Financial, Data) · Level AA","3.3.1 Error Identification · Level A","3.3.3 Error Suggestion · Level AA"],
+ e:"3.3.4 (AA) covers only legal, financial and data-changing submissions. 3.3.6 (AAA) extends it to all submissions."},
+{id:"auth-enh", sc:"3.3.9", d:2, k:"Pass or fail?",
+ q:"A login asks users to pick the photo of their pet from nine images (object recognition). Passes AA 3.3.8. What about AAA 3.3.9 Accessible Authentication (Enhanced)?",
+ o:["Fail: 3.3.9 removes the object-recognition and personal-content exceptions","Pass: object recognition is always allowed","Pass: 3.3.9 only covers passwords","Not applicable to images"],
+ e:"3.3.8 (AA) allows object recognition and identifying content the user provided. 3.3.9 (AAA) removes those exceptions."},
+{id:"identify-purpose", sc:"1.3.6", d:2, k:"Criterion and level",
+ q:"A team adds personalisation semantics so icons, regions and components can be swapped for symbols a user understands. Which criterion is this aiming at?",
+ o:["1.3.6 Identify Purpose · Level AAA","1.3.5 Identify Input Purpose · Level AA","1.3.1 Info and Relationships · Level A","4.1.2 Name, Role, Value · Level A"],
+ e:"1.3.6 asks that the purpose of UI components, icons and regions can be programmatically determined (landmarks, ARIA, personalisation semantics). 1.3.5 covers only input fields about the user."},
+{id:"visual-pres", sc:"1.4.8", d:2, k:"Real-world issue",
+ q:"Article text is fully justified, lines run 140 characters wide, and users can't change foreground/background colours. Which AAA criterion?",
+ o:["1.4.8 Visual Presentation","1.4.12 Text Spacing","1.4.10 Reflow","1.4.6 Contrast (Enhanced)"],
+ e:"For blocks of text, 1.4.8 asks for user-selectable colours, width ≤ 80 characters, no justification, line spacing 1.5, and resize to 200% without horizontal scrolling."},
+{id:"bg-audio", sc:"1.4.7", d:2, k:"Real-world issue",
+ q:"A prerecorded podcast has loud background music under the speech that can't be turned off. Which AAA criterion?",
+ o:["1.4.7 Low or No Background Audio","1.4.2 Audio Control","1.2.1 Audio-only and Video-only (Prerecorded)","1.2.9 Audio-only (Live)"],
+ e:"Prerecorded audio-only content with speech should have no background sound, a way to turn it off, or background at least 20 dB quieter than the speech."},
+{id:"img-text-noexc", sc:"1.4.9", d:1, k:"Pass or fail?",
+ q:"A button's label is an image of styled text because the brand wanted a custom gradient. It has correct alt text and passes 1.4.5 because the team says customisation was essential. What about 1.4.9?",
+ o:["Fail: at AAA, images of text are only for pure decoration or where the presentation is essential (like logos)","Pass: alt text makes it fine","Pass: 1.4.9 only applies to paragraphs","Not applicable to buttons"],
+ e:"1.4.9 (AAA) only allows images of text for decoration or when the particular presentation is essential. A brand gradient preference isn't essential."},
+{id:"sign-lang", sc:"1.2.6", d:0, k:"Criterion and level",
+ q:"A government video adds a sign language interpreter in a picture-in-picture window. Which criterion is this for?",
+ o:["1.2.6 Sign Language (Prerecorded) · Level AAA","1.2.2 Captions (Prerecorded) · Level A","1.2.4 Captions (Live) · Level AA","1.2.8 Media Alternative (Prerecorded) · Level AAA"],
+ e:"Sign language interpretation for prerecorded synchronised media is a AAA requirement (1.2.6)."},
+{id:"ext-ad", sc:"1.2.7", d:2, k:"Real-world issue",
+ q:"A fast-paced tutorial has no gaps in the narration long enough to describe the on-screen steps. To add audio description, the video must pause to fit it. Which criterion covers this?",
+ o:["1.2.7 Extended Audio Description (Prerecorded) · Level AAA","1.2.5 Audio Description (Prerecorded) · Level AA","1.2.3 Audio Description or Media Alternative · Level A","2.2.2 Pause, Stop, Hide · Level A"],
+ e:"When pauses in foreground audio aren't enough for standard audio description, extended audio description freezes the video to insert description. AAA."},
+{id:"media-alt", sc:"1.2.8", d:1, k:"Criterion and level",
+ q:"Every prerecorded video on a training site has a full descriptive transcript covering all dialogue and visual information. Which criterion does that specifically satisfy at AAA?",
+ o:["1.2.8 Media Alternative (Prerecorded)","1.2.6 Sign Language (Prerecorded)","1.2.7 Extended Audio Description","1.2.9 Audio-only (Live)"],
+ e:"1.2.8 requires a full text alternative for all prerecorded synchronised media and video-only media."},
+{id:"live-audio", sc:"1.2.9", d:1, k:"Real-world issue",
+ q:"A radio station streams a live talk show on its website with no live text alternative. Which criterion?",
+ o:["1.2.9 Audio-only (Live) · Level AAA","1.2.4 Captions (Live) · Level AA","1.2.1 Audio-only and Video-only (Prerecorded) · Level A","1.4.7 Low or No Background Audio · Level AAA"],
+ e:"Live audio-only content should have a text alternative such as real-time captioning (CART) or a prepared script. AAA."},
+{id:"concurrent", sc:"2.5.6", d:2, k:"Real-world issue",
+ q:"A tablet web app detects touch and then ignores the paired Bluetooth keyboard and mouse. Which AAA criterion?",
+ o:["2.5.6 Concurrent Input Mechanisms","2.1.1 Keyboard","2.5.1 Pointer Gestures","2.1.3 Keyboard (No Exception)"],
+ e:"Content shouldn't restrict use of input methods available on a platform, unless essential, for security, or to respect user settings."},
+
+/* ---------------- audit practice (mapped to related criteria) ---------------- */
+{id:"tool-limits", sc:"1.1.1", d:1, k:"Audit method",
+ q:"axe reports zero image issues on a page. What can you conclude about 1.1.1?",
+ o:["Only that every image has some alt; you still need to judge manually whether each alt is meaningful","1.1.1 passes completely","1.1.1 fails because axe is not a screen reader","Nothing; axe doesn't test images"],
+ e:"Automated tools catch missing alt but can't judge quality (e.g. alt=\"image\" or a wrong description). Manual review in context is always needed."},
+{id:"nvda-graphics", sc:"1.1.1", d:1, k:"Audit method",
+ q:"Which NVDA quick key jumps between graphics when checking alt text?",
+ o:["G","H","F","K"],
+ e:"In NVDA browse mode: G = graphics, H = headings, F = form fields, K = links. Use Shift with them to go backwards."},
+{id:"insert-f7", sc:"2.4.4", d:1, k:"Audit method",
+ q:"You want to check every link's text out of context in NVDA. What do you open?",
+ o:["The Elements List (NVDA+F7) set to Links","The NVDA Python console","Speech viewer only","The browser's history"],
+ e:"NVDA+F7 lists links, headings, form fields, buttons and landmarks. Reviewing links out of context quickly reveals vague text like “click here”."},
+{id:"zoom-test", sc:"1.4.10", d:1, k:"Audit method",
+ q:"How do you test 1.4.10 Reflow on a desktop browser?",
+ o:["Set the viewport to 1280px wide and zoom to 400% (or resize to 320 CSS px), then check for two-dimensional scrolling and lost content","Zoom to 200% and check text only","Use a screen reader","Run axe; it detects reflow issues automatically"],
+ e:"1280px at 400% = 320 CSS px. Check that content reflows into one column with no horizontal scrolling (except 2D content) and nothing is cut off or overlapping."},
+{id:"severity", sc:"2.1.2", d:2, k:"Audit method",
+ q:"Which finding would most auditors rate as the highest severity (a blocker)?",
+ o:["A keyboard trap in the checkout payment widget","A decorative image with alt=\"swirl\"","Headings that skip from h2 to h4","A link with slightly vague text in the footer"],
+ e:"Severity reflects user impact. A keyboard trap on a critical path completely blocks the task. The others add friction but don't stop users."},
+{id:"fail-vs-bp", sc:"1.3.1", d:1, k:"Failure or best practice?",
+ q:"Headings jump from h2 to h4, but each heading is correctly marked up and descriptive. How do you log it?",
+ o:["Best practice recommendation; skipped levels alone aren't a WCAG failure","Fail 1.3.1 Info and Relationships","Fail 2.4.6 Headings and Labels","Fail 2.4.10 Section Headings"],
+ e:"WCAG doesn't require sequential heading levels. Log it as advice: users who navigate by headings find gaps confusing. It becomes a 1.3.1 failure only if levels misrepresent the visual structure."},
+{id:"one-h1", sc:"1.3.1", d:1, k:"Failure or best practice?",
+ q:"A page has no <h1> but uses h2 for every section. Is it a WCAG failure?",
+ o:["No, it's a best practice issue; WCAG doesn't require an h1","Yes, 2.4.2 Page Titled","Yes, 1.3.1 always requires one h1","Yes, 2.4.6"],
+ e:"An h1 that names the page is strongly recommended but not required by any success criterion. Log it as a best practice."},
+{id:"pass-target-inline", sc:"2.5.8", d:2, k:"Pass or fail?",
+ q:"A link inside a paragraph is only 16px tall and closely spaced with the line above. Does it fail 2.5.8 Target Size (Minimum)?",
+ o:["No: targets in a sentence or block of text are exempt (inline exception)","Yes: every link needs 24×24 CSS px","Yes: but only on mobile","No: links are always exempt"],
+ e:"2.5.8 exempts inline targets whose size is constrained by the line height of surrounding text. Standalone links and buttons aren't exempt."},
+{id:"accname-order", sc:"4.1.2", d:2, k:"Accessible name",
+ q:"A button has visible text “Save”, aria-label=\"Save draft\" and aria-labelledby pointing to a span reading “Store”. What's its accessible name?",
+ code:`<span id="s">Store</span>\n<button aria-label="Save draft" aria-labelledby="s">Save</button>`,
+ o:["“Store” (aria-labelledby wins over aria-label and content)","“Save draft”","“Save”","“Store Save draft Save”"],
+ e:"The accessible name computation uses aria-labelledby first, then aria-label, then native labels/content, then title. Here it also fails 2.5.3 because the name doesn't contain “Save”."},
+{id:"role-presentation", sc:"1.3.1", d:2, k:"Spot the issue in code",
+ q:"A developer added role=\"presentation\" to a data table to “clean up” screen reader output. What happens?",
+ code:`<table role="presentation">\n  <tr><th>Plan</th><th>Price</th></tr>\n  <tr><td>Pro</td><td>₹499</td></tr>\n</table>`,
+ o:["Table semantics are removed, so headers and cell relationships are lost: fails 1.3.1","Nothing changes; th keeps its role","It becomes a layout table that passes","Only the caption is hidden"],
+ e:"role=\"presentation\"/\"none\" strips table, row and header semantics. That's right for layout tables but breaks data tables."},
+{id:"alert-overuse", sc:"4.1.3", d:2, k:"Recommended fix",
+ q:"A form uses role=\"alert\" for the “Saving…” and “Saved” messages, interrupting whatever the screen reader is saying. What's better?",
+ o:["Use role=\"status\" (polite) for non-urgent updates; keep role=\"alert\" for urgent, time-sensitive messages","Remove the messages entirely","Use aria-live=\"off\"","Move focus to each message"],
+ e:"role=\"alert\" is assertive and interrupts. Routine confirmations belong in a polite status region. Moving focus to status messages is disruptive and not what 4.1.3 asks."}
+];
+
 (function(){
   "use strict";
   const SPEC = "https://www.w3.org/TR/WCAG22/";
@@ -17962,9 +18600,540 @@ const PRINCIPLES = [
 
   const extLink = (href, text) => `<a class="ext" href="${esc(href)}" target="_blank" rel="noopener">${esc(text)}${I.ext}<span class="visually-hidden"> (opens in a new tab)</span></a>`;
 
+  /* =========================================================
+     Quiz me: question bank
+     Built at load time from the study data above (criteria,
+     failures, techniques, APG patterns, practices) plus the
+     hand-written real-world questions in QUIZ_HAND.
+     ========================================================= */
+  const QZ_SIZE = 20, QZ_PASS = 16;
+  const QZ_LEVELS = ["A","AA","AAA"];
+  const QZ_DIFFS = [["basic","Basic"],["medium","Medium"],["advanced","Advanced"]];
+
+  function qzHash(str){ let h = 2166136261; for (let i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  function qzRng(seed){ let a = typeof seed === "number" ? seed : qzHash(String(seed)); return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function qzShuffle(arr, rnd){ const a = arr.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+  function buildQuizBank(){
+    const bank = [];
+    const byId = {}; ALL.forEach(c => byId[c.id] = c);
+    const scName = c => `${c.id} ${c.title}`;
+    const scHref = c => `#/${c._p.id}/${c.id}`;
+    const scRef = c => [[scHref(c), `Study ${c.id} ${c.title}`], [`#/meet/${c.id}`, `How to meet ${c.id}`]];
+    const lvOf = id => (byId[id] || {}).level || "A";
+    const clean = s => String(s).replace(/\s+/g, " ").trim();
+    const first = (s, max) => { s = clean(s); const m = /^(.+?[.!?])(\s|$)/.exec(s); let t = m && m[1].length > 40 ? m[1] : s; if (max && t.length > max) t = t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…"; return t; };
+    const an = w => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
+    const strip = s => clean(String(s).replace(/<[^>]+>/g, ""));
+
+    /* criteria that are easy to confuse: never offered as wrong answers for each other */
+    const GROUPS = [
+      ["1.1.1","4.1.2","2.4.4","2.5.3","1.4.5","1.4.9","2.4.6","2.4.9"],
+      ["1.3.1","4.1.2","3.3.2","2.4.6","2.4.10","2.4.1","1.3.2"],
+      ["1.4.3","1.4.6","1.4.11","1.4.1"],
+      ["2.4.7","2.4.11","2.4.12","2.4.13","1.4.11"],
+      ["2.1.1","2.1.3","4.1.2","2.5.1","2.5.7","1.4.13","2.1.2"],
+      ["2.4.3","2.1.2","2.4.11","1.3.2"],
+      ["1.4.4","1.4.10","1.4.12","1.4.8","1.3.4"],
+      ["1.2.1","1.2.3","1.2.5","1.2.8","1.2.9"],
+      ["1.2.2","1.2.4","1.2.6","1.2.1"],
+      ["1.2.3","1.2.7"],["1.2.5","1.2.7"],
+      ["3.3.1","3.3.3","4.1.3","3.3.4","3.3.6","3.3.2"],
+      ["3.3.2","2.5.3","1.3.5","3.3.7","3.3.5"],
+      ["3.2.1","3.2.2","3.2.5"],["3.2.3","3.2.4","3.2.6","2.4.5"],
+      ["2.4.5","2.4.8","2.4.1"],["2.4.2","2.4.6"],["1.3.5","1.3.6"],["2.5.8","2.5.5"],["3.3.8","3.3.9"],
+      ["2.2.1","2.2.3","2.2.6","2.2.5","2.2.4"],["2.2.2","2.3.3","1.4.2","2.3.1","2.3.2","2.2.4"],
+      ["3.1.1","3.1.2"],["3.1.3","3.1.4","3.1.5","3.1.6"],["1.3.3","1.4.1"],["4.1.2","4.1.3"],["3.2.6","3.3.5"],
+      ["1.4.7","1.4.2"],["1.4.13","2.1.1"]
+    ];
+    const conf = {};
+    GROUPS.forEach(g => g.forEach(a => g.forEach(b => { (conf[a] = conf[a] || new Set()).add(b); })));
+    const clash = (a, b) => a === b || (conf[a] && conf[a].has(b));
+
+    /* pick wrong-answer criteria: "near" = same principle first, "far" = anywhere */
+    function pickSC(correctIds, n, rnd, mode, extraBan){
+      const ban = new Set(extraBan || []);
+      const ok = c => !ban.has(c.id) && !correctIds.some(id => clash(id, c.id));
+      const main = byId[correctIds[0]];
+      let pool = ALL.filter(ok);
+      if (mode === "near" && main){
+        const near = qzShuffle(pool.filter(c => c._p === main._p), rnd);
+        const rest = qzShuffle(pool.filter(c => c._p !== main._p), rnd);
+        pool = near.concat(rest);
+      } else pool = qzShuffle(pool, rnd);
+      return pool.slice(0, n);
+    }
+    const seenQ = new Set();
+    function add(q){
+      if (!q.o || q.o.length < 2) return;
+      if (new Set(q.o).size !== q.o.length) return;
+      const key = q.q + "|" + (q.code || "") + "|" + q.o[0];
+      if (seenQ.has(key)) return;
+      seenQ.add(key); bank.push(q);
+    }
+    /* correct answer first, then distractors; options get shuffled when shown */
+    const mc = (id, lv, d, k, q, right, wrong, e, r, extra) => add(Object.assign({id, lv, d, k, q, o:[right, ...wrong], a:0, e, r}, extra || {}));
+
+    /* ---- per criterion ---- */
+    ALL.forEach(c => {
+      const R = qzRng("sc" + c.id);
+      const L = c.level, lvTxt = `Level ${L}`;
+      const sumE = `${scName(c)} is Level ${L}. ${clean(c.s)}`;
+
+      // basic: level
+      mc(`lvl-${c.id}`, L, 0, "Conformance level", `What conformance level is success criterion ${scName(c)}?`,
+        lvTxt, QZ_LEVELS.filter(x => x !== L).map(x => `Level ${x}`), sumE, scRef(c));
+
+      // basic: description to criterion
+      mc(`desc-${c.id}`, L, 0, "Name the criterion", `Which success criterion requires this? “${clean(c.s)}”`,
+        scName(c), pickSC([c.id], 3, R, "far").map(scName), sumE, scRef(c));
+
+      // basic: guideline
+      const gl = qzShuffle(PRINCIPLES.flatMap(p => p.guidelines).filter(g => g !== c._g), R).slice(0, 3);
+      mc(`gl-${c.id}`, L, 0, "Structure", `Success criterion ${scName(c)} sits under which guideline?`,
+        `${c._g.id} ${c._g.name}`, gl.map(g => `${g.id} ${g.name}`),
+        `${c.id} belongs to guideline ${c._g.id} ${c._g.name}, under the ${c._p.name} principle. ${clean(c._g.desc)}`, scRef(c));
+
+      // medium: expected result
+      if (EXPECTED_RESULTS[c.id]){
+        const others = pickSC([c.id], 6, R, "near").filter(x => EXPECTED_RESULTS[x.id]).slice(0, 3);
+        if (others.length === 3)
+          mc(`exp-${c.id}`, L, 1, "Pass condition", `You are testing ${scName(c)}. Which expected result tells you it passes?`,
+            first(EXPECTED_RESULTS[c.id], 260), others.map(x => first(EXPECTED_RESULTS[x.id], 260)),
+            `The expected result for ${c.id}: ${clean(EXPECTED_RESULTS[c.id])}`, scRef(c));
+      }
+
+      // medium: scenario -> criterion; advanced: scenario -> criterion + level; advanced: fix
+      (c.scenarios || []).forEach((s, i) => {
+        const RR = qzRng(`scen${c.id}-${i}`);
+        mc(`scen-${c.id}-${i}`, L, 1, "Real-world issue", `Audit finding: ${clean(s[1])} Which success criterion does this fail?`,
+          scName(c), pickSC([c.id], 3, RR, "near").map(scName),
+          `${s[0]}. This fails ${scName(c)} (Level ${L}). ${clean(c.s)}`, scRef(c));
+        const near = pickSC([c.id], 2, RR, "near");
+        const wrongLv = QZ_LEVELS.filter(x => x !== L);
+        const opts = [`${scName(c)} · Level ${wrongLv[0]}`, `${scName(near[0])} · Level ${near[0].level}`, `${scName(near[1])} · Level ${wrongLv[1] === near[1].level ? L : wrongLv[1]}`];
+        mc(`scenlv-${c.id}-${i}`, L, 2, "Criterion and level", `“${s[0]}”: ${clean(s[1])} Which criterion and level would you log this against?`,
+          `${scName(c)} · Level ${L}`, opts,
+          `Log it against ${scName(c)}, Level ${L}. ${clean(c.s)}`, scRef(c));
+        const rec = COMMON_RECS[c.id];
+        if (rec){
+          const others = pickSC([c.id], 8, RR, "near").map(x => COMMON_RECS[x.id]).filter(Boolean).slice(0, 3);
+          if (others.length === 3)
+            mc(`fix-${c.id}-${i}`, L, 2, "Recommended fix", `You are writing the recommendation for this finding: ${clean(s[1])} What should the developer do?`,
+              first(rec, 260), others.map(x => first(x, 260)), `Recommendation for ${scName(c)}: ${clean(rec)}`, scRef(c));
+        }
+      });
+
+      // medium: what you check -> criterion (up to 3 per criterion)
+      qzShuffle(c.check || [], R).slice(0, 3).forEach((ch, i) => {
+        const mentioned = (String(ch).match(/\b\d\.\d\.\d{1,2}\b/g) || []);
+        mc(`chk-${c.id}-${i}`, L, 1, "What am I testing?", `During an audit you check: “${clean(ch)}” Which success criterion is this check for?`,
+          scName(c), pickSC([c.id], 3, qzRng(`chk${c.id}${i}`), "near", mentioned).map(scName),
+          `This is one of the checks for ${scName(c)} (Level ${L}). ${clean(c.s)}`, scRef(c));
+      });
+
+      // advanced: failing code
+      if (c.ex && c.ex.bad){
+        mc(`code-${c.id}`, L, 2, "Spot the issue in code", `Review this markup. Which success criterion does it fail?`,
+          scName(c), pickSC([c.id], 3, R, "near").map(scName),
+          `${clean(c.ex.badNote || "")} It fails ${scName(c)} (Level ${L}). ${c.ex.goodNote ? "The fix: " + clean(c.ex.goodNote) : ""}`, scRef(c),
+          {code:c.ex.bad, fix:c.ex.good});
+      }
+      // advanced: pass/fail pairs with code
+      (c.pairs || []).forEach((pr, i) => {
+        if (!pr.failCode) return;
+        mc(`pair-${c.id}-${i}`, L, 2, "Spot the issue in code", `${pr.t}: which success criterion does this markup fail?`,
+          scName(c), pickSC([c.id], 3, qzRng(`pair${c.id}${i}`), "near").map(scName),
+          `${clean(pr.fail || "")} It fails ${scName(c)} (Level ${L}).`, scRef(c), {code:pr.failCode, fix:pr.passCode});
+      });
+      // medium: pass/fail pairs without code -> pass or fail
+      (c.pairs || []).forEach((pr, i) => {
+        if (!pr.fail || !pr.pass || pr.failCode) return;
+        const showFail = qzHash(c.id + i) % 2 === 0;
+        mc(`pf-${c.id}-${i}`, L, 1, "Pass or fail?", `${pr.t}, tested against ${scName(c)}: ${clean(showFail ? pr.fail : pr.pass)} Does this pass or fail?`,
+          showFail ? "Fail" : "Pass", [showFail ? "Pass" : "Fail", "Not applicable: this criterion doesn't cover it"],
+          `${showFail ? "Fail" : "Pass"}. Passing version: ${clean(pr.pass)} Failing version: ${clean(pr.fail)}`, scRef(c));
+      });
+
+      // basic/medium: best practice vs failure
+      (BEST_PRACTICES[c.id] || []).slice(0, 1).forEach((bp, i) => {
+        mc(`bp-${c.id}-${i}`, L, 0, "Failure or best practice?", `While checking ${scName(c)} you note: “${clean(bp)}” How do you log a page that ignores this advice (and is otherwise fine)?`,
+          "As a best-practice recommendation, not a WCAG failure", ["As a WCAG failure of " + c.id, "As a failure of a different criterion", "Don't log it at all"],
+          `This is listed as a best practice beside ${c.id}, not as a requirement. Log it as a recommendation so the report keeps failures and advice apart.`, scRef(c));
+      });
+    });
+
+    /* ---- documented failures (F codes) and sufficient techniques ---- */
+    const codeSC = {}, sufSC = {};
+    const walk = (node, fn) => { if (!node) return; if (Array.isArray(node)) return node.forEach(n => walk(n, fn)); if (typeof node === "object"){ if (node.t) fn(node.t); walk(node.g, fn); walk(node.i, fn); walk(node.s, fn); } };
+    MEET_SC.forEach(m => {
+      walk(m.fail, t => (t.match(/\{([A-Z]+\d+)\}/g) || []).forEach(x => { x = x.slice(1, -1); (codeSC[x] = codeSC[x] || new Set()).add(m.id); }));
+      walk(m.suf, t => (t.match(/\{([A-Z]+\d+)\}/g) || []).forEach(x => { x = x.slice(1, -1); (sufSC[x] = sufSC[x] || new Set()).add(m.id); }));
+    });
+    ALL.forEach(c => (c.fails || []).forEach(f => (codeSC[f[0]] = codeSC[f[0]] || new Set()).add(c.id)));
+    Object.keys(codeSC).forEach(code => {
+      const ids = [...codeSC[code]].filter(id => byId[id]); if (!ids.length) return;
+      const own = ALL.find(c => (c.fails || []).some(f => f[0] === code));
+      const txt = (MEET_TECH[code] && MEET_TECH[code][0]) || (own && own.fails.find(f => f[0] === code)[1]);
+      if (!txt) return;
+      const c = byId[ids[0]];
+      mc(`f-${code}`, c.level, 1, "Documented failure", `WCAG documents this failure (${code}): “${clean(txt)}” Which success criterion does it fail?`,
+        scName(c), pickSC(ids, 3, qzRng("f" + code), "near").map(scName),
+        `${code} is a documented failure of ${ids.map(id => scName(byId[id])).join(", ")}.`, scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []));
+    });
+    Object.keys(sufSC).forEach(code => {
+      const ids = [...sufSC[code]].filter(id => byId[id]);
+      if (ids.length !== 1 || !MEET_TECH[code] || /^F/.test(code)) return;
+      const c = byId[ids[0]];
+      mc(`t-${code}`, c.level, 2, "Technique", `Technique ${code}: “${clean(MEET_TECH[code][0])}” Which success criterion is this a sufficient technique for?`,
+        scName(c), pickSC(ids, 3, qzRng("t" + code), "near").map(scName),
+        `${code} is listed as a sufficient technique for ${scName(c)} (Level ${c.level}).`, scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []),
+        MEET_TECH[code][1] ? {code:MEET_TECH[code][1]} : null);
+    });
+
+    /* ---- APG patterns ---- */
+    const pats = Object.keys(APG_PATTERNS);
+    pats.forEach(slug => {
+      const p = APG_PATTERNS[slug], R = qzRng("apg" + slug);
+      const ref = [[`#/apg/${slug}`, `Study the ${p.name} pattern`], [p.apg, `${p.name} at W3C APG`]];
+      const plv = lvOf((p.wcag && p.wcag[0] && p.wcag[0][0]) || "4.1.2");
+      const otherNames = qzShuffle(pats.filter(x => x !== slug), R).slice(0, 3).map(x => APG_PATTERNS[x].name);
+      mc(`apgsum-${slug}`, plv, 0, "Name the pattern", `Which APG pattern is this? “${clean(p.summary)}”`, p.name, otherNames, `${p.name}: ${clean(p.what || p.summary)}`, ref);
+      const meta = APG_META[slug];
+      if (meta && meta[2]){
+        const others = qzShuffle(pats.filter(x => x !== slug && APG_META[x] && APG_META[x][2] && APG_META[x][2] !== meta[2]), R).slice(0, 3).map(x => APG_META[x][2]);
+        if (others.length === 3) mc(`apgnat-${slug}`, plv, 0, "Native HTML first", `Before reaching for ARIA, which native HTML gets you closest to the ${p.name} pattern?`, meta[2], others, `For ${p.name}, start with ${meta[2]}. Native elements bring keyboard support, roles and states for free.`, ref);
+      }
+      (p.quiz || []).forEach((x, i) => add({id:`apgq-${slug}-${i}`, lv:plv, d: i % 2 ? 2 : 1, k:`APG: ${p.name}`, q:x.q, o:[x.o[x.a], ...x.o.filter((_, j) => j !== x.a)], a:0, e:x.e, r:ref}));
+      const kb = (p.keyboard || []).filter(k => k[1]);
+      kb.slice(0, 5).forEach((k, i) => {
+        const pool = kb.filter(x => x !== k).map(x => first(x[1], 200));
+        const extra = qzShuffle(pats.filter(x => x !== slug).flatMap(x => (APG_PATTERNS[x].keyboard || []).map(y => first(y[1], 200))), qzRng(`kb${slug}${i}`));
+        const right = first(k[1], 200);
+        const wrong = [...new Set(qzShuffle(pool, R).concat(extra))].filter(x => x !== right).slice(0, 3);
+        mc(`apgkb-${slug}-${i}`, plv, 1, `Keyboard: ${p.name}`, `In the APG ${p.name} pattern, what should ${clean(k[0])} do?`, right, wrong, `${clean(k[0])}: ${clean(k[1])}`, ref);
+      });
+      const roles = (p.roles || []).filter(r => r[3] && (r[0] || r[1]));
+      roles.slice(0, 5).forEach((r, i) => {
+        const right = first(r[3], 200);
+        const pool = roles.filter(x => x !== r).map(x => first(x[3], 200));
+        const extra = qzShuffle(pats.filter(x => x !== slug).flatMap(x => (APG_PATTERNS[x].roles || []).filter(y => y[3]).map(y => first(y[3], 200))), qzRng(`ro${slug}${i}`));
+        const wrong = [...new Set(qzShuffle(pool, R).concat(extra))].filter(x => x !== right).slice(0, 3);
+        const what = [r[0] && `role="${r[0]}"`, r[1]].filter(Boolean).join(" with ");
+        mc(`apgro-${slug}-${i}`, plv, 2, `ARIA: ${p.name}`, `In the APG ${p.name} example, what is ${what}${r[2] ? ` on the ${r[2]} element` : ""} for?`, right, wrong, `${what}: ${clean(r[3])}`, ref);
+      });
+      (p.mistakes || []).slice(0, 5).forEach((m, i) => {
+        const right = first(m[1], 220);
+        const pool = (p.mistakes || []).filter(x => x !== m).map(x => first(x[1], 220));
+        const wrong = [...new Set(qzShuffle(pool, qzRng(`mi${slug}${i}`)))].filter(x => x !== right).slice(0, 3);
+        mc(`apgmi-${slug}-${i}`, plv, 1, `Common mistake: ${p.name}`, `You audit ${an(p.name.toLowerCase())} and find: “${clean(m[0])}”. What is the impact?`, right, wrong, `${clean(m[0])}: ${clean(m[1])}`, ref);
+      });
+      (p.wcag || []).slice(0, 4).forEach((w, i) => {
+        const c = byId[w[0]]; if (!c) return;
+        const ban = (p.wcag || []).map(x => x[0]);
+        mc(`apgwc-${slug}-${i}`, c.level, 1, `WCAG in ${p.name}`, `In ${an(p.name.toLowerCase())}: “${clean(w[1])}” Which success criterion covers this?`,
+          scName(c), pickSC([c.id], 3, qzRng(`wc${slug}${i}`), "near", ban).map(scName), `${scName(c)} (Level ${c.level}). ${clean(w[1])}`, ref.concat([[scHref(c), `Study ${c.id}`]]));
+      });
+    });
+
+    /* ---- APG practices ---- */
+    PRAC_ORDER.forEach(slug => {
+      const pr = PRACTICES[slug]; if (!pr) return;
+      const ref = [[`#/practices/${slug}`, `Study ${pr.name}`]];
+      const plv = lvOf((pr.wcag && pr.wcag[0] && pr.wcag[0][0]) || "1.3.1");
+      (pr.mistakes || []).forEach((m, i) => {
+        const right = first(m[1], 220);
+        const wrong = qzShuffle((pr.mistakes || []).filter(x => x !== m).map(x => first(x[1], 220)), qzRng(`pm${slug}${i}`)).filter(x => x !== right).slice(0, 3);
+        mc(`prmi-${slug}-${i}`, plv, 1, `Practice: ${pr.name}`, `${pr.name}: what goes wrong with “${clean(m[0])}”?`, right, wrong, `${clean(m[0])}: ${clean(m[1])}`, ref);
+      });
+      (pr.wcag || []).forEach((w, i) => {
+        const c = byId[w[0]]; if (!c) return;
+        mc(`prwc-${slug}-${i}`, c.level, 1, `Practice: ${pr.name}`, `${pr.name}: “${clean(w[1])}” Which success criterion is this?`,
+          scName(c), pickSC([c.id], 3, qzRng(`pw${slug}${i}`), "near", (pr.wcag || []).map(x => x[0])).map(scName), `${scName(c)} (Level ${c.level}).`, ref.concat([[scHref(c), `Study ${c.id}`]]));
+      });
+      (pr.sections || []).forEach(sec => {
+        const t = sec.table; if (!t || !t.rows || t.head.length !== 2 || t.rows.length < 4) return;
+        t.rows.forEach((row, i) => {
+          const right = strip(row[1]); if (!right || right.length > 120) return;
+          const wrong = [...new Set(t.rows.filter(x => x !== row).map(x => strip(x[1])))].filter(x => x && x !== right);
+          if (wrong.length < 3) return;
+          mc(`prtb-${slug}-${sec.id}-${i}`, plv, 0, `Practice: ${pr.name}`, `${strip(t.caption)}: for “${strip(row[0])}”, what is the ${strip(t.head[1]).toLowerCase()}?`,
+            right, qzShuffle(wrong, qzRng(`pt${slug}${i}`)).slice(0, 3), `${strip(row[0])} → ${right.replace(/\.$/, "")}. (${strip(t.caption)})`, ref);
+        });
+      });
+    });
+
+    /* ---- hand-written, real-world questions ---- */
+    (typeof QUIZ_HAND !== "undefined" ? QUIZ_HAND : []).forEach((h, i) => {
+      const c = byId[h.sc];
+      add({id:"h-" + (h.id || i), lv:h.lv || (c ? c.level : "A"), d:h.d, k:h.k, q:h.q, shot:h.shot, code:h.code, o:h.o, a:0, e:h.e, hand:true,
+        r: h.r || (c ? scRef(c) : [])});
+    });
+    return bank;
+  }
+
+  /* split each compliance level into sections of 20, eased from basic to advanced */
+  function buildQuizTracks(bank){
+    const tracks = {};
+    QZ_LEVELS.forEach(lv => {
+      const pool = bank.filter(q => q.lv === lv);
+      const R = qzRng("track" + lv);
+      const sorted = [0, 1, 2].flatMap(d => {
+        const qs = pool.filter(q => q.d === d);
+        return qs.filter(q => q.hand).concat(qzShuffle(qs.filter(q => !q.hand), R));
+      });
+      const total = Math.floor(sorted.length / QZ_SIZE);
+      const counts = [0, 1, 2].map(d => pool.filter(q => q.d === d).length / QZ_SIZE);
+      let n = counts.map(Math.round);
+      while (n[0] + n[1] + n[2] > total){ const i = n.indexOf(Math.max(...n)); n[i]--; }
+      while (n[0] + n[1] + n[2] < total){ n[1]++; }
+      // re-slice in difficulty order so borderline questions shift to a neighbour level
+      const ordered = sorted;
+      let at = 0;
+      QZ_DIFFS.forEach((df, d) => {
+        const take = ordered.slice(at, at + n[d] * QZ_SIZE); at += n[d] * QZ_SIZE;
+        const mixed = qzShuffle(take, qzRng(`mix${lv}${d}`));
+        // spread hand-written questions evenly across sections
+        const hand = mixed.filter(q => q.hand), gen = mixed.filter(q => !q.hand);
+        const secs = Array.from({length:n[d]}, () => []);
+        hand.forEach((q, i) => secs[i % n[d]].push(q));
+        let s = 0; gen.forEach(q => { while (secs[s].length >= QZ_SIZE) s++; secs[s].push(q); });
+        tracks[lv + "|" + df[0]] = secs;
+      });
+    });
+    return tracks;
+  }
+
+  /* ---------- Quiz me ---------- */
+  let QZ_BANK = null, QZ_TRACKS = null, qzRun = null;
+  const qzData = () => { if (!QZ_BANK){ QZ_BANK = buildQuizBank(); QZ_TRACKS = buildQuizTracks(QZ_BANK); } return QZ_TRACKS; };
+  const qzDiffName = d => (QZ_DIFFS.find(x => x[0] === d) || ["", ""])[1];
+  const qzKey = (lv, df) => lv + "|" + df;
+  const qzLoad = () => store.get("quiz", {sel:{lv:"A", df:"basic"}, tracks:{}});
+  const qzSave = s => store.set("quiz", s);
+  const qzTrackState = (s, key) => (s.tracks[key] = s.tracks[key] || {passed:{}, best:{}});
+  const qzUnlocked = (st, n) => n === 1 || !!st.passed[n] || !!st.passed[n - 1];
+  const qzNext = (st, total) => { for (let n = 1; n <= total; n++) if (!st.passed[n]) return n; return 0; };
+  const qzRunHref = (lv, df, n) => `#/quiz/${lv}/${df}/${n}`;
+  const lockIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+  function renderQuizHub(){
+    const T = qzData(), s = qzLoad();
+    const total = QZ_BANK.length;
+    const nSec = lv => QZ_DIFFS.reduce((a, d) => a + T[qzKey(lv, d[0])].length, 0);
+    const lvDesc = {A:"The minimum: issues that block people completely.", AA:"The usual legal and contractual target.", AAA:"The highest level, for going further."};
+    app.innerHTML = `<div class="wrap qz">
+      <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">Quiz me</span></li></ol></nav>
+      <h1 id="p-h1" tabindex="-1" class="mt-ph2">Quiz me</h1>
+      <p class="qz-lead">${total.toLocaleString()} questions drawn from everything in a11ywallet: WCAG 2.2 criteria, documented failures, techniques, APG patterns, practices and real audit findings. Pick a compliance level and a difficulty, then work through the sections in order. Each section has ${QZ_SIZE} questions; score ${QZ_PASS} or more to pass and unlock the next one. Passed sections stay open for revisiting.</p>
+      <div class="qz-pickers">
+        <fieldset class="qz-seg">
+          <legend>Compliance level</legend>
+          ${QZ_LEVELS.map(lv => `<label class="qz-chip"><input type="radio" name="qz-lv" value="${lv}"${s.sel.lv === lv ? " checked" : ""}><span><b><span class="badge lvl-${lv}">Level ${lv}</span></b><small>${lvDesc[lv]} ${plural(nSec(lv), "section", "sections")}.</small></span></label>`).join("")}
+        </fieldset>
+        <fieldset class="qz-seg">
+          <legend>Difficulty</legend>
+          <div id="qz-diffs"></div>
+        </fieldset>
+      </div>
+      <p class="visually-hidden" role="status" id="qz-status"></p>
+      <section class="qz-track" id="qz-track" aria-labelledby="qz-track-h"></section>
+      <section class="qz-resetall" aria-labelledby="qz-ra-h">
+        <h2 id="qz-ra-h">Start over</h2>
+        <p>Reset clears passed sections and best scores so you start again from Section 1.</p>
+        <div class="btn-row" id="qz-ra-row"><button type="button" class="btn ghost" id="qz-reset-all">Reset all quiz progress (every level and difficulty)</button></div>
+      </section>
+    </div>`;
+    const diffs = () => {
+      const st = qzLoad();
+      document.getElementById("qz-diffs").innerHTML = QZ_DIFFS.map(d => {
+        const secs = T[qzKey(st.sel.lv, d[0])], tst = qzTrackState(st, qzKey(st.sel.lv, d[0]));
+        const done = secs.filter((_, i) => tst.passed[i + 1]).length;
+        return `<label class="qz-chip"><input type="radio" name="qz-df" value="${d[0]}"${st.sel.df === d[0] ? " checked" : ""}><span><b>${d[1]}</b><small>${done} of ${plural(secs.length, "section", "sections")} passed</small></span></label>`;
+      }).join("");
+    };
+    const track = () => {
+      const st = qzLoad(), lv = st.sel.lv, df = st.sel.df, key = qzKey(lv, df);
+      const secs = T[key], tst = qzTrackState(st, key), next = qzNext(tst, secs.length);
+      const done = secs.filter((_, i) => tst.passed[i + 1]).length;
+      const pct = secs.length ? Math.round(done / secs.length * 100) : 0;
+      const cards = secs.map((qs, i) => {
+        const n = i + 1, passed = tst.passed[n], open = qzUnlocked(tst, n);
+        const kinds = [...new Set(qs.map(q => q.k.replace(/:.*/, "")))].slice(0, 3).join(", ");
+        if (!open) return `<li class="qz-sec locked"><span class="qz-sec-n">${lockIcon} Section ${n}</span><span class="qz-sec-s">Locked: pass Section ${n - 1} first</span></li>`;
+        return `<li class="qz-sec${passed ? " passed" : " current"}"><a href="${qzRunHref(lv, df, n)}"><span class="qz-sec-n">${passed ? I.ok : ""} Section ${n}</span><span class="qz-sec-s">${passed ? `Passed · best ${tst.best[n]}/${QZ_SIZE}` : (tst.best[n] != null ? `Best so far ${tst.best[n]}/${QZ_SIZE}` : "Ready to start")}</span><span class="qz-sec-k">${esc(kinds)}</span></a></li>`;
+      }).join("");
+      document.getElementById("qz-track").innerHTML = `
+        <div class="qz-track-head">
+          <div>
+            <h2 id="qz-track-h"><span class="badge lvl-${lv}">Level ${lv}</span> ${qzDiffName(df)}</h2>
+            <p class="qz-prog-t">${done} of ${plural(secs.length, "section", "sections")} passed (${pct}%)</p>
+            <div class="qz-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
+          </div>
+          <div class="btn-row">
+            ${next ? `<a class="btn" href="${qzRunHref(lv, df, next)}">${done ? "Continue with" : "Start"} Section ${next}</a>` : `<p class="qz-alldone">${I.star} Every section passed. Revisit any of them below.</p>`}
+            <button type="button" class="btn ghost" id="qz-reset">Reset ${qzDiffName(df)} · Level ${lv}</button>
+          </div>
+        </div>
+        <div id="qz-confirm"></div>
+        <ol class="qz-secs">${cards}</ol>`;
+      document.getElementById("qz-reset").addEventListener("click", () => confirmReset(`Reset progress for Level ${lv} · ${qzDiffName(df)}? You'll start again from Section 1.`, "qz-confirm", () => {
+        const s2 = qzLoad(); delete s2.tracks[key]; qzSave(s2); diffs(); track();
+        say(`Level ${lv} ${qzDiffName(df)} reset. Start from Section 1.`);
+        document.getElementById("qz-track-h").setAttribute("tabindex", "-1"); document.getElementById("qz-track-h").focus();
+      }, "qz-reset"));
+    };
+    const say = msg => { const el = document.getElementById("qz-status"); el.textContent = ""; setTimeout(() => el.textContent = msg, 60); };
+    function confirmReset(msg, hostId, onYes, returnId){
+      const host = document.getElementById(hostId);
+      host.innerHTML = `<div class="qz-confirm" role="group" aria-labelledby="qz-cf-m"><p id="qz-cf-m" tabindex="-1">${esc(msg)}</p><div class="btn-row"><button type="button" class="btn qz-danger" id="qz-cf-yes">Yes, reset</button><button type="button" class="btn ghost" id="qz-cf-no">Cancel</button></div></div>`;
+      document.getElementById("qz-cf-m").focus();
+      document.getElementById("qz-cf-yes").addEventListener("click", () => { host.innerHTML = ""; onYes(); });
+      document.getElementById("qz-cf-no").addEventListener("click", () => { host.innerHTML = ""; const b = document.getElementById(returnId); if (b) b.focus(); });
+    }
+    diffs(); track();
+    app.querySelector(".qz-pickers").addEventListener("change", e => {
+      const st = qzLoad();
+      if (e.target.name === "qz-lv") st.sel.lv = e.target.value;
+      if (e.target.name === "qz-df") st.sel.df = e.target.value;
+      qzSave(st);
+      if (e.target.name === "qz-lv") diffs();
+      track();
+      const secs = T[qzKey(st.sel.lv, st.sel.df)];
+      say(`Showing Level ${st.sel.lv}, ${qzDiffName(st.sel.df)}: ${plural(secs.length, "section", "sections")}.`);
+    });
+    const raHost = document.createElement("div"); raHost.id = "qz-ra-confirm";
+    document.getElementById("qz-ra-row").after(raHost);
+    document.getElementById("qz-reset-all").addEventListener("click", () => confirmReset("Reset all quiz progress for Level A, AA and AAA at every difficulty? You'll start again from Section 1 everywhere.", "qz-ra-confirm", () => {
+      const st = qzLoad(); st.tracks = {}; qzSave(st); diffs(); track();
+      say("All quiz progress reset.");
+      document.getElementById("qz-reset-all").focus();
+    }, "qz-reset-all"));
+  }
+
+  function renderQuizRun(lv, df, n){
+    const T = qzData(), key = qzKey(lv, df), secs = T[key];
+    const crumbs = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/quiz">Quiz me</a></li><li><span aria-current="page">Level ${lv} · ${qzDiffName(df)} · Section ${n}</span></li></ol></nav>`;
+    if (!secs || !secs[n - 1]){
+      app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section not found</h1><p><a href="#/quiz">Back to Quiz me</a></p></div>`; return;
+    }
+    const s = qzLoad(), st = qzTrackState(s, key);
+    if (s.sel.lv !== lv || s.sel.df !== df){ s.sel = {lv, df}; qzSave(s); }
+    if (!qzUnlocked(st, n)){
+      app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n} is locked</h1><p>Pass Section ${n - 1} with ${QZ_PASS} or more out of ${QZ_SIZE} to open it.</p><div class="btn-row"><a class="btn" href="${qzRunHref(lv, df, qzNext(st, secs.length) || 1)}">Go to Section ${qzNext(st, secs.length) || 1}</a><a class="btn ghost" href="#/quiz">Back to Quiz me</a></div></div>`; return;
+    }
+    const runId = key + "|" + n;
+    if (!qzRun || qzRun.id !== runId || qzRun.finished){
+      const rnd = qzRng(Date.now());
+      const qs = qzShuffle(secs[n - 1], rnd);
+      qzRun = {id:runId, qs, order:qs.map(q => qzShuffle(q.o.map((_, i) => i), rnd)), i:0, picks:[], checked:false, score:0, finished:false};
+    }
+    app.innerHTML = `<div class="wrap qz">${crumbs}
+      <h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n}</h1>
+      <p class="qz-meta"><span class="badge lvl-${lv}">Level ${lv}</span> <span>${qzDiffName(df)}</span> <span id="qz-count"></span></p>
+      <div class="qz-bar" aria-hidden="true"><span id="qz-barfill"></span></div>
+      <div id="qz-stage"></div>
+    </div>`;
+    showQuestion(lv, df, n, false);
+  }
+
+  const qzShot = q => q.shot ? `<figure class="qz-shot"><div class="qz-mock" inert>${q.shot}</div><figcaption>Mock screenshot of the page being audited</figcaption></figure>` : "";
+  const qzCode = (code, label) => `<pre class="qz-code" tabindex="0" aria-label="${esc(label)}"><code>${esc(code)}</code></pre>`;
+  const qzRefs = q => (q.r || []).length ? `<p class="qz-refs"><b>Study it:</b> ${q.r.map(r => /^https?:/.test(r[0]) ? extLink(r[0], r[1]) : `<a href="${esc(r[0])}">${esc(r[1])}</a>`).join(" · ")}</p>` : "";
+
+  function showQuestion(lv, df, n, focus){
+    const R = qzRun, q = R.qs[R.i], ord = R.order[R.i];
+    document.getElementById("qz-count").textContent = `Question ${R.i + 1} of ${R.qs.length} · Score ${R.score}`;
+    document.getElementById("qz-barfill").style.width = (R.i / R.qs.length * 100) + "%";
+    const stage = document.getElementById("qz-stage");
+    stage.innerHTML = `<form class="qz-card" id="qz-form" novalidate>
+        <p class="qz-kind">${esc(q.k)}</p>
+        <h2 id="qz-q" tabindex="-1" class="qz-q"><span class="visually-hidden">Question ${R.i + 1}: </span>${esc(q.q)}</h2>
+        ${qzShot(q)}
+        ${q.code ? qzCode(q.code, "Code sample for this question") : ""}
+        <fieldset class="qz-opts" id="qz-opts" aria-describedby="qz-err">
+          <legend class="visually-hidden">Choose one answer</legend>
+          ${ord.map((oi, j) => `<label class="qz-opt" data-oi="${oi}"><input type="radio" name="qz-a" value="${oi}"><span class="qz-letter" aria-hidden="true">${"ABCDEF"[j]}</span><span class="qz-otext">${esc(q.o[oi])}</span><span class="qz-tag"></span></label>`).join("")}
+        </fieldset>
+        <p class="qz-err" id="qz-err" hidden>Choose an answer first.</p>
+        <div class="btn-row" id="qz-actions"><button class="btn" type="submit">Check answer</button><a class="btn ghost" href="#/quiz">Leave section</a></div>
+      </form>
+      <div id="qz-fb"></div>`;
+    const form = document.getElementById("qz-form");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      if (R.checked) return;
+      const sel = form.querySelector("input[name=qz-a]:checked");
+      const err = document.getElementById("qz-err");
+      if (!sel){ err.hidden = false; form.querySelector("input[name=qz-a]").focus(); return; }
+      err.hidden = true;
+      const pick = +sel.value, ok = pick === q.a;
+      R.checked = true; R.picks[R.i] = pick; if (ok) R.score++;
+      document.getElementById("qz-opts").disabled = true;
+      form.querySelectorAll(".qz-opt").forEach(l => {
+        const oi = +l.dataset.oi, tag = l.querySelector(".qz-tag");
+        if (oi === q.a){ l.classList.add("is-right"); tag.innerHTML = `${I.ok} Correct answer`; }
+        else if (oi === pick){ l.classList.add("is-wrong"); tag.innerHTML = `${I.x} Your answer`; }
+      });
+      document.getElementById("qz-actions").hidden = true;
+      document.getElementById("qz-count").textContent = `Question ${R.i + 1} of ${R.qs.length} · Score ${R.score}`;
+      const last = R.i === R.qs.length - 1;
+      document.getElementById("qz-fb").innerHTML = `<div class="qz-fb ${ok ? "ok" : "no"}">
+        <h2 id="qz-fbh" tabindex="-1">${ok ? I.ok + " Correct" : I.x + " Not quite"}</h2>
+        ${ok ? "" : `<p><b>Correct answer:</b> ${esc(q.o[q.a])}</p>`}
+        <p>${esc(q.e)}</p>
+        ${q.fix ? `<p class="qz-fixh"><b>Passing version</b></p>${qzCode(q.fix, "Passing version of the code")}` : ""}
+        ${qzRefs(q)}
+        <div class="btn-row"><button type="button" class="btn" id="qz-next">${last ? "See my results" : "Next question"}</button></div>
+      </div>`;
+      document.getElementById("qz-fbh").focus();
+      document.getElementById("qz-next").addEventListener("click", () => {
+        R.checked = false;
+        if (last){ finishRun(lv, df, n); return; }
+        R.i++; showQuestion(lv, df, n, true);
+      });
+    });
+    if (focus){ document.getElementById("qz-q").focus(); window.scrollTo(0, 0); }
+  }
+
+  function finishRun(lv, df, n){
+    const R = qzRun; R.finished = true;
+    const key = qzKey(lv, df), secs = QZ_TRACKS[key];
+    const s = qzLoad(), st = qzTrackState(s, key);
+    const passed = R.score >= QZ_PASS;
+    const firstPass = passed && !st.passed[n];
+    st.best[n] = Math.max(st.best[n] || 0, R.score);
+    if (passed) st.passed[n] = true;
+    qzSave(s);
+    const hasNext = n < secs.length;
+    const wrong = R.qs.map((q, i) => ({q, i, pick:R.picks[i]})).filter(x => x.pick !== x.q.a);
+    document.getElementById("qz-count").textContent = `Finished · Score ${R.score} of ${R.qs.length}`;
+    document.getElementById("qz-barfill").style.width = "100%";
+    document.getElementById("qz-stage").innerHTML = `<section class="qz-result ${passed ? "ok" : "no"}" aria-labelledby="qz-rh">
+        <h2 id="qz-rh" tabindex="-1">${passed ? "Passed" : "Not passed yet"}: ${R.score} out of ${R.qs.length}</h2>
+        <p>${passed ? (firstPass && hasNext ? `Section ${n + 1} is now unlocked.` : hasNext ? "Nice, this section stays open for revisiting." : "That was the last section in this track. Every section is done.") : `You need ${QZ_PASS} or more to pass. Review the explanations below and try again; the questions and answer order are reshuffled.`}</p>
+        <div class="btn-row">
+          ${passed && hasNext ? `<a class="btn" href="${qzRunHref(lv, df, n + 1)}">Go to Section ${n + 1}</a>` : ""}
+          <button type="button" class="btn${passed && hasNext ? " ghost" : ""}" id="qz-retry">Retake Section ${n}</button>
+          <a class="btn ghost" href="#/quiz">Back to Quiz me</a>
+        </div>
+      </section>
+      ${wrong.length ? `<section class="qz-review" aria-labelledby="qz-rvh"><h2 id="qz-rvh">Review: ${plural(wrong.length, "question", "questions")} to revisit</h2><ol>${wrong.map(x => `<li>
+          <p class="qz-kind">${esc(x.q.k)}</p>
+          <h3>${esc(x.q.q)}</h3>
+          ${x.q.code ? qzCode(x.q.code, "Code sample") : ""}
+          <p class="qz-yours">${I.x} <b>Your answer:</b> ${esc(x.q.o[x.pick])}</p>
+          <p class="qz-right">${I.ok} <b>Correct answer:</b> ${esc(x.q.o[x.q.a])}</p>
+          <p>${esc(x.q.e)}</p>
+          ${qzRefs(x.q)}
+        </li>`).join("")}</ol></section>` : `<p class="qz-perfect">${I.star} A perfect score. Nothing to review.</p>`}`;
+    document.getElementById("qz-rh").focus(); window.scrollTo(0, 0);
+    document.getElementById("qz-retry").addEventListener("click", () => { qzRun = null; renderQuizRun(lv, df, n); document.getElementById("p-h1").focus(); });
+  }
+
   /* ---------- nav ---------- */
   function renderNav(current){
-    const items = [["wcag","WCAG 2.2"],["meet","How to meet"],["apg","APG patterns"],["practices","Practices"],["audit","Audit guide"]];
+    const items = [["wcag","WCAG 2.2"],["meet","How to meet"],["apg","APG patterns"],["practices","Practices"],["audit","Audit guide"],["quiz","Quiz me"]];
     document.getElementById("navlist").innerHTML = items.map(x =>
       `<li><a href="#/${x[0]}"${current === x[0] ? ' aria-current="page"' : ""}>${x[1]}</a></li>`).join("");
   }
@@ -18059,6 +19228,12 @@ const PRINCIPLES = [
             <span class="pick-k">APG practices</span>
             <span class="pick-t">Techniques behind the patterns</span>
             <span class="pick-d">${PRAC_ORDER.length} W3C practice guides: Read Me First, landmarks, names and descriptions, keyboard focus, grid and table properties, range values, structural roles and hiding semantics.</span>
+          </a></li>
+          <li><a class="pick pick-quiz" href="#/quiz">
+            <span class="chip" aria-hidden="true"></span>
+            <span class="pick-k">Quiz me</span>
+            <span class="pick-t">Test what you've learned</span>
+            <span class="pick-d">Thousands of questions at Level A, AA and AAA, from basic to advanced: real audit findings, mock screenshots, code to review and fixes to recommend.</span>
           </a></li>
         </ul>
         <p class="land-more"><a href="#/audit">Read the audit guide</a>: how to plan, run and report an accessibility audit.</p>
@@ -19917,6 +21092,16 @@ Severity: High`)}</code></pre></div>
       const same = app.dataset.view === view;
       if (!same){ app.dataset.view = view; renderNav(""); renderSearchPage(term); window.scrollTo(0, 0); }
       document.title = (term ? `Search results for “${term}”` : "Search") + " | a11ywallet";
+      if (!first && !same) document.getElementById("p-h1").focus();
+      first = false; return;
+    }
+    if (parts[0] === "quiz"){
+      const lv = parts[1], df = parts[2], n = parseInt(parts[3], 10);
+      const isRun = QZ_LEVELS.includes(lv) && QZ_DIFFS.some(d => d[0] === df) && n > 0;
+      const view = isRun ? `quiz:${lv}:${df}:${n}` : "quiz";
+      const same = app.dataset.view === view;
+      if (!same){ app.dataset.view = view; renderNav("quiz"); if (isRun) renderQuizRun(lv, df, n); else renderQuizHub(); window.scrollTo(0, 0); }
+      document.title = (isRun ? `Section ${n} · Level ${lv} ${qzDiffName(df)} | Quiz me` : "Quiz me") + " | a11ywallet";
       if (!first && !same) document.getElementById("p-h1").focus();
       first = false; return;
     }
