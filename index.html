@@ -803,75 +803,79 @@ footer p{max-width:70ch}
 /* ---------- Quiz me ---------- */
 .pick-quiz{background:#F0C796}
 .qz{padding-bottom:3rem}
-.qz-lead{max-width:70ch;font-size:1.05rem;margin:.75rem 0 1.5rem}
-.qz-pickers{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.25rem;margin-bottom:1.75rem}
-.qz-seg{border:1px solid var(--line);border-radius:16px;padding:1rem 1.1rem 1.1rem;margin:0;background:var(--surface);display:grid;gap:.6rem;align-content:start}
-.qz-seg legend{font-weight:800;font-size:1.1rem;padding:0 .4rem}
-#qz-diffs{display:grid;gap:.6rem}
-.qz-chip{display:flex;gap:.75rem;align-items:flex-start;padding:.7rem .85rem;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--bg)}
-.qz-chip:has(input:checked){border-color:var(--link);background:var(--surface-2)}
-.qz-chip input{margin:.25rem 0 0;width:1.15rem;height:1.15rem;accent-color:var(--link);flex:none}
-.qz-chip input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-.qz-chip span{display:grid;gap:.15rem;justify-items:start}
-.qz-chip span span{display:inline-block}
-.qz-chip small{font-size:.92rem;color:var(--muted)}
+.qz-lead{max-width:72ch;font-size:1.05rem;margin:.75rem 0 1.5rem}
+.qz-filters{display:flex;flex-wrap:wrap;gap:1rem 2.5rem;margin-bottom:1.5rem}
+.qz-chips{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;min-width:0}
+.qz-chips legend{font-weight:800;font-size:1rem;padding:0;margin-bottom:.5rem;float:left;width:100%}
+.qz-chiprow{display:flex;flex-wrap:wrap;gap:.5rem}
+.qz-chip{position:relative;display:inline-flex;align-items:baseline;gap:.45rem;padding:.5rem 1rem;border:2px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-weight:700;line-height:1.3}
+.qz-chip input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;width:100%;height:100%}
+.qz-chip small{font-weight:600;font-size:.85rem;color:var(--muted)}
+.qz-chip:hover{background:var(--surface-2)}
+.qz-chip:has(input:checked){background:var(--leather);border-color:var(--link);color:#fff}
+.qz-chip:has(input:checked) small{color:#DCE6E0}
+.qz-chip:has(input:checked)::before{content:"✓";font-weight:800}
+.qz-chip.lvc-A:has(input:checked){background:var(--lvl-a);border-color:var(--lvl-a)}
+.qz-chip.lvc-AA:has(input:checked){background:var(--lvl-aa);border-color:var(--lvl-aa)}
+.qz-chip.lvc-AAA:has(input:checked){background:var(--lvl-aaa);border-color:var(--lvl-aaa)}
+.qz-chip:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:3px}
 .qz-track{border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:1.25rem 1.25rem 1.5rem}
 .qz-track-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;align-items:flex-end}
 .qz-track-head > div:first-child{flex:1 1 18rem}
 .qz-track h2{font-size:1.5rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.qz-track h2:focus{outline:none}
 .qz-track .btn-row{margin-top:0}
 .qz-prog-t{margin:.5rem 0 .4rem;font-weight:600}
-.qz-bar{height:.6rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;max-width:40rem}
-.qz-bar span{display:block;height:100%;background:var(--pass);border-radius:999px;transition:width .3s}
+.qz-bar{display:block;height:.6rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;max-width:40rem}
+.qz-bar span{display:block;height:100%;background:var(--pass);border-radius:999px}
 .qz-alldone{margin:0;display:flex;gap:.4rem;align-items:center;font-weight:700}
 .qz-alldone svg,.qz-perfect svg{width:1.2rem;height:1.2rem;color:var(--brass-ink)}
-.qz-secs{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,13rem),1fr));gap:.75rem}
-.qz-sec > a,.qz-sec.locked{display:grid;gap:.2rem;padding:.8rem .9rem;border-radius:12px;border:2px solid var(--line);min-height:5.5rem;text-decoration:none;color:var(--text);background:var(--bg)}
+.qz-secs{list-style:none;margin:1.25rem 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,12.5rem),1fr));gap:.75rem}
+.qz-sec > a,.qz-sec.locked{display:grid;gap:.35rem;padding:.8rem .9rem;border-radius:12px;border:2px solid var(--line);min-height:5.75rem;text-decoration:none;color:var(--text);background:var(--bg);align-content:start}
 .qz-sec > a:hover .qz-sec-n{text-decoration:underline}
 .qz-sec > a:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
 .qz-sec.passed > a{border-color:var(--pass);background:var(--pass-bg)}
-.qz-sec.current > a{border-color:var(--link);border-style:solid}
+.qz-sec.current > a,.qz-sec.inprog > a{border-color:var(--link)}
 .qz-sec.locked{color:var(--muted);border-style:dashed}
 .qz-sec-n{font-weight:800;display:flex;gap:.35rem;align-items:center}
 .qz-sec-n svg{width:1rem;height:1rem;flex:none}
 .qz-sec.passed .qz-sec-n svg{color:var(--pass)}
-.qz-sec-s{font-size:.92rem;font-weight:600}
-.qz-sec-k{font-size:.82rem;color:var(--muted)}
+.qz-sec-s{font-size:.9rem;font-weight:600}
+.qz-mini{display:block;height:.45rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden;margin-top:auto}
+.qz-mini span{display:block;height:100%;background:var(--link)}
+.qz-sec.passed .qz-mini span{background:var(--pass)}
 .qz-confirm{margin-top:1rem;padding:1rem;border:2px solid var(--fail);border-radius:12px;background:var(--fail-bg)}
 .qz-confirm p{margin:0;font-weight:700}
 .qz-confirm p:focus{outline:none}
 .qz-confirm .btn-row{margin-top:.75rem}
 .btn.qz-danger{background:var(--fail);border-color:var(--fail);color:#fff}
-[data-theme="dark"] .btn.qz-danger{color:#1C2421}
+:root[data-theme="dark"] .btn.qz-danger{color:#1C2421}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.qz-danger{color:#1C2421}}
 .qz-resetall{margin-top:2.25rem;padding-top:1.25rem;border-top:1px solid var(--line)}
 .qz-resetall h2{font-size:1.25rem}
-.qz-resetall p{margin:.4rem 0 0;color:var(--muted)}
-#qz-ra-confirm:empty{display:none}
+.qz-resetall p{margin:.4rem 0 0;color:var(--muted);max-width:70ch}
 .qz-meta{display:flex;flex-wrap:wrap;gap:.5rem .8rem;align-items:center;margin:.6rem 0 .5rem;font-weight:600}
+.qz-dots{list-style:none;margin:.4rem 0 0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
+.qz-dots li{width:1.6rem;height:.55rem;border-radius:999px;background:var(--surface-2);border:1px solid var(--line)}
+.qz-dots li.now{background:var(--link);border-color:var(--link)}
+.qz-dots li.ok{background:var(--pass);border-color:var(--pass)}
+.qz-dots li.no{background:var(--fail);border-color:var(--fail);height:.55rem;background-image:repeating-linear-gradient(45deg,transparent 0 3px,rgba(255,255,255,.55) 3px 5px)}
 .qz-card{margin-top:1.25rem;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:1.25rem 1.35rem 1.4rem;max-width:52rem}
 .qz-kind{margin:0 0 .35rem;font-size:.85rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--brass-ink)}
-.qz-q{font-size:1.25rem;line-height:1.4;font-weight:700}
+.qz-q{font-size:1.2rem;line-height:1.45;font-weight:700}
 .qz-q:focus,#qz-fbh:focus,#qz-rh:focus{outline:none}
 .qz-shot{margin:1rem 0 0}
 .qz-mock{background:#fff;color:#111;border:1px solid #c9c9c9;border-radius:10px;padding:14px;box-shadow:0 6px 18px rgba(0,0,0,.08);overflow:auto}
 .qz-shot figcaption{font-size:.85rem;color:var(--muted);margin-top:.35rem}
 .qz-code{margin-top:1rem;border-radius:10px;white-space:pre-wrap;word-break:break-word}
-.qz-opts{border:0;padding:0;margin:1.1rem 0 0;display:grid;gap:.6rem;min-width:0}
-.qz-opt{display:grid;grid-template-columns:auto auto 1fr;gap:.25rem .65rem;align-items:start;padding:.75rem .9rem;border:2px solid var(--line);border-radius:12px;cursor:pointer;background:var(--bg);color:var(--text)}
-.qz-opt input{margin:.2rem 0 0;width:1.1rem;height:1.1rem;accent-color:var(--link)}
-.qz-opt input:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-.qz-opt:has(input:checked){border-color:var(--link);background:var(--surface-2)}
-.qz-opts:disabled .qz-opt{cursor:default}
-.qz-letter{font-weight:800;min-width:1.2rem}
-.qz-otext{overflow-wrap:anywhere}
-.qz-tag{grid-column:3;display:none;gap:.3rem;align-items:center;font-weight:800;font-size:.9rem}
-.qz-tag svg{width:1rem;height:1rem}
-.qz-opt.is-right,.qz-opt.is-right:has(input:checked){border-color:var(--pass);background:var(--pass-bg)}
-.qz-opt.is-right .qz-tag{display:flex;color:var(--pass)}
-.qz-opt.is-wrong,.qz-opt.is-wrong:has(input:checked){border-color:var(--fail);background:var(--fail-bg)}
-.qz-opt.is-wrong .qz-tag{display:flex;color:var(--fail)}
-.qz-err{color:var(--fail);font-weight:700;margin:.6rem 0 0}
+.qz-field{margin-top:1.25rem;display:grid;gap:.3rem}
+.qz-field label{font-weight:800}
+.qz-hint{margin:0;color:var(--muted);font-size:.93rem}
+.qz-field input{font:inherit;font-size:1.05rem;padding:.7rem .85rem;border:2px solid var(--muted);border-radius:10px;background:var(--bg);color:var(--text);width:100%;max-width:36rem}
+.qz-field input:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.qz-field input[readonly]{background:var(--surface-2)}
+.qz-field input[aria-invalid="true"]{border-color:var(--fail)}
+.qz-err{color:var(--fail);font-weight:700;margin:.2rem 0 0}
 .qz-fb,.qz-result{margin-top:1.25rem;border-radius:16px;padding:1.1rem 1.3rem 1.3rem;max-width:52rem;border:2px solid}
 .qz-fb.ok,.qz-result.ok{background:var(--pass-bg);border-color:var(--pass)}
 .qz-fb.no,.qz-result.no{background:var(--fail-bg);border-color:var(--fail)}
@@ -879,6 +883,7 @@ footer p{max-width:70ch}
 .qz-fb h2 svg{width:1.3rem;height:1.3rem}
 .qz-fb.ok h2{color:var(--pass)}
 .qz-fb.no h2{color:var(--fail)}
+.qz-note{font-weight:700}
 .qz-fb p,.qz-result p{max-width:70ch}
 .qz-fixh{margin-bottom:0}
 .qz-refs{font-size:.95rem}
@@ -886,14 +891,13 @@ footer p{max-width:70ch}
 .qz-review > h2{font-size:1.35rem}
 .qz-review ol{padding-left:1.4rem;display:grid;gap:1.25rem}
 .qz-review li{border-bottom:1px solid var(--line);padding-bottom:1rem}
-.qz-review h3{font-size:1.08rem;line-height:1.4}
-.qz-yours,.qz-right{display:flex;gap:.4rem;align-items:baseline}
+.qz-review h3{font-size:1.05rem;line-height:1.45}
+.qz-yours,.qz-right{display:flex;gap:.4rem;align-items:baseline;flex-wrap:wrap}
 .qz-yours svg,.qz-right svg{width:1rem;height:1rem;flex:none;align-self:center}
 .qz-yours{color:var(--fail)}
 .qz-right{color:var(--pass)}
 .qz-perfect{display:flex;gap:.4rem;align-items:center;font-weight:700;margin-top:1.25rem}
-@media (forced-colors:active){.qz-opt.is-right,.qz-opt.is-wrong,.qz-chip:has(input:checked){border-width:4px}.qz-bar span{background:Highlight}}
-@media (prefers-reduced-motion:reduce){.qz-bar span{transition:none}}
+@media (forced-colors:active){.qz-chip:has(input:checked){border-width:4px;forced-color-adjust:none;background:Highlight;color:HighlightText}.qz-bar span,.qz-mini span,.qz-dots li.ok,.qz-dots li.now{background:Highlight}.qz-dots li.no{background:Mark}}
 </style>
 </head>
 <body>
@@ -18540,6 +18544,52 @@ const QUIZ_HAND = [
  e:"role=\"alert\" is assertive and interrupts. Routine confirmations belong in a polite status region. Moving focus to status messages is disruptive and not what 4.1.3 asks."}
 ];
 
+/* how typed answers are checked for questions whose model answer is a sentence */
+(function(){
+  const K = (groups, extra) => Object.assign({t:"kw", groups}, extra || {});
+  const A = {
+    "cart-icon": K([["name","label","alt","aria-label","text alternative","accessible name","no text","unlabel","nothing to read","empty link"]], {ids:["1.1.1","4.1.2","2.4.4"]}),
+    "logo-alt": K([["home","homepage","home page","company name","brand name","acme"]], {hint:"Type the alt text you'd use."}),
+    "divider": K([["alt=\"\"","empty alt","null alt","alt empty","blank alt","empty","background","aria-hidden","presentation","role=none","decorative"]]),
+    "chart": K([["table","data","text","description","describ","summary","longdesc","details"]]),
+    "placeholder-label": K([["label","placeholder"]]),
+    "table-headers": K([["th","header cell","table header","scope","headers"]]),
+    "radio-group": K([["fieldset","legend","radiogroup","group"]]),
+    "keyboard-div": K([["button","focus","keyboard","tabindex","tab"]], {ids:["2.1.1","4.1.2"]}),
+    "session-timeout": K([["warn","extend","adjust","turn off","more time","notify","prompt","alert"]]),
+    "required-star": K([["required","explain","legend","instruction","aria-required","meaning","label","key"]]),
+    "aria-expanded": K([["expanded","state","aria"],["updat","chang","toggl","stale","static","never","sync","same","stuck","false","doesn't","does not","not"]]),
+    "aria-hidden-focus": K([["display","hidden","inert","visibility","tab order","focusable","tabindex","focus","tab"]]),
+    "role-button-link": K([["button"]]),
+    "input-type-image": K([["alt"]]),
+    "svg-icon": {t:"text", vals:["b","option b","version b"], exact:true, hint:"Type A, B or C."},
+    "iframe-title": K([["title","aria-label","name","label"]]),
+    "duplicate-id": K([["label","unlabel","name","associat"]]),
+    "parsing-obsolete": K([["obsolete","removed","remov","deprecat","dropped","retired","deleted","no longer","gone"]]),
+    "error-suggestion": K([["suggest","example","format","how to fix","correct","valid","hint","tell","explain","28"]]),
+    "live-region-late": K([["already","before","exist","on load","page load","initial","ahead","empty","in the dom","present","beforehand","advance"]]),
+    "contrast-enh": {t:"yn", v:"no", also:["7:1","7 to 1","seven"]},
+    "target-44": {t:"yn", v:"no", also:["44"]},
+    "reading-level": K([["simpl","summary","supplement","easier","plain","lower secondary","illustrat","easy read","alternative version","simpler"]]),
+    "nvda-graphics": {t:"text", vals:["g"], exact:true, hint:"Type the key."},
+    "insert-f7": K([["elements list","element list","f7","links list","link list"]]),
+    "zoom-test": K([["400","320"]]),
+    "severity": K([["trap","checkout","payment"]]),
+    "fail-vs-bp": {t:"bp", v:"bp"},
+    "one-h1": {t:"yn", v:"no", also:["best practice","bp","recommendation"]},
+    "accname-order": {t:"text", vals:["store"], hint:"Type the accessible name."},
+    "role-presentation": K([["semantic","header","relationship","structure","1.3.1","lost","remov","strip","flatten","layout"]]),
+    "alert-overuse": K([["status","polite"]]),
+    "tool-limits": K([["manual","judge","quality","meaningful","review","human","check","context","accurate","appropriate","not enough","only","exist","has alt","have alt"]]),
+    "read-more": {t:"yn", v:"yes", also:["can pass","context","it can"]},
+    "lang": K([["lang"]], {ids:["3.1.1"]}),
+    "viewport-noscale": K([["user-scalable","zoom","maximum-scale","scal","pinch"]], {ids:["1.4.4"]}),
+    "lang-parts": K([["lang"]], {ids:["3.1.2"]}),
+    "pass-target-inline": {t:"yn", v:"no", also:["pass","exempt","inline"]}
+  };
+  QUIZ_HAND.forEach(h => { if (A[h.id]) h.ans = A[h.id]; });
+})();
+
 (function(){
   "use strict";
   const SPEC = "https://www.w3.org/TR/WCAG22/";
@@ -18605,8 +18655,10 @@ const QUIZ_HAND = [
      Built at load time from the study data above (criteria,
      failures, techniques, APG patterns, practices) plus the
      hand-written real-world questions in QUIZ_HAND.
+     Every question is answered by typing; q.ans says how the
+     answer is checked (see qzCheck).
      ========================================================= */
-  const QZ_SIZE = 20, QZ_PASS = 16;
+  const QZ_SIZE = 10, QZ_PASS = 8;
   const QZ_LEVELS = ["A","AA","AAA"];
   const QZ_DIFFS = [["basic","Basic"],["medium","Medium"],["advanced","Advanced"]];
 
@@ -18622,145 +18674,64 @@ const QUIZ_HAND = [
     const scRef = c => [[scHref(c), `Study ${c.id} ${c.title}`], [`#/meet/${c.id}`, `How to meet ${c.id}`]];
     const lvOf = id => (byId[id] || {}).level || "A";
     const clean = s => String(s).replace(/\s+/g, " ").trim();
-    const first = (s, max) => { s = clean(s); const m = /^(.+?[.!?])(\s|$)/.exec(s); let t = m && m[1].length > 40 ? m[1] : s; if (max && t.length > max) t = t.slice(0, max - 1).replace(/\s+\S*$/, "") + "…"; return t; };
-    const an = w => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
     const strip = s => clean(String(s).replace(/<[^>]+>/g, ""));
-
-    /* criteria that are easy to confuse: never offered as wrong answers for each other */
-    const GROUPS = [
-      ["1.1.1","4.1.2","2.4.4","2.5.3","1.4.5","1.4.9","2.4.6","2.4.9"],
-      ["1.3.1","4.1.2","3.3.2","2.4.6","2.4.10","2.4.1","1.3.2"],
-      ["1.4.3","1.4.6","1.4.11","1.4.1"],
-      ["2.4.7","2.4.11","2.4.12","2.4.13","1.4.11"],
-      ["2.1.1","2.1.3","4.1.2","2.5.1","2.5.7","1.4.13","2.1.2"],
-      ["2.4.3","2.1.2","2.4.11","1.3.2"],
-      ["1.4.4","1.4.10","1.4.12","1.4.8","1.3.4"],
-      ["1.2.1","1.2.3","1.2.5","1.2.8","1.2.9"],
-      ["1.2.2","1.2.4","1.2.6","1.2.1"],
-      ["1.2.3","1.2.7"],["1.2.5","1.2.7"],
-      ["3.3.1","3.3.3","4.1.3","3.3.4","3.3.6","3.3.2"],
-      ["3.3.2","2.5.3","1.3.5","3.3.7","3.3.5"],
-      ["3.2.1","3.2.2","3.2.5"],["3.2.3","3.2.4","3.2.6","2.4.5"],
-      ["2.4.5","2.4.8","2.4.1"],["2.4.2","2.4.6"],["1.3.5","1.3.6"],["2.5.8","2.5.5"],["3.3.8","3.3.9"],
-      ["2.2.1","2.2.3","2.2.6","2.2.5","2.2.4"],["2.2.2","2.3.3","1.4.2","2.3.1","2.3.2","2.2.4"],
-      ["3.1.1","3.1.2"],["3.1.3","3.1.4","3.1.5","3.1.6"],["1.3.3","1.4.1"],["4.1.2","4.1.3"],["3.2.6","3.3.5"],
-      ["1.4.7","1.4.2"],["1.4.13","2.1.1"]
-    ];
-    const conf = {};
-    GROUPS.forEach(g => g.forEach(a => g.forEach(b => { (conf[a] = conf[a] || new Set()).add(b); })));
-    const clash = (a, b) => a === b || (conf[a] && conf[a].has(b));
-
-    /* pick wrong-answer criteria: "near" = same principle first, "far" = anywhere */
-    function pickSC(correctIds, n, rnd, mode, extraBan){
-      const ban = new Set(extraBan || []);
-      const ok = c => !ban.has(c.id) && !correctIds.some(id => clash(id, c.id));
-      const main = byId[correctIds[0]];
-      let pool = ALL.filter(ok);
-      if (mode === "near" && main){
-        const near = qzShuffle(pool.filter(c => c._p === main._p), rnd);
-        const rest = qzShuffle(pool.filter(c => c._p !== main._p), rnd);
-        pool = near.concat(rest);
-      } else pool = qzShuffle(pool, rnd);
-      return pool.slice(0, n);
-    }
+    const an = w => (/^[aeiou]/i.test(w) ? "an " : "a ") + w;
+    const scModel = c => `${scName(c)} · Level ${c.level}`;
     const seenQ = new Set();
     function add(q){
-      if (!q.o || q.o.length < 2) return;
-      if (new Set(q.o).size !== q.o.length) return;
-      const key = q.q + "|" + (q.code || "") + "|" + q.o[0];
+      const key = q.q + "|" + (q.code || "");
       if (seenQ.has(key)) return;
       seenQ.add(key); bank.push(q);
     }
-    /* correct answer first, then distractors; options get shuffled when shown */
-    const mc = (id, lv, d, k, q, right, wrong, e, r, extra) => add(Object.assign({id, lv, d, k, q, o:[right, ...wrong], a:0, e, r}, extra || {}));
+    const scQ = (id, c, d, k, q, e, r, extra) => add(Object.assign({id, lv:c.level, d, k, q, ans:{t:"sc", ids:[c.id]}, model:scModel(c), e, r:r || scRef(c)}, extra || {}));
 
     /* ---- per criterion ---- */
     ALL.forEach(c => {
       const R = qzRng("sc" + c.id);
-      const L = c.level, lvTxt = `Level ${L}`;
-      const sumE = `${scName(c)} is Level ${L}. ${clean(c.s)}`;
+      const L = c.level;
 
-      // basic: level
-      mc(`lvl-${c.id}`, L, 0, "Conformance level", `What conformance level is success criterion ${scName(c)}?`,
-        lvTxt, QZ_LEVELS.filter(x => x !== L).map(x => `Level ${x}`), sumE, scRef(c));
+      // basic: level, number, description, pass condition
+      add({id:`lvl-${c.id}`, lv:L, d:0, k:"Conformance level", q:`What conformance level is ${c.title}?`, ans:{t:"lv", lv:L}, model:`Level ${L} (${c.id})`, e:`${scName(c)} is Level ${L}. ${clean(c.s)}`, r:scRef(c)});
+      add({id:`num-${c.id}`, lv:L, d:0, k:"Criterion number", q:`What is the number of the success criterion “${c.title}”?`, ans:{t:"sc", ids:[c.id], numOnly:true}, model:scModel(c), e:`“${c.title}” is ${c.id}, under ${c._g.id} ${c._g.name}. ${clean(c.s)}`, r:scRef(c)});
+      scQ(`desc-${c.id}`, c, 0, "Name the criterion", `Which success criterion requires this? “${clean(c.s)}”`, `${scModel(c)}. ${clean(c.intent || "").slice(0, 400)}`);
+      if (EXPECTED_RESULTS[c.id]) scQ(`exp-${c.id}`, c, 0, "Pass condition", `You record this as the expected result in your test case. Which criterion are you testing? “${clean(EXPECTED_RESULTS[c.id])}”`, `This is the pass condition for ${scModel(c)}.`);
 
-      // basic: description to criterion
-      mc(`desc-${c.id}`, L, 0, "Name the criterion", `Which success criterion requires this? “${clean(c.s)}”`,
-        scName(c), pickSC([c.id], 3, R, "far").map(scName), sumE, scRef(c));
-
-      // basic: guideline
-      const gl = qzShuffle(PRINCIPLES.flatMap(p => p.guidelines).filter(g => g !== c._g), R).slice(0, 3);
-      mc(`gl-${c.id}`, L, 0, "Structure", `Success criterion ${scName(c)} sits under which guideline?`,
-        `${c._g.id} ${c._g.name}`, gl.map(g => `${g.id} ${g.name}`),
-        `${c.id} belongs to guideline ${c._g.id} ${c._g.name}, under the ${c._p.name} principle. ${clean(c._g.desc)}`, scRef(c));
-
-      // medium: expected result
-      if (EXPECTED_RESULTS[c.id]){
-        const others = pickSC([c.id], 6, R, "near").filter(x => EXPECTED_RESULTS[x.id]).slice(0, 3);
-        if (others.length === 3)
-          mc(`exp-${c.id}`, L, 1, "Pass condition", `You are testing ${scName(c)}. Which expected result tells you it passes?`,
-            first(EXPECTED_RESULTS[c.id], 260), others.map(x => first(EXPECTED_RESULTS[x.id], 260)),
-            `The expected result for ${c.id}: ${clean(EXPECTED_RESULTS[c.id])}`, scRef(c));
-      }
-
-      // medium: scenario -> criterion; advanced: scenario -> criterion + level; advanced: fix
+      // medium: scenario -> criterion; advanced: scenario -> criterion + level
       (c.scenarios || []).forEach((s, i) => {
-        const RR = qzRng(`scen${c.id}-${i}`);
-        mc(`scen-${c.id}-${i}`, L, 1, "Real-world issue", `Audit finding: ${clean(s[1])} Which success criterion does this fail?`,
-          scName(c), pickSC([c.id], 3, RR, "near").map(scName),
-          `${s[0]}. This fails ${scName(c)} (Level ${L}). ${clean(c.s)}`, scRef(c));
-        const near = pickSC([c.id], 2, RR, "near");
-        const wrongLv = QZ_LEVELS.filter(x => x !== L);
-        const opts = [`${scName(c)} · Level ${wrongLv[0]}`, `${scName(near[0])} · Level ${near[0].level}`, `${scName(near[1])} · Level ${wrongLv[1] === near[1].level ? L : wrongLv[1]}`];
-        mc(`scenlv-${c.id}-${i}`, L, 2, "Criterion and level", `“${s[0]}”: ${clean(s[1])} Which criterion and level would you log this against?`,
-          `${scName(c)} · Level ${L}`, opts,
-          `Log it against ${scName(c)}, Level ${L}. ${clean(c.s)}`, scRef(c));
-        const rec = COMMON_RECS[c.id];
-        if (rec){
-          const others = pickSC([c.id], 8, RR, "near").map(x => COMMON_RECS[x.id]).filter(Boolean).slice(0, 3);
-          if (others.length === 3)
-            mc(`fix-${c.id}-${i}`, L, 2, "Recommended fix", `You are writing the recommendation for this finding: ${clean(s[1])} What should the developer do?`,
-              first(rec, 260), others.map(x => first(x, 260)), `Recommendation for ${scName(c)}: ${clean(rec)}`, scRef(c));
-        }
+        scQ(`scen-${c.id}-${i}`, c, 1, "Real-world issue", `Audit finding: ${clean(s[1])} Which success criterion does this fail?`, `${s[0]}. This fails ${scModel(c)}. ${clean(c.s)}`);
+        add({id:`scenlv-${c.id}-${i}`, lv:L, d:2, k:"Criterion and level", q:`You're logging this bug: “${s[0]}”. ${clean(s[1])} Which criterion and level do you log it against?`,
+          ans:{t:"sclv", ids:[c.id], lv:L}, model:scModel(c), e:`Log it against ${scModel(c)}. ${clean(c.s)}`, r:scRef(c)});
       });
 
-      // medium: what you check -> criterion (up to 3 per criterion)
-      qzShuffle(c.check || [], R).slice(0, 3).forEach((ch, i) => {
-        const mentioned = (String(ch).match(/\b\d\.\d\.\d{1,2}\b/g) || []);
-        mc(`chk-${c.id}-${i}`, L, 1, "What am I testing?", `During an audit you check: “${clean(ch)}” Which success criterion is this check for?`,
-          scName(c), pickSC([c.id], 3, qzRng(`chk${c.id}${i}`), "near", mentioned).map(scName),
-          `This is one of the checks for ${scName(c)} (Level ${L}). ${clean(c.s)}`, scRef(c));
+      // medium: what you check -> criterion
+      qzShuffle(c.check || [], R).slice(0, 4).forEach((ch, i) => {
+        const masked = clean(ch).replace(/\b\d\.\d\.\d{1,2}\b/g, "another criterion");
+        scQ(`chk-${c.id}-${i}`, c, 1, "What am I testing?", `During an audit you check: “${masked}” Which success criterion is this check for?`, `This is one of the checks for ${scModel(c)}. ${clean(c.s)}`);
       });
 
       // advanced: failing code
-      if (c.ex && c.ex.bad){
-        mc(`code-${c.id}`, L, 2, "Spot the issue in code", `Review this markup. Which success criterion does it fail?`,
-          scName(c), pickSC([c.id], 3, R, "near").map(scName),
-          `${clean(c.ex.badNote || "")} It fails ${scName(c)} (Level ${L}). ${c.ex.goodNote ? "The fix: " + clean(c.ex.goodNote) : ""}`, scRef(c),
-          {code:c.ex.bad, fix:c.ex.good});
-      }
-      // advanced: pass/fail pairs with code
+      if (c.ex && c.ex.bad)
+        scQ(`code-${c.id}`, c, 2, "Spot the issue in code", `Review this markup. Which success criterion does it fail?`,
+          `${clean(c.ex.badNote || "")} It fails ${scModel(c)}. ${c.ex.goodNote ? "The fix: " + clean(c.ex.goodNote) : ""}`, null, {code:c.ex.bad, fix:c.ex.good});
       (c.pairs || []).forEach((pr, i) => {
-        if (!pr.failCode) return;
-        mc(`pair-${c.id}-${i}`, L, 2, "Spot the issue in code", `${pr.t}: which success criterion does this markup fail?`,
-          scName(c), pickSC([c.id], 3, qzRng(`pair${c.id}${i}`), "near").map(scName),
-          `${clean(pr.fail || "")} It fails ${scName(c)} (Level ${L}).`, scRef(c), {code:pr.failCode, fix:pr.passCode});
-      });
-      // medium: pass/fail pairs without code -> pass or fail
-      (c.pairs || []).forEach((pr, i) => {
-        if (!pr.fail || !pr.pass || pr.failCode) return;
-        const showFail = qzHash(c.id + i) % 2 === 0;
-        mc(`pf-${c.id}-${i}`, L, 1, "Pass or fail?", `${pr.t}, tested against ${scName(c)}: ${clean(showFail ? pr.fail : pr.pass)} Does this pass or fail?`,
-          showFail ? "Fail" : "Pass", [showFail ? "Pass" : "Fail", "Not applicable: this criterion doesn't cover it"],
-          `${showFail ? "Fail" : "Pass"}. Passing version: ${clean(pr.pass)} Failing version: ${clean(pr.fail)}`, scRef(c));
+        if (pr.failCode) scQ(`pair-${c.id}-${i}`, c, 2, "Spot the issue in code", `${pr.t}: which success criterion does this markup fail?`, `${clean(pr.fail || "")} It fails ${scModel(c)}.`, null, {code:pr.failCode, fix:pr.passCode});
+        else if (pr.fail && pr.pass){
+          const showFail = qzHash(c.id + i) % 2 === 0;
+          add({id:`pf-${c.id}-${i}`, lv:L, d:1, k:"Pass or fail?", q:`${pr.t}, tested against ${scName(c)}: ${clean(showFail ? pr.fail : pr.pass)} Does this pass or fail?`,
+            ans:{t:"pf", v:showFail ? "fail" : "pass"}, model:showFail ? "Fail" : "Pass", e:`Passing version: ${clean(pr.pass)} Failing version: ${clean(pr.fail)}`, r:scRef(c)});
+        }
       });
 
-      // basic/medium: best practice vs failure
-      (BEST_PRACTICES[c.id] || []).slice(0, 1).forEach((bp, i) => {
-        mc(`bp-${c.id}-${i}`, L, 0, "Failure or best practice?", `While checking ${scName(c)} you note: “${clean(bp)}” How do you log a page that ignores this advice (and is otherwise fine)?`,
-          "As a best-practice recommendation, not a WCAG failure", ["As a WCAG failure of " + c.id, "As a failure of a different criterion", "Don't log it at all"],
-          `This is listed as a best practice beside ${c.id}, not as a requirement. Log it as a recommendation so the report keeps failures and advice apart.`, scRef(c));
+      // basic/medium: requirement or best practice?
+      (BEST_PRACTICES[c.id] || []).slice(0, 2).forEach((bp, i) => {
+        add({id:`bp-${c.id}-${i}`, lv:L, d:i ? 1 : 0, k:"Failure or best practice?", q:`While auditing, you notice a page ignores this advice: “${clean(bp)}” Everything else is fine. Do you log a WCAG failure or a best-practice recommendation?`,
+          ans:{t:"bp", v:"bp"}, model:"Best practice (recommendation, not a WCAG failure)", e:`This is a best practice listed beside ${scName(c)}, not a requirement. Keep failures and advice apart in the report.`, r:scRef(c)});
       });
+      const reqs = qzShuffle((c.check || []).filter(x => !/\b\d\.\d\.\d/.test(x)), qzRng("req" + c.id));
+      if (reqs.length > 4){
+        add({id:`req-${c.id}`, lv:L, d:1, k:"Failure or best practice?", q:`A page doesn't meet this: “${clean(reqs[reqs.length - 1])}” Do you log a WCAG failure or a best-practice recommendation?`,
+          ans:{t:"bp", v:"req"}, model:`WCAG failure (${scName(c)})`, e:`This is a required check for ${scModel(c)}, so not meeting it is a failure.`, r:scRef(c)});
+      }
     });
 
     /* ---- documented failures (F codes) and sufficient techniques ---- */
@@ -18777,62 +18748,74 @@ const QUIZ_HAND = [
       const txt = (MEET_TECH[code] && MEET_TECH[code][0]) || (own && own.fails.find(f => f[0] === code)[1]);
       if (!txt) return;
       const c = byId[ids[0]];
-      mc(`f-${code}`, c.level, 1, "Documented failure", `WCAG documents this failure (${code}): “${clean(txt)}” Which success criterion does it fail?`,
-        scName(c), pickSC(ids, 3, qzRng("f" + code), "near").map(scName),
-        `${code} is a documented failure of ${ids.map(id => scName(byId[id])).join(", ")}.`, scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []));
+      add({id:`f-${code}`, lv:c.level, d:1, k:"Documented failure", q:`WCAG documents this failure: “${clean(txt)}” Which success criterion does it fail?`,
+        ans:{t:"sc", ids:[c.id], any:ids}, model:ids.map(id => scModel(byId[id])).join(" or "),
+        e:`This is failure ${code}, documented for ${ids.map(id => scName(byId[id])).join(", ")}. Any of them counts.`, r:scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []),
+        code:MEET_TECH[code] && MEET_TECH[code][1] || undefined});
     });
     Object.keys(sufSC).forEach(code => {
       const ids = [...sufSC[code]].filter(id => byId[id]);
       if (ids.length !== 1 || !MEET_TECH[code] || /^F/.test(code)) return;
       const c = byId[ids[0]];
-      mc(`t-${code}`, c.level, 2, "Technique", `Technique ${code}: “${clean(MEET_TECH[code][0])}” Which success criterion is this a sufficient technique for?`,
-        scName(c), pickSC(ids, 3, qzRng("t" + code), "near").map(scName),
-        `${code} is listed as a sufficient technique for ${scName(c)} (Level ${c.level}).`, scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []),
-        MEET_TECH[code][1] ? {code:MEET_TECH[code][1]} : null);
+      add({id:`t-${code}`, lv:c.level, d:2, k:"Technique", q:`A developer applies technique ${code}: “${clean(MEET_TECH[code][0])}” Which success criterion is this a sufficient technique for?`,
+        ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${code} is a sufficient technique for ${scModel(c)}.`,
+        r:scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []), code:MEET_TECH[code][1] || undefined});
     });
 
     /* ---- APG patterns ---- */
     const pats = Object.keys(APG_PATTERNS);
+    const compact = s => String(s).toLowerCase().replace(/pattern/g, "").replace(/[^a-z0-9]/g, "").replace(/s$/, "");
+    const patAnswers = slug => {
+      const n = APG_PATTERNS[slug].name, base = n.replace(/\s*\(.*\)/, ""), par = (/\((.*)\)/.exec(n) || [])[1];
+      const v = [compact(n), compact(slug), compact(n.replace(/[()]/g, ""))];
+      if (par){ v.push(compact(par + " " + base)); }
+      if (!pats.some(x => x !== slug && compact(APG_PATTERNS[x].name.replace(/\s*\(.*\)/, "")) === compact(base))) v.push(compact(base));
+      if (slug === "alertdialog") v.push("alertdialog", "messagedialog");
+      if (slug === "menubar") v.push("menubar", "menu");
+      if (slug === "radio") v.push("radio", "radiobutton");
+      if (slug === "disclosure") v.push("showhide");
+      return [...new Set(v)];
+    };
     pats.forEach(slug => {
-      const p = APG_PATTERNS[slug], R = qzRng("apg" + slug);
+      const p = APG_PATTERNS[slug];
       const ref = [[`#/apg/${slug}`, `Study the ${p.name} pattern`], [p.apg, `${p.name} at W3C APG`]];
       const plv = lvOf((p.wcag && p.wcag[0] && p.wcag[0][0]) || "4.1.2");
-      const otherNames = qzShuffle(pats.filter(x => x !== slug), R).slice(0, 3).map(x => APG_PATTERNS[x].name);
-      mc(`apgsum-${slug}`, plv, 0, "Name the pattern", `Which APG pattern is this? “${clean(p.summary)}”`, p.name, otherNames, `${p.name}: ${clean(p.what || p.summary)}`, ref);
+      const hide = s => clean(s).replace(new RegExp(p.name.replace(/[()]/g, "").split(/\s+/).filter(w => w.length > 3).join("|") || "$^", "gi"), "____");
+      add({id:`apgsum-${slug}`, lv:plv, d:0, k:"Name the pattern", q:`Which APG pattern is this? “${hide(p.summary)}”`, ans:{t:"pattern", vals:patAnswers(slug)}, model:p.name, e:`${p.name}: ${clean(p.what || p.summary)}`, r:ref});
+      if (p.what) add({id:`apgwhat-${slug}`, lv:plv, d:1, k:"Name the pattern", q:`A designer describes a component like this. Which APG pattern should you audit it against? “${hide(p.what).slice(0, 420)}”`, ans:{t:"pattern", vals:patAnswers(slug)}, model:p.name, e:`${p.name}. ${clean(p.summary)}`, r:ref});
       const meta = APG_META[slug];
-      if (meta && meta[2]){
-        const others = qzShuffle(pats.filter(x => x !== slug && APG_META[x] && APG_META[x][2] && APG_META[x][2] !== meta[2]), R).slice(0, 3).map(x => APG_META[x][2]);
-        if (others.length === 3) mc(`apgnat-${slug}`, plv, 0, "Native HTML first", `Before reaching for ARIA, which native HTML gets you closest to the ${p.name} pattern?`, meta[2], others, `For ${p.name}, start with ${meta[2]}. Native elements bring keyboard support, roles and states for free.`, ref);
+      if (meta && meta[2] && /</.test(meta[2])){
+        const alts = meta[2].split(/\bor\b/).map(x => ((/<(\w+)/.exec(x) || /(\w+)/.exec(x)) || [])[1]).filter(Boolean);
+        if (slug === "landmarks") alts.push(...(meta[2].match(/<(\w+)/g) || []).map(x => x.slice(1)));
+        add({id:`apgnat-${slug}`, lv:plv, d:0, k:"Native HTML first", q:`Before reaching for ARIA, which native HTML element gets you closest to the ${p.name} pattern?`, ans:{t:"tag", vals:[...new Set(alts)]}, model:meta[2], e:`For ${p.name}, start with ${meta[2]}. Native elements bring keyboard support, roles and states for free.`, r:ref});
       }
-      (p.quiz || []).forEach((x, i) => add({id:`apgq-${slug}-${i}`, lv:plv, d: i % 2 ? 2 : 1, k:`APG: ${p.name}`, q:x.q, o:[x.o[x.a], ...x.o.filter((_, j) => j !== x.a)], a:0, e:x.e, r:ref}));
-      const kb = (p.keyboard || []).filter(k => k[1]);
-      kb.slice(0, 5).forEach((k, i) => {
-        const pool = kb.filter(x => x !== k).map(x => first(x[1], 200));
-        const extra = qzShuffle(pats.filter(x => x !== slug).flatMap(x => (APG_PATTERNS[x].keyboard || []).map(y => first(y[1], 200))), qzRng(`kb${slug}${i}`));
-        const right = first(k[1], 200);
-        const wrong = [...new Set(qzShuffle(pool, R).concat(extra))].filter(x => x !== right).slice(0, 3);
-        mc(`apgkb-${slug}-${i}`, plv, 1, `Keyboard: ${p.name}`, `In the APG ${p.name} pattern, what should ${clean(k[0])} do?`, right, wrong, `${clean(k[0])}: ${clean(k[1])}`, ref);
+      (p.keyboard || []).filter(k => k[1] && !/^(not applicable|none|on open)/i.test(k[0])).forEach((k, i) => {
+        const keys = qzKeyList(k[0]);
+        if (!keys.length) return;
+        add({id:`apgkb-${slug}-${i}`, lv:plv, d:1, k:`Keyboard: ${p.name}`, q:`In the APG ${p.name} pattern, which key does this? “${clean(k[1])}”`, ans:{t:"key", keys, label:k[0]}, model:k[0], e:`${clean(k[0])}: ${clean(k[1])}`, r:ref});
       });
-      const roles = (p.roles || []).filter(r => r[3] && (r[0] || r[1]));
-      roles.slice(0, 5).forEach((r, i) => {
-        const right = first(r[3], 200);
-        const pool = roles.filter(x => x !== r).map(x => first(x[3], 200));
-        const extra = qzShuffle(pats.filter(x => x !== slug).flatMap(x => (APG_PATTERNS[x].roles || []).filter(y => y[3]).map(y => first(y[3], 200))), qzRng(`ro${slug}${i}`));
-        const wrong = [...new Set(qzShuffle(pool, R).concat(extra))].filter(x => x !== right).slice(0, 3);
-        const what = [r[0] && `role="${r[0]}"`, r[1]].filter(Boolean).join(" with ");
-        mc(`apgro-${slug}-${i}`, plv, 2, `ARIA: ${p.name}`, `In the APG ${p.name} example, what is ${what}${r[2] ? ` on the ${r[2]} element` : ""} for?`, right, wrong, `${what}: ${clean(r[3])}`, ref);
+      (p.roles || []).filter(r => r[3] && (r[0] || r[1])).forEach((r, i) => {
+        const vals = [];
+        if (/^[a-z]+$/.test(r[0])) vals.push(r[0]);
+        (String(r[1]).match(/aria-[a-z]+|tabindex|role="[a-z]+"/g) || []).forEach(x => vals.push(x.replace(/role=|"/g, "")));
+        if (/^role=/.test(r[1])) (String(r[1]).match(/"[a-z]+"/g) || []).forEach(x => vals.push(x.replace(/"/g, "")));
+        if (!vals.length) return;
+        let usage = clean(r[3]);
+        vals.forEach(v => { usage = usage.replace(new RegExp(v.replace(/-/g, "\\-"), "gi"), "____"); });
+        add({id:`apgro-${slug}-${i}`, lv:plv, d:2, k:`ARIA: ${p.name}`, q:`In the APG ${p.name} example, which role or attribute does this${r[2] ? ` (on the ${r[2]} element)` : ""}? “${usage}”`,
+          ans:{t:"attr", vals}, model:[r[0] && /^[a-z]+$/.test(r[0]) ? `role="${r[0]}"` : r[0], r[1]].filter(Boolean).join(" + "), e:`${[r[0], r[1]].filter(Boolean).join(" ")}: ${clean(r[3])}`, r:ref});
       });
-      (p.mistakes || []).slice(0, 5).forEach((m, i) => {
-        const right = first(m[1], 220);
-        const pool = (p.mistakes || []).filter(x => x !== m).map(x => first(x[1], 220));
-        const wrong = [...new Set(qzShuffle(pool, qzRng(`mi${slug}${i}`)))].filter(x => x !== right).slice(0, 3);
-        mc(`apgmi-${slug}-${i}`, plv, 1, `Common mistake: ${p.name}`, `You audit ${an(p.name.toLowerCase())} and find: “${clean(m[0])}”. What is the impact?`, right, wrong, `${clean(m[0])}: ${clean(m[1])}`, ref);
-      });
-      (p.wcag || []).slice(0, 4).forEach((w, i) => {
+      (p.wcag || []).forEach((w, i) => {
         const c = byId[w[0]]; if (!c) return;
-        const ban = (p.wcag || []).map(x => x[0]);
-        mc(`apgwc-${slug}-${i}`, c.level, 1, `WCAG in ${p.name}`, `In ${an(p.name.toLowerCase())}: “${clean(w[1])}” Which success criterion covers this?`,
-          scName(c), pickSC([c.id], 3, qzRng(`wc${slug}${i}`), "near", ban).map(scName), `${scName(c)} (Level ${c.level}). ${clean(w[1])}`, ref.concat([[scHref(c), `Study ${c.id}`]]));
+        add({id:`apgwc-${slug}-${i}`, lv:c.level, d:1, k:`WCAG in ${p.name}`, q:`You audit ${an(p.name.toLowerCase())}: “${clean(w[1]).replace(/\b\d\.\d\.\d{1,2}\b/g, "this criterion")}” Which success criterion are you checking?`,
+          ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${scModel(c)}. ${clean(w[1])}`, r:ref.concat([[scHref(c), `Study ${c.id}`]])});
+      });
+      (p.mistakes || []).forEach((m, i) => {
+        const ids = (String(m[1]).match(/\b\d\.\d\.\d{1,2}\b/g) || []).filter(id => byId[id]);
+        if (!ids.length) return;
+        const c = byId[ids[0]];
+        add({id:`apgmi-${slug}-${i}`, lv:c.level, d:2, k:`Common mistake: ${p.name}`, q:`You audit ${an(p.name.toLowerCase())} and find: “${clean(m[0])}”. ${clean(m[1]).replace(/\b\d\.\d\.\d{1,2}\b/g, "____")} Which success criterion fails?`,
+          ans:{t:"sc", ids:[c.id], any:ids}, model:ids.map(id => scModel(byId[id])).join(" or "), e:`${clean(m[0])}: ${clean(m[1])}`, r:ref});
       });
     });
 
@@ -18841,24 +18824,23 @@ const QUIZ_HAND = [
       const pr = PRACTICES[slug]; if (!pr) return;
       const ref = [[`#/practices/${slug}`, `Study ${pr.name}`]];
       const plv = lvOf((pr.wcag && pr.wcag[0] && pr.wcag[0][0]) || "1.3.1");
-      (pr.mistakes || []).forEach((m, i) => {
-        const right = first(m[1], 220);
-        const wrong = qzShuffle((pr.mistakes || []).filter(x => x !== m).map(x => first(x[1], 220)), qzRng(`pm${slug}${i}`)).filter(x => x !== right).slice(0, 3);
-        mc(`prmi-${slug}-${i}`, plv, 1, `Practice: ${pr.name}`, `${pr.name}: what goes wrong with “${clean(m[0])}”?`, right, wrong, `${clean(m[0])}: ${clean(m[1])}`, ref);
-      });
       (pr.wcag || []).forEach((w, i) => {
         const c = byId[w[0]]; if (!c) return;
-        mc(`prwc-${slug}-${i}`, c.level, 1, `Practice: ${pr.name}`, `${pr.name}: “${clean(w[1])}” Which success criterion is this?`,
-          scName(c), pickSC([c.id], 3, qzRng(`pw${slug}${i}`), "near", (pr.wcag || []).map(x => x[0])).map(scName), `${scName(c)} (Level ${c.level}).`, ref.concat([[scHref(c), `Study ${c.id}`]]));
+        add({id:`prwc-${slug}-${i}`, lv:c.level, d:1, k:`Practice: ${pr.name}`, q:`${pr.name}: “${clean(w[1])}” Which success criterion is this about?`, ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${scModel(c)}.`, r:ref.concat([[scHref(c), `Study ${c.id}`]])});
+      });
+      (pr.mistakes || []).forEach((m, i) => {
+        const ids = (String(m[1]).match(/\b\d\.\d\.\d{1,2}\b/g) || []).filter(id => byId[id]);
+        if (!ids.length) return;
+        const c = byId[ids[0]];
+        add({id:`prmi-${slug}-${i}`, lv:c.level, d:2, k:`Practice: ${pr.name}`, q:`${pr.name}: you find “${clean(m[0])}”. ${clean(m[1]).replace(/\b\d\.\d\.\d{1,2}\b/g, "____")} Which success criterion fails?`, ans:{t:"sc", ids:[c.id], any:ids}, model:scModel(c), e:`${clean(m[0])}: ${clean(m[1])}`, r:ref});
       });
       (pr.sections || []).forEach(sec => {
-        const t = sec.table; if (!t || !t.rows || t.head.length !== 2 || t.rows.length < 4) return;
+        const t = sec.table; if (!t || !t.rows || t.head.length !== 2 || t.rows.length < 3) return;
         t.rows.forEach((row, i) => {
-          const right = strip(row[1]); if (!right || right.length > 120) return;
-          const wrong = [...new Set(t.rows.filter(x => x !== row).map(x => strip(x[1])))].filter(x => x && x !== right);
-          if (wrong.length < 3) return;
-          mc(`prtb-${slug}-${sec.id}-${i}`, plv, 0, `Practice: ${pr.name}`, `${strip(t.caption)}: for “${strip(row[0])}”, what is the ${strip(t.head[1]).toLowerCase()}?`,
-            right, qzShuffle(wrong, qzRng(`pt${slug}${i}`)).slice(0, 3), `${strip(row[0])} → ${right.replace(/\.$/, "")}. (${strip(t.caption)})`, ref);
+          const right = strip(row[1]).replace(/\.$/, "");
+          if (!right || right.length > 30 || /^(yes|no)$/i.test(right)) return;
+          add({id:`prtb-${slug}-${sec.id}-${i}`, lv:plv, d:0, k:`Practice: ${pr.name}`, q:`${strip(t.caption)}: for “${strip(row[0])}”, what is the ${strip(t.head[1]).toLowerCase()}?`,
+            ans:{t:"text", vals:right.split(/\s*\/\s*|\s+or\s+|,\s*/).filter(Boolean)}, model:right, e:`${strip(row[0])} → ${right}. (${strip(t.caption)})`, r:ref});
         });
       });
     });
@@ -18866,124 +18848,303 @@ const QUIZ_HAND = [
     /* ---- hand-written, real-world questions ---- */
     (typeof QUIZ_HAND !== "undefined" ? QUIZ_HAND : []).forEach((h, i) => {
       const c = byId[h.sc];
-      add({id:"h-" + (h.id || i), lv:h.lv || (c ? c.level : "A"), d:h.d, k:h.k, q:h.q, shot:h.shot, code:h.code, o:h.o, a:0, e:h.e, hand:true,
+      const ans = h.ans || qzDeriveAns(h);
+      if (!ans) return;
+      add({id:"h-" + (h.id || i), lv:h.lv || (c ? c.level : "A"), d:h.d, k:h.k, q:h.q, shot:h.shot, code:h.code, ans, model:h.o[0], e:h.e, hand:true,
         r: h.r || (c ? scRef(c) : [])});
     });
     return bank;
   }
 
-  /* split each compliance level into sections of 20, eased from basic to advanced */
-  function buildQuizTracks(bank){
-    const tracks = {};
+  /* hand-written questions: work out how to check the answer from the model answer */
+  function qzDeriveAns(h){
+    const m = h.o[0];
+    const ids = m.match(/\b\d\.\d\.\d{1,2}\b/g) || [];
+    if (/^\d\.\d\.\d/.test(m)){
+      const lv = (/· Level (A{1,3})\b/.exec(m) || [])[1];
+      if (lv && /level/i.test(h.q)) return {t:"sclv", ids:[ids[0]], lv};
+      return {t:"sc", ids: / and \d\.\d\.\d/.test(m) ? ids : [ids[0]]};
+    }
+    if (/^Level (A{1,3})\b/.test(m)) return {t:"lv", lv:/^Level (A{1,3})/.exec(m)[1]};
+    if (/^Pass\b/.test(m)) return {t:"pf", v:"pass"};
+    if (/^Fail\b/.test(m)) return {t:"pf", v:"fail"};
+    return null;
+  }
+
+  /* ---------- answer checking ---------- */
+  const QZ_STOP = new Set(["and","or","the","of","a","an","on","in","for","to","sc","success","criterion","criteria","wcag","level","it","is","this","fails","fail","under","guideline"]);
+  const qzTok = s => [...new Set(String(s).toLowerCase().replace(/\bnon\s*-?\s*text/g, "non text").replace(/[^a-z0-9]+/g, " ").trim().split(" ").filter(w => w && !QZ_STOP.has(w)).map(w => w.length > 3 ? w.replace(/s$/, "") : w))];
+  const qzLev = (a, b) => { if (Math.abs(a.length - b.length) > 1) return 2; const m = a.length, n = b.length; let prev = Array.from({length:n + 1}, (_, j) => j); for (let i = 1; i <= m; i++){ const cur = [i]; for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = cur; } return prev[n]; };
+  const qzTokEq = (a, b) => a === b || (a.length >= 5 && b.length >= 5 && qzLev(a, b) <= 1);
+
+  /* criteria named in an answer: numbers first, then names */
+  const QZ_ALIAS = {"alt text":"1.1.1","alt":"1.1.1","text alternative":"1.1.1","text alternatives":"1.1.1","skip link":"2.4.1","autocomplete":"1.3.5","zoom":"1.4.4","page title":"2.4.2","lang":"3.1.1","language":"3.1.1","focus indicator":"2.4.7","live region":"4.1.3","status message":"4.1.3","keyboard access":"2.1.1"};
+  function qzFindSC(raw){
+    const al = QZ_ALIAS[String(raw).toLowerCase().replace(/[^a-z ]/g, "").trim()];
+    if (al) return {ids:[al], byName:true};
+    const nums = (String(raw).match(/\b[1-4]\s*\.\s*\d{1,2}\s*\.\s*\d{1,2}\b/g) || []).map(x => x.replace(/\s/g, "")).filter(id => ALL.some(c => c.id === id));
+    if (nums.length) return {ids:[...new Set(nums)], byName:false};
+    const rest = String(raw).replace(/\b(level\s*)?a{1,3}\b/gi, " ");
+    const parts = rest.split(/\s*(?:,|;|\band\b|&|\+|\/)\s*/i).filter(x => x.trim());
+    const found = [], amb = [];
+    (parts.length > 1 ? parts.concat([rest]) : [rest]).forEach(part => {
+      const U = qzTok(part); if (!U.length) return;
+      const scored = ALL.map(c => {
+        const T = qzTok(c.title);
+        const hitT = T.filter(t => U.some(u => qzTokEq(u, t))).length;
+        const hitU = U.filter(u => T.some(t => qzTokEq(u, t))).length;
+        return {c, full: hitT === T.length && hitU / U.length >= .6, score: hitT / T.length, prec: hitU / U.length};
+      });
+      const full = scored.filter(x => x.full);
+      if (full.length){
+        // prefer the title with the fewest extra words
+        full.sort((a, b) => b.prec - a.prec || qzTok(a.c.title).length - qzTok(b.c.title).length);
+        const best = full.filter(x => x.prec === full[0].prec && qzTok(x.c.title).length === qzTok(full[0].c.title).length);
+        if (best.length === 1) found.push(best[0].c.id); else amb.push(...best.map(x => x.c.id));
+      } else {
+        const good = scored.filter(x => x.score >= .66 && x.prec >= .8).sort((a, b) => b.score - a.score);
+        if (good.length && (good.length === 1 || good[0].score > good[1].score)) found.push(good[0].c.id);
+        else if (good.length) amb.push(...good.filter(x => x.score === good[0].score).map(x => x.c.id));
+        else { const loose = scored.filter(x => x.prec === 1 && x.score > 0); if (loose.length > 1 && loose.length <= 6) amb.push(...loose.map(x => x.c.id)); else if (loose.length === 1) found.push(loose[0].c.id); }
+      }
+    });
+    return {ids:[...new Set(found)], amb:[...new Set(amb)], byName:true};
+  }
+  function qzFindLevel(raw){
+    const s = String(raw).trim();
+    const only = /^(?:level\s*)?(a{1,3})\.?$/i.exec(s);
+    if (only) return only[1].toUpperCase();
+    const m = /\blevel\s*(aaa|aa|a)\b/i.exec(s) || /\b(AAA|AA|A)\b/.exec(s) || /\b(aaa|aa)\b/i.exec(s) || /\b(triple a|double a|single a)\b/i.exec(s);
+    if (!m) return null;
+    const v = m[1].toLowerCase();
+    return {"triple a":"AAA","double a":"AA","single a":"A"}[v] || v.toUpperCase();
+  }
+  function qzKeyCanon(s){
+    let k = String(s).toLowerCase().replace(/\(.*?\)/g, " ");
+    k = k.replace(/←/g, "left").replace(/→/g, "right").replace(/↑/g, "up").replace(/↓/g, "down");
+    k = k.replace(/\bpage\s+up\b|\bpgup\b/g, "pageup").replace(/\bpage\s+down\b|\bpgdn\b|\bpgdown\b/g, "pagedown");
+    k = k.replace(/\bcontrol\b/g, "ctrl").replace(/\besc\b/g, "escape").replace(/\bdel\b/g, "delete").replace(/\bspacebar\b|\bspace bar\b/g, "space").replace(/\breturn\b/g, "enter");
+    k = k.replace(/\b(arrows?|keys?|the|press|pressing|key)\b/g, " ");
+    return k.replace(/[^a-z0-9]/g, "");
+  }
+  function qzKeyList(label){
+    const arrow = /arrow/i.test(label);
+    return [...new Set(String(label).replace(/\(.*?\)/g, " ").split(/\s*(?:\/|,|\bor\b)\s*/i).map(x => x.trim()).filter(Boolean)
+      .map(x => qzKeyCanon(arrow && /^(right|left|up|down)$/i.test(x) ? x + " arrow" : x)).filter(Boolean))];
+  }
+  const qzCompact = s => String(s).toLowerCase().replace(/pattern/g, "").replace(/[^a-z0-9]/g, "").replace(/s$/, "");
+  const qzWord = (ans, term) => {
+    const t = String(term).toLowerCase();
+    if (/[^a-z0-9 \-:]/.test(t)) return ans.replace(/\s+/g, "").replace(/'/g, '"').includes(t.replace(/\s+/g, "").replace(/'/g, '"'));
+    const esc2 = t.replace(/[-]/g, "\\-").replace(/\s+/g, "[\\s\\-]*");
+    return new RegExp(t.length <= 3 ? `(^|[^a-z0-9])${esc2}($|[^a-z0-9])` : `(^|[^a-z0-9])${esc2}`).test(ans);
+  };
+  const QZ_YES = ["yes","yep","yeah","it can","can pass","correct","true"], QZ_NO = ["no","nope","not","isn't","doesn't","cannot","can't","false"];
+
+  /* returns {ok, note?} */
+  function qzCheck(q, raw){
+    const a = q.ans, ans = String(raw).trim().toLowerCase();
+    if (!ans) return {ok:false, note:"No answer given."};
+    if (a.t === "sc" || a.t === "sclv"){
+      const f = qzFindSC(raw);
+      const okSet = new Set(a.any || a.ids);
+      if (a.numOnly && f.byName) return {ok:false, note:"Type the number, like 2.4.7."};
+      if (!f.ids.length){
+        if (f.amb && f.amb.length) return {ok:false, note:`That name matches more than one criterion (${f.amb.join(", ")}). Be more specific, or use the number.`};
+        return {ok:false, note:"I couldn't find a success criterion in your answer. Try the number, like 1.4.3."};
+      }
+      const need = a.any ? [f.ids.find(id => okSet.has(id))].filter(Boolean) : a.ids.filter(id => f.ids.includes(id));
+      const hit = a.any ? need.length > 0 : need.length === a.ids.length;
+      const extra = f.ids.filter(id => !okSet.has(id));
+      if (!hit) return {ok:false};
+      if (extra.length > 2) return {ok:false, note:"You listed too many criteria; name the one that fits best."};
+      let note = extra.length ? `You also named ${extra.join(", ")}, which isn't the main criterion here.` : "";
+      if (a.t === "sclv"){
+        const lv = qzFindLevel(String(raw).replace(/\b\d\.\d\.\d{1,2}\b/g, " "));
+        if (!lv || lv !== a.lv) return {ok:false};
+      }
+      return {ok:true, note};
+    }
+    if (a.t === "lv"){
+      const lv = qzFindLevel(raw);
+      return lv === a.lv ? {ok:true} : {ok:false};
+    }
+    if (a.t === "pf"){
+      const p = ans.search(/\b(pass|passes|passed|ok|compliant|meets)\b/), fl = ans.search(/\b(fail|fails|failed|failure|not compliant|violat)/);
+      const v = p < 0 && fl < 0 ? null : (fl < 0 ? "pass" : p < 0 ? "fail" : (p < fl ? "pass" : "fail"));
+      if (!v) return {ok:false, note:"Type pass or fail."};
+      return {ok:v === a.v};
+    }
+    if (a.t === "yn"){
+      if ((a.also || []).some(t => qzWord(ans, t))) return {ok:true};
+      const y = QZ_YES.some(t => qzWord(ans, t)), n = QZ_NO.some(t => qzWord(ans, t));
+      if (y === n) return {ok:false, note:"Type yes or no."};
+      return {ok:(a.v === "yes") === y};
+    }
+    if (a.t === "bp"){
+      const bp = /best[\s-]*practi|\bbp\b|recommend|advis|advice|not (a )?(wcag )?(failure|requirement|violation)|enhancement|nice to have/.test(ans);
+      const rq = !bp && /fail|requir|violat|wcag issue|non[\s-]*complian|must/.test(ans);
+      if (!bp && !rq) return {ok:false, note:"Type failure or best practice."};
+      return {ok:(a.v === "bp") === bp};
+    }
+    if (a.t === "key"){
+      const user = ans.split(/\s*(?:\/|,|\bor\b|\band\b)\s*/).map(qzKeyCanon).filter(Boolean);
+      if (!user.length && /arrow/.test(ans) && /arrow/i.test(a.label)) return {ok:true, note:`More precisely: ${a.label}.`};
+      return user.some(u => a.keys.includes(u)) ? {ok:true} : {ok:false};
+    }
+    if (a.t === "attr"){
+      const c = ans.replace(/role\s*=\s*/g, "").replace(/["'\s]/g, "");
+      return a.vals.some(v => c.includes(v.replace(/["'\s]/g, ""))) ? {ok:true} : {ok:false};
+    }
+    if (a.t === "tag"){
+      return a.vals.some(v => new RegExp(`(^|[^a-z])${v}([^a-z]|$)`).test(ans)) ? {ok:true} : {ok:false};
+    }
+    if (a.t === "pattern"){
+      const c = qzCompact(ans);
+      return a.vals.some(v => c === v || (v.length > 4 && c.includes(v))) ? {ok:true} : {ok:false};
+    }
+    if (a.t === "text"){
+      const c = qzCompact(ans);
+      return a.vals.some(v => { const vc = qzCompact(v); return a.exact ? c === vc : (c === vc || (vc.length >= 2 && c.includes(vc))); }) ? {ok:true} : {ok:false};
+    }
+    if (a.t === "kw"){
+      if (a.ids){ const f = qzFindSC(raw); if (f.ids.some(id => a.ids.includes(id)) && f.byName === false) return {ok:true, note:"You named the criterion; the model answer below explains the fix too."}; }
+      const miss = a.groups.filter(g => !g.some(t => qzWord(ans, t)));
+      return miss.length ? {ok:false} : {ok:true};
+    }
+    return {ok:false};
+  }
+  const QZ_HINT = {
+    sc:"Type the criterion number (like 1.4.3) or its name.", sclv:"Type the criterion number and level, like 1.4.3 AA.",
+    lv:"Type A, AA or AAA.", pf:"Type pass or fail.", yn:"Type yes or no.", bp:"Type failure or best practice.",
+    key:"Type the key, like Enter, Space, Down Arrow or Home.", attr:"Type the role or ARIA attribute, like aria-expanded.",
+    tag:"Type the HTML element, like details.", pattern:"Type the pattern name.", text:"Type a short answer.", kw:"Answer in a few words."
+  };
+  const qzHint = q => q.ans.numOnly ? "Type the criterion number, like 2.4.7." : (q.ans.hint || QZ_HINT[q.ans.t]);
+
+  /* fixed split of each level's questions into basic / medium / advanced (multiples of 10) */
+  function buildQuizPools(bank){
+    const pools = {};
     QZ_LEVELS.forEach(lv => {
       const pool = bank.filter(q => q.lv === lv);
-      const R = qzRng("track" + lv);
-      const sorted = [0, 1, 2].flatMap(d => {
+      const ordered = [0, 1, 2].flatMap(d => {
         const qs = pool.filter(q => q.d === d);
-        return qs.filter(q => q.hand).concat(qzShuffle(qs.filter(q => !q.hand), R));
+        return qs.filter(q => q.hand).concat(qs.filter(q => !q.hand).sort((a, b) => qzHash(a.id) - qzHash(b.id)));
       });
-      const total = Math.floor(sorted.length / QZ_SIZE);
-      const counts = [0, 1, 2].map(d => pool.filter(q => q.d === d).length / QZ_SIZE);
-      let n = counts.map(Math.round);
+      const total = Math.floor(ordered.length / QZ_SIZE);
+      let n = [0, 1, 2].map(d => Math.round(pool.filter(q => q.d === d).length / QZ_SIZE));
       while (n[0] + n[1] + n[2] > total){ const i = n.indexOf(Math.max(...n)); n[i]--; }
-      while (n[0] + n[1] + n[2] < total){ n[1]++; }
-      // re-slice in difficulty order so borderline questions shift to a neighbour level
-      const ordered = sorted;
+      while (n[0] + n[1] + n[2] < total) n[1]++;
       let at = 0;
-      QZ_DIFFS.forEach((df, d) => {
-        const take = ordered.slice(at, at + n[d] * QZ_SIZE); at += n[d] * QZ_SIZE;
-        const mixed = qzShuffle(take, qzRng(`mix${lv}${d}`));
-        // spread hand-written questions evenly across sections
-        const hand = mixed.filter(q => q.hand), gen = mixed.filter(q => !q.hand);
-        const secs = Array.from({length:n[d]}, () => []);
-        hand.forEach((q, i) => secs[i % n[d]].push(q));
-        let s = 0; gen.forEach(q => { while (secs[s].length >= QZ_SIZE) s++; secs[s].push(q); });
-        tracks[lv + "|" + df[0]] = secs;
-      });
+      QZ_DIFFS.forEach((df, d) => { pools[lv + "|" + df[0]] = ordered.slice(at, at + n[d] * QZ_SIZE); at += n[d] * QZ_SIZE; });
     });
-    return tracks;
+    return pools;
+  }
+  /* sections for one track; a new seed (after a reset) reshuffles which questions land in which section */
+  function buildQuizSections(pool, seed){
+    const R = qzRng(seed), nSec = pool.length / QZ_SIZE;
+    const hand = qzShuffle(pool.filter(q => q.hand), R), gen = qzShuffle(pool.filter(q => !q.hand), R);
+    const secs = Array.from({length:nSec}, () => []);
+    hand.forEach((q, i) => secs[i % nSec].push(q));
+    let s = 0; gen.forEach(q => { while (secs[s].length >= QZ_SIZE) s++; secs[s].push(q); });
+    return secs;
   }
 
   /* ---------- Quiz me ---------- */
-  let QZ_BANK = null, QZ_TRACKS = null, qzRun = null;
-  const qzData = () => { if (!QZ_BANK){ QZ_BANK = buildQuizBank(); QZ_TRACKS = buildQuizTracks(QZ_BANK); } return QZ_TRACKS; };
+  let QZ_BANK = null, QZ_POOLS = null;
+  const qzSecCache = {};
+  const qzData = () => { if (!QZ_BANK){ QZ_BANK = buildQuizBank(); QZ_POOLS = buildQuizPools(QZ_BANK); } return QZ_POOLS; };
   const qzDiffName = d => (QZ_DIFFS.find(x => x[0] === d) || ["", ""])[1];
   const qzKey = (lv, df) => lv + "|" + df;
-  const qzLoad = () => store.get("quiz", {sel:{lv:"A", df:"basic"}, tracks:{}});
-  const qzSave = s => store.set("quiz", s);
-  const qzTrackState = (s, key) => (s.tracks[key] = s.tracks[key] || {passed:{}, best:{}});
+  const qzLoad = () => { const s = store.get("quiz2", null) || {sel:{lv:"A", df:"basic"}, tracks:{}}; s.tracks = s.tracks || {}; return s; };
+  const qzSave = s => store.set("quiz2", s);
+  const qzTrackState = (s, key) => {
+    const t = s.tracks[key] = s.tracks[key] || {};
+    t.passed = t.passed || {}; t.best = t.best || {}; t.runs = t.runs || {};
+    if (t.seed == null) t.seed = Math.floor(Math.random() * 1e9);
+    return t;
+  };
+  const qzSections = (key, seed) => { const ck = key + "#" + seed; return qzSecCache[ck] || (qzSecCache[ck] = buildQuizSections(qzData()[key], seed)); };
   const qzUnlocked = (st, n) => n === 1 || !!st.passed[n] || !!st.passed[n - 1];
   const qzNext = (st, total) => { for (let n = 1; n <= total; n++) if (!st.passed[n]) return n; return 0; };
   const qzRunHref = (lv, df, n) => `#/quiz/${lv}/${df}/${n}`;
   const lockIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+  const qzMeter = (val, max, label) => `<span class="qz-mini" role="img" aria-label="${esc(label)}"><span style="width:${max ? Math.round(val / max * 100) : 0}%"></span></span>`;
 
   function renderQuizHub(){
-    const T = qzData(), s = qzLoad();
-    const total = QZ_BANK.length;
-    const nSec = lv => QZ_DIFFS.reduce((a, d) => a + T[qzKey(lv, d[0])].length, 0);
-    const lvDesc = {A:"The minimum: issues that block people completely.", AA:"The usual legal and contractual target.", AAA:"The highest level, for going further."};
+    const P = qzData();
+    const nSec = lv => QZ_DIFFS.reduce((a, d) => a + P[qzKey(lv, d[0])].length / QZ_SIZE, 0);
     app.innerHTML = `<div class="wrap qz">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">Quiz me</span></li></ol></nav>
       <h1 id="p-h1" tabindex="-1" class="mt-ph2">Quiz me</h1>
-      <p class="qz-lead">${total.toLocaleString()} questions drawn from everything in a11ywallet: WCAG 2.2 criteria, documented failures, techniques, APG patterns, practices and real audit findings. Pick a compliance level and a difficulty, then work through the sections in order. Each section has ${QZ_SIZE} questions; score ${QZ_PASS} or more to pass and unlock the next one. Passed sections stay open for revisiting.</p>
-      <div class="qz-pickers">
-        <fieldset class="qz-seg">
-          <legend>Compliance level</legend>
-          ${QZ_LEVELS.map(lv => `<label class="qz-chip"><input type="radio" name="qz-lv" value="${lv}"${s.sel.lv === lv ? " checked" : ""}><span><b><span class="badge lvl-${lv}">Level ${lv}</span></b><small>${lvDesc[lv]} ${plural(nSec(lv), "section", "sections")}.</small></span></label>`).join("")}
+      <p class="qz-lead">${QZ_BANK.length.toLocaleString()} questions drawn from everything in a11ywallet: WCAG 2.2 criteria, documented failures, techniques, APG patterns, practices and real audit findings. Type your answers; they're checked sensibly, so a criterion number like <b>1.4.3</b> or its name is enough. Each section has ${QZ_SIZE} questions: score ${QZ_PASS} or more to unlock the next one. Passed sections stay open for revisiting.</p>
+      <div class="qz-filters">
+        <fieldset class="qz-chips"><legend>WCAG level</legend>
+          ${QZ_LEVELS.map(lv => `<label class="qz-chip lvc-${lv}"><input type="radio" name="qz-lv" value="${lv}"><span>Level ${lv}</span><small>${nSec(lv)} sections</small></label>`).join("")}
         </fieldset>
-        <fieldset class="qz-seg">
-          <legend>Difficulty</legend>
-          <div id="qz-diffs"></div>
-        </fieldset>
+        <fieldset class="qz-chips"><legend>Difficulty</legend><div class="qz-chiprow" id="qz-diffs"></div></fieldset>
       </div>
       <p class="visually-hidden" role="status" id="qz-status"></p>
       <section class="qz-track" id="qz-track" aria-labelledby="qz-track-h"></section>
       <section class="qz-resetall" aria-labelledby="qz-ra-h">
         <h2 id="qz-ra-h">Start over</h2>
-        <p>Reset clears passed sections and best scores so you start again from Section 1.</p>
-        <div class="btn-row" id="qz-ra-row"><button type="button" class="btn ghost" id="qz-reset-all">Reset all quiz progress (every level and difficulty)</button></div>
+        <p>Resetting clears passed sections and scores, and reshuffles which questions land in each section, so you start again from Section 1 with a fresh mix.</p>
+        <div class="btn-row"><button type="button" class="btn ghost" id="qz-reset-all">Reset every level and difficulty</button></div>
+        <div id="qz-ra-confirm"></div>
       </section>
     </div>`;
+    const say = msg => { const el = document.getElementById("qz-status"); el.textContent = ""; setTimeout(() => el.textContent = msg, 60); };
+    const syncLv = () => { const st = qzLoad(); app.querySelectorAll("input[name=qz-lv]").forEach(i => i.checked = i.value === st.sel.lv); };
     const diffs = () => {
       const st = qzLoad();
       document.getElementById("qz-diffs").innerHTML = QZ_DIFFS.map(d => {
-        const secs = T[qzKey(st.sel.lv, d[0])], tst = qzTrackState(st, qzKey(st.sel.lv, d[0]));
-        const done = secs.filter((_, i) => tst.passed[i + 1]).length;
-        return `<label class="qz-chip"><input type="radio" name="qz-df" value="${d[0]}"${st.sel.df === d[0] ? " checked" : ""}><span><b>${d[1]}</b><small>${done} of ${plural(secs.length, "section", "sections")} passed</small></span></label>`;
+        const key = qzKey(st.sel.lv, d[0]), total = P[key].length / QZ_SIZE, tst = qzTrackState(st, key);
+        const done = Object.keys(tst.passed).filter(n => tst.passed[n] && n <= total).length;
+        return `<label class="qz-chip"><input type="radio" name="qz-df" value="${d[0]}"${st.sel.df === d[0] ? " checked" : ""}><span>${d[1]}</span><small>${done}/${total} passed</small></label>`;
       }).join("");
+      qzSave(st);
     };
     const track = () => {
       const st = qzLoad(), lv = st.sel.lv, df = st.sel.df, key = qzKey(lv, df);
-      const secs = T[key], tst = qzTrackState(st, key), next = qzNext(tst, secs.length);
+      const tst = qzTrackState(st, key); qzSave(st);
+      const secs = qzSections(key, tst.seed), total = secs.length, next = qzNext(tst, total);
       const done = secs.filter((_, i) => tst.passed[i + 1]).length;
-      const pct = secs.length ? Math.round(done / secs.length * 100) : 0;
+      const answered = secs.reduce((a, _, i) => a + (tst.passed[i + 1] ? QZ_SIZE : (tst.runs[i + 1] ? tst.runs[i + 1].log.length : 0)), 0);
+      const pct = total ? Math.round(done / total * 100) : 0;
       const cards = secs.map((qs, i) => {
-        const n = i + 1, passed = tst.passed[n], open = qzUnlocked(tst, n);
-        const kinds = [...new Set(qs.map(q => q.k.replace(/:.*/, "")))].slice(0, 3).join(", ");
-        if (!open) return `<li class="qz-sec locked"><span class="qz-sec-n">${lockIcon} Section ${n}</span><span class="qz-sec-s">Locked: pass Section ${n - 1} first</span></li>`;
-        return `<li class="qz-sec${passed ? " passed" : " current"}"><a href="${qzRunHref(lv, df, n)}"><span class="qz-sec-n">${passed ? I.ok : ""} Section ${n}</span><span class="qz-sec-s">${passed ? `Passed · best ${tst.best[n]}/${QZ_SIZE}` : (tst.best[n] != null ? `Best so far ${tst.best[n]}/${QZ_SIZE}` : "Ready to start")}</span><span class="qz-sec-k">${esc(kinds)}</span></a></li>`;
+        const n = i + 1, passed = tst.passed[n], open = qzUnlocked(tst, n), run = tst.runs[n], best = tst.best[n];
+        if (!open) return `<li class="qz-sec locked"><span class="qz-sec-n">${lockIcon} Section ${n}</span><span class="qz-sec-s">Locked: pass Section ${n - 1} first</span>${qzMeter(0, QZ_SIZE, "Not started")}</li>`;
+        let status, meter;
+        if (run){
+          const right = run.log.filter(x => x.ok).length;
+          status = `In progress: ${run.log.length}/${QZ_SIZE} answered, ${right} right`;
+          meter = qzMeter(run.log.length, QZ_SIZE, `${run.log.length} of ${QZ_SIZE} answered`);
+        } else if (passed){ status = `Passed · best ${best}/${QZ_SIZE}`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
+        else if (best != null){ status = `Not passed yet · best ${best}/${QZ_SIZE}`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
+        else { status = "Ready to start"; meter = qzMeter(0, QZ_SIZE, "Not started"); }
+        return `<li class="qz-sec${passed ? " passed" : ""}${run ? " inprog" : ""}${!passed && !run ? " current" : ""}"><a href="${qzRunHref(lv, df, n)}"><span class="qz-sec-n">${passed ? I.ok : ""} Section ${n}</span><span class="qz-sec-s">${status}</span>${meter}</a></li>`;
       }).join("");
+      const resumeN = next && tst.runs[next] ? next : 0;
       document.getElementById("qz-track").innerHTML = `
         <div class="qz-track-head">
           <div>
-            <h2 id="qz-track-h"><span class="badge lvl-${lv}">Level ${lv}</span> ${qzDiffName(df)}</h2>
-            <p class="qz-prog-t">${done} of ${plural(secs.length, "section", "sections")} passed (${pct}%)</p>
-            <div class="qz-bar" aria-hidden="true"><span style="width:${pct}%"></span></div>
+            <h2 id="qz-track-h" tabindex="-1"><span class="badge lvl-${lv}">Level ${lv}</span> ${qzDiffName(df)}</h2>
+            <p class="qz-prog-t">${done} of ${plural(total, "section", "sections")} passed (${pct}%) · ${answered} of ${total * QZ_SIZE} questions answered</p>
+            <div class="qz-bar" role="img" aria-label="${pct}% of sections passed"><span style="width:${pct}%"></span></div>
           </div>
           <div class="btn-row">
-            ${next ? `<a class="btn" href="${qzRunHref(lv, df, next)}">${done ? "Continue with" : "Start"} Section ${next}</a>` : `<p class="qz-alldone">${I.star} Every section passed. Revisit any of them below.</p>`}
-            <button type="button" class="btn ghost" id="qz-reset">Reset ${qzDiffName(df)} · Level ${lv}</button>
+            ${next ? `<a class="btn" href="${qzRunHref(lv, df, next)}">${resumeN ? "Resume" : done ? "Continue with" : "Start"} Section ${next}</a>` : `<p class="qz-alldone">${I.star} Every section passed. Revisit any of them below.</p>`}
+            <button type="button" class="btn ghost" id="qz-reset">Reset Level ${lv} · ${qzDiffName(df)}</button>
           </div>
         </div>
         <div id="qz-confirm"></div>
         <ol class="qz-secs">${cards}</ol>`;
-      document.getElementById("qz-reset").addEventListener("click", () => confirmReset(`Reset progress for Level ${lv} · ${qzDiffName(df)}? You'll start again from Section 1.`, "qz-confirm", () => {
-        const s2 = qzLoad(); delete s2.tracks[key]; qzSave(s2); diffs(); track();
-        say(`Level ${lv} ${qzDiffName(df)} reset. Start from Section 1.`);
-        document.getElementById("qz-track-h").setAttribute("tabindex", "-1"); document.getElementById("qz-track-h").focus();
+      document.getElementById("qz-reset").addEventListener("click", () => confirmReset(`Reset Level ${lv} · ${qzDiffName(df)}? Scores are cleared, questions are reshuffled into new sections, and you start again from Section 1.`, "qz-confirm", () => {
+        const s2 = qzLoad(); s2.tracks[key] = {seed: Math.floor(Math.random() * 1e9)}; qzSave(s2); diffs(); track();
+        say(`Level ${lv} ${qzDiffName(df)} reset and reshuffled. Start from Section 1.`);
+        document.getElementById("qz-track-h").focus();
       }, "qz-reset"));
     };
-    const say = msg => { const el = document.getElementById("qz-status"); el.textContent = ""; setTimeout(() => el.textContent = msg, 60); };
     function confirmReset(msg, hostId, onYes, returnId){
       const host = document.getElementById(hostId);
       host.innerHTML = `<div class="qz-confirm" role="group" aria-labelledby="qz-cf-m"><p id="qz-cf-m" tabindex="-1">${esc(msg)}</p><div class="btn-row"><button type="button" class="btn qz-danger" id="qz-cf-yes">Yes, reset</button><button type="button" class="btn ghost" id="qz-cf-no">Cancel</button></div></div>`;
@@ -18991,127 +19152,145 @@ const QUIZ_HAND = [
       document.getElementById("qz-cf-yes").addEventListener("click", () => { host.innerHTML = ""; onYes(); });
       document.getElementById("qz-cf-no").addEventListener("click", () => { host.innerHTML = ""; const b = document.getElementById(returnId); if (b) b.focus(); });
     }
-    diffs(); track();
-    app.querySelector(".qz-pickers").addEventListener("change", e => {
+    syncLv(); diffs(); track();
+    app.querySelector(".qz-filters").addEventListener("change", e => {
       const st = qzLoad();
       if (e.target.name === "qz-lv") st.sel.lv = e.target.value;
       if (e.target.name === "qz-df") st.sel.df = e.target.value;
       qzSave(st);
       if (e.target.name === "qz-lv") diffs();
       track();
-      const secs = T[qzKey(st.sel.lv, st.sel.df)];
-      say(`Showing Level ${st.sel.lv}, ${qzDiffName(st.sel.df)}: ${plural(secs.length, "section", "sections")}.`);
+      say(`Showing Level ${st.sel.lv}, ${qzDiffName(st.sel.df)}: ${plural(P[qzKey(st.sel.lv, st.sel.df)].length / QZ_SIZE, "section", "sections")}.`);
     });
-    const raHost = document.createElement("div"); raHost.id = "qz-ra-confirm";
-    document.getElementById("qz-ra-row").after(raHost);
-    document.getElementById("qz-reset-all").addEventListener("click", () => confirmReset("Reset all quiz progress for Level A, AA and AAA at every difficulty? You'll start again from Section 1 everywhere.", "qz-ra-confirm", () => {
+    document.getElementById("qz-reset-all").addEventListener("click", () => confirmReset("Reset Level A, AA and AAA at every difficulty? All scores are cleared and every track is reshuffled.", "qz-ra-confirm", () => {
       const st = qzLoad(); st.tracks = {}; qzSave(st); diffs(); track();
-      say("All quiz progress reset.");
+      say("All quiz progress reset and reshuffled.");
       document.getElementById("qz-reset-all").focus();
     }, "qz-reset-all"));
   }
 
-  function renderQuizRun(lv, df, n){
-    const T = qzData(), key = qzKey(lv, df), secs = T[key];
-    const crumbs = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/quiz">Quiz me</a></li><li><span aria-current="page">Level ${lv} · ${qzDiffName(df)} · Section ${n}</span></li></ol></nav>`;
-    if (!secs || !secs[n - 1]){
-      app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section not found</h1><p><a href="#/quiz">Back to Quiz me</a></p></div>`; return;
-    }
-    const s = qzLoad(), st = qzTrackState(s, key);
-    if (s.sel.lv !== lv || s.sel.df !== df){ s.sel = {lv, df}; qzSave(s); }
-    if (!qzUnlocked(st, n)){
-      app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n} is locked</h1><p>Pass Section ${n - 1} with ${QZ_PASS} or more out of ${QZ_SIZE} to open it.</p><div class="btn-row"><a class="btn" href="${qzRunHref(lv, df, qzNext(st, secs.length) || 1)}">Go to Section ${qzNext(st, secs.length) || 1}</a><a class="btn ghost" href="#/quiz">Back to Quiz me</a></div></div>`; return;
-    }
-    const runId = key + "|" + n;
-    if (!qzRun || qzRun.id !== runId || qzRun.finished){
-      const rnd = qzRng(Date.now());
-      const qs = qzShuffle(secs[n - 1], rnd);
-      qzRun = {id:runId, qs, order:qs.map(q => qzShuffle(q.o.map((_, i) => i), rnd)), i:0, picks:[], checked:false, score:0, finished:false};
-    }
-    app.innerHTML = `<div class="wrap qz">${crumbs}
-      <h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n}</h1>
-      <p class="qz-meta"><span class="badge lvl-${lv}">Level ${lv}</span> <span>${qzDiffName(df)}</span> <span id="qz-count"></span></p>
-      <div class="qz-bar" aria-hidden="true"><span id="qz-barfill"></span></div>
-      <div id="qz-stage"></div>
-    </div>`;
-    showQuestion(lv, df, n, false);
-  }
-
+  /* ---------- running a section ---------- */
   const qzShot = q => q.shot ? `<figure class="qz-shot"><div class="qz-mock" inert>${q.shot}</div><figcaption>Mock screenshot of the page being audited</figcaption></figure>` : "";
   const qzCode = (code, label) => `<pre class="qz-code" tabindex="0" aria-label="${esc(label)}"><code>${esc(code)}</code></pre>`;
   const qzRefs = q => (q.r || []).length ? `<p class="qz-refs"><b>Study it:</b> ${q.r.map(r => /^https?:/.test(r[0]) ? extLink(r[0], r[1]) : `<a href="${esc(r[0])}">${esc(r[1])}</a>`).join(" · ")}</p>` : "";
+  let qzCtx = null;
 
-  function showQuestion(lv, df, n, focus){
-    const R = qzRun, q = R.qs[R.i], ord = R.order[R.i];
-    document.getElementById("qz-count").textContent = `Question ${R.i + 1} of ${R.qs.length} · Score ${R.score}`;
-    document.getElementById("qz-barfill").style.width = (R.i / R.qs.length * 100) + "%";
-    const stage = document.getElementById("qz-stage");
-    stage.innerHTML = `<form class="qz-card" id="qz-form" novalidate>
+  function renderQuizRun(lv, df, n){
+    const P = qzData(), key = qzKey(lv, df);
+    const crumbs = `<nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><a href="#/quiz">Quiz me</a></li><li><span aria-current="page">Level ${lv} · ${qzDiffName(df)} · Section ${n}</span></li></ol></nav>`;
+    const s = qzLoad(), st = qzTrackState(s, key);
+    if (s.sel.lv !== lv || s.sel.df !== df) s.sel = {lv, df};
+    qzSave(s);
+    const secs = qzSections(key, st.seed);
+    if (!secs[n - 1]){ app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section not found</h1><p><a href="#/quiz">Back to Quiz me</a></p></div>`; return; }
+    if (!qzUnlocked(st, n)){
+      const go = qzNext(st, secs.length) || 1;
+      app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n} is locked</h1><p>Pass Section ${n - 1} with ${QZ_PASS} or more out of ${QZ_SIZE} to open it.</p><div class="btn-row"><a class="btn" href="${qzRunHref(lv, df, go)}">Go to Section ${go}</a><a class="btn ghost" href="#/quiz">Back to Quiz me</a></div></div>`; return;
+    }
+    // resume a saved attempt, or start a new one with the questions in a fresh order
+    let run = st.runs[n];
+    const byId = {}; secs[n - 1].forEach(q => byId[q.id] = q);
+    if (!run || !run.order || run.order.some(id => !byId[id])){
+      run = st.runs[n] = {order: qzShuffle(secs[n - 1].map(q => q.id), qzRng(Date.now())), log: []};
+      qzSave(s);
+    }
+    qzCtx = {lv, df, n, key, qs: run.order.map(id => byId[id])};
+    app.innerHTML = `<div class="wrap qz">${crumbs}
+      <h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n}</h1>
+      <p class="qz-meta"><span class="badge lvl-${lv}">Level ${lv}</span> <span>${qzDiffName(df)}</span> <span id="qz-count"></span></p>
+      <ol class="qz-dots" id="qz-dots" aria-label="Progress in this section"></ol>
+      <div id="qz-stage"></div>
+    </div>`;
+    if (run.log.length >= qzCtx.qs.length) finishRun(); else showQuestion(false);
+  }
+  const qzRunState = () => { const s = qzLoad(); return {s, st: qzTrackState(s, qzCtx.key)}; };
+
+  function paintProgress(log, current){
+    const total = qzCtx.qs.length, right = log.filter(x => x.ok).length;
+    document.getElementById("qz-count").textContent = current < total ? `Question ${current + 1} of ${total} · ${right} right so far` : `Finished · ${right} of ${total} right`;
+    document.getElementById("qz-dots").innerHTML = qzCtx.qs.map((_, i) => {
+      const l = log[i], cls = l ? (l.ok ? "ok" : "no") : (i === current ? "now" : "");
+      const txt = l ? (l.ok ? "right" : "wrong") : (i === current ? "current" : "not answered");
+      return `<li class="${cls}"><span class="visually-hidden">Question ${i + 1}: ${txt}</span></li>`;
+    }).join("");
+  }
+
+  function showQuestion(focus){
+    const {st} = qzRunState(), run = st.runs[qzCtx.n], i = run.log.length, q = qzCtx.qs[i];
+    paintProgress(run.log, i);
+    const hint = qzHint(q);
+    document.getElementById("qz-stage").innerHTML = `<form class="qz-card" id="qz-form" novalidate>
         <p class="qz-kind">${esc(q.k)}</p>
-        <h2 id="qz-q" tabindex="-1" class="qz-q"><span class="visually-hidden">Question ${R.i + 1}: </span>${esc(q.q)}</h2>
+        <h2 id="qz-q" tabindex="-1" class="qz-q"><span class="visually-hidden">Question ${i + 1}: </span>${esc(q.q)}</h2>
         ${qzShot(q)}
         ${q.code ? qzCode(q.code, "Code sample for this question") : ""}
-        <fieldset class="qz-opts" id="qz-opts" aria-describedby="qz-err">
-          <legend class="visually-hidden">Choose one answer</legend>
-          ${ord.map((oi, j) => `<label class="qz-opt" data-oi="${oi}"><input type="radio" name="qz-a" value="${oi}"><span class="qz-letter" aria-hidden="true">${"ABCDEF"[j]}</span><span class="qz-otext">${esc(q.o[oi])}</span><span class="qz-tag"></span></label>`).join("")}
-        </fieldset>
-        <p class="qz-err" id="qz-err" hidden>Choose an answer first.</p>
-        <div class="btn-row" id="qz-actions"><button class="btn" type="submit">Check answer</button><a class="btn ghost" href="#/quiz">Leave section</a></div>
+        <div class="qz-field">
+          <label for="qz-in">Your answer</label>
+          <p class="qz-hint" id="qz-hint">${esc(hint)}</p>
+          <input id="qz-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="qz-hint qz-err">
+          <p class="qz-err" id="qz-err" hidden>Type an answer first, or choose “Show answer”.</p>
+        </div>
+        <div class="btn-row" id="qz-actions"><button class="btn" type="submit">Check answer</button><button class="btn ghost" type="button" id="qz-skip">Show answer</button><a class="btn ghost" href="#/quiz">Save and leave</a></div>
       </form>
       <div id="qz-fb"></div>`;
-    const form = document.getElementById("qz-form");
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      if (R.checked) return;
-      const sel = form.querySelector("input[name=qz-a]:checked");
-      const err = document.getElementById("qz-err");
-      if (!sel){ err.hidden = false; form.querySelector("input[name=qz-a]").focus(); return; }
-      err.hidden = true;
-      const pick = +sel.value, ok = pick === q.a;
-      R.checked = true; R.picks[R.i] = pick; if (ok) R.score++;
-      document.getElementById("qz-opts").disabled = true;
-      form.querySelectorAll(".qz-opt").forEach(l => {
-        const oi = +l.dataset.oi, tag = l.querySelector(".qz-tag");
-        if (oi === q.a){ l.classList.add("is-right"); tag.innerHTML = `${I.ok} Correct answer`; }
-        else if (oi === pick){ l.classList.add("is-wrong"); tag.innerHTML = `${I.x} Your answer`; }
-      });
+    const form = document.getElementById("qz-form"), input = document.getElementById("qz-in");
+    const grade = (given, res) => {
+      const {s, st: st2} = qzRunState(), r2 = st2.runs[qzCtx.n];
+      r2.log.push({a: given, ok: res.ok}); qzSave(s);
+      input.readOnly = true;
       document.getElementById("qz-actions").hidden = true;
-      document.getElementById("qz-count").textContent = `Question ${R.i + 1} of ${R.qs.length} · Score ${R.score}`;
-      const last = R.i === R.qs.length - 1;
-      document.getElementById("qz-fb").innerHTML = `<div class="qz-fb ${ok ? "ok" : "no"}">
-        <h2 id="qz-fbh" tabindex="-1">${ok ? I.ok + " Correct" : I.x + " Not quite"}</h2>
-        ${ok ? "" : `<p><b>Correct answer:</b> ${esc(q.o[q.a])}</p>`}
+      paintProgress(r2.log, r2.log.length - 1);
+      const last = r2.log.length === qzCtx.qs.length;
+      const head = res.ok ? `${I.ok} Correct` : res.skipped ? "Here's the answer" : `${I.x} Not quite`;
+      document.getElementById("qz-fb").innerHTML = `<div class="qz-fb ${res.ok ? "ok" : "no"}">
+        <h2 id="qz-fbh" tabindex="-1">${head}</h2>
+        ${res.note ? `<p class="qz-note">${esc(res.note)}</p>` : ""}
+        <p><b>${res.ok ? "Model answer" : "Answer"}:</b> ${esc(q.model)}</p>
         <p>${esc(q.e)}</p>
         ${q.fix ? `<p class="qz-fixh"><b>Passing version</b></p>${qzCode(q.fix, "Passing version of the code")}` : ""}
         ${qzRefs(q)}
-        <div class="btn-row"><button type="button" class="btn" id="qz-next">${last ? "See my results" : "Next question"}</button></div>
+        <div class="btn-row">
+          <button type="button" class="btn" id="qz-next">${last ? "See my results" : "Next question"}</button>
+          ${!res.ok && !res.skipped ? `<button type="button" class="btn ghost" id="qz-override">My answer was right, count it</button>` : ""}
+        </div>
       </div>`;
       document.getElementById("qz-fbh").focus();
-      document.getElementById("qz-next").addEventListener("click", () => {
-        R.checked = false;
-        if (last){ finishRun(lv, df, n); return; }
-        R.i++; showQuestion(lv, df, n, true);
+      document.getElementById("qz-next").addEventListener("click", () => { if (last) finishRun(); else showQuestion(true); });
+      const ov = document.getElementById("qz-override");
+      if (ov) ov.addEventListener("click", () => {
+        const {s: s3, st: st3} = qzRunState(); const r3 = st3.runs[qzCtx.n]; r3.log[r3.log.length - 1].ok = true; r3.log[r3.log.length - 1].self = true; qzSave(s3);
+        paintProgress(r3.log, r3.log.length - 1);
+        const h = document.getElementById("qz-fbh"); h.innerHTML = `${I.ok} Counted as correct`; h.parentElement.className = "qz-fb ok";
+        ov.remove(); document.getElementById("qz-next").focus();
       });
+    };
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      if (input.readOnly) return;
+      const v = input.value.trim(), err = document.getElementById("qz-err");
+      if (!v){ err.hidden = false; input.setAttribute("aria-invalid", "true"); input.focus(); return; }
+      err.hidden = true; input.removeAttribute("aria-invalid");
+      grade(v, qzCheck(q, v));
     });
+    document.getElementById("qz-skip").addEventListener("click", () => grade("", {ok:false, skipped:true}));
     if (focus){ document.getElementById("qz-q").focus(); window.scrollTo(0, 0); }
   }
 
-  function finishRun(lv, df, n){
-    const R = qzRun; R.finished = true;
-    const key = qzKey(lv, df), secs = QZ_TRACKS[key];
-    const s = qzLoad(), st = qzTrackState(s, key);
-    const passed = R.score >= QZ_PASS;
-    const firstPass = passed && !st.passed[n];
-    st.best[n] = Math.max(st.best[n] || 0, R.score);
+  function finishRun(){
+    const {lv, df, n, key, qs} = qzCtx;
+    const {s, st} = qzRunState(), run = st.runs[n];
+    const score = run.log.filter(x => x.ok).length, passed = score >= QZ_PASS, firstPass = passed && !st.passed[n];
+    st.best[n] = Math.max(st.best[n] || 0, score);
     if (passed) st.passed[n] = true;
+    const log = run.log;
+    delete st.runs[n];
     qzSave(s);
-    const hasNext = n < secs.length;
-    const wrong = R.qs.map((q, i) => ({q, i, pick:R.picks[i]})).filter(x => x.pick !== x.q.a);
-    document.getElementById("qz-count").textContent = `Finished · Score ${R.score} of ${R.qs.length}`;
-    document.getElementById("qz-barfill").style.width = "100%";
+    paintProgress(log, qs.length);
+    const total = qzSections(key, st.seed).length, hasNext = n < total;
+    const wrong = qs.map((q, i) => ({q, l: log[i]})).filter(x => !x.l.ok);
     document.getElementById("qz-stage").innerHTML = `<section class="qz-result ${passed ? "ok" : "no"}" aria-labelledby="qz-rh">
-        <h2 id="qz-rh" tabindex="-1">${passed ? "Passed" : "Not passed yet"}: ${R.score} out of ${R.qs.length}</h2>
-        <p>${passed ? (firstPass && hasNext ? `Section ${n + 1} is now unlocked.` : hasNext ? "Nice, this section stays open for revisiting." : "That was the last section in this track. Every section is done.") : `You need ${QZ_PASS} or more to pass. Review the explanations below and try again; the questions and answer order are reshuffled.`}</p>
+        <h2 id="qz-rh" tabindex="-1">${passed ? "Passed" : "Not passed yet"}: ${score} out of ${qs.length}</h2>
+        <p>${passed ? (firstPass && hasNext ? `Section ${n + 1} is now unlocked.` : hasNext ? "This section stays open for revisiting." : "That was the last section in this track.") : `You need ${QZ_PASS} or more to pass. Review the answers below and try again; the questions come back in a new order.`}</p>
         <div class="btn-row">
           ${passed && hasNext ? `<a class="btn" href="${qzRunHref(lv, df, n + 1)}">Go to Section ${n + 1}</a>` : ""}
           <button type="button" class="btn${passed && hasNext ? " ghost" : ""}" id="qz-retry">Retake Section ${n}</button>
@@ -19122,13 +19301,13 @@ const QUIZ_HAND = [
           <p class="qz-kind">${esc(x.q.k)}</p>
           <h3>${esc(x.q.q)}</h3>
           ${x.q.code ? qzCode(x.q.code, "Code sample") : ""}
-          <p class="qz-yours">${I.x} <b>Your answer:</b> ${esc(x.q.o[x.pick])}</p>
-          <p class="qz-right">${I.ok} <b>Correct answer:</b> ${esc(x.q.o[x.q.a])}</p>
+          <p class="qz-yours">${I.x} <b>You said:</b> ${x.l.a ? esc(x.l.a) : "<i>no answer (shown)</i>"}</p>
+          <p class="qz-right">${I.ok} <b>Answer:</b> ${esc(x.q.model)}</p>
           <p>${esc(x.q.e)}</p>
           ${qzRefs(x.q)}
         </li>`).join("")}</ol></section>` : `<p class="qz-perfect">${I.star} A perfect score. Nothing to review.</p>`}`;
     document.getElementById("qz-rh").focus(); window.scrollTo(0, 0);
-    document.getElementById("qz-retry").addEventListener("click", () => { qzRun = null; renderQuizRun(lv, df, n); document.getElementById("p-h1").focus(); });
+    document.getElementById("qz-retry").addEventListener("click", () => { renderQuizRun(lv, df, n); document.getElementById("p-h1").focus(); });
   }
 
   /* ---------- nav ---------- */
@@ -19233,7 +19412,7 @@ const QUIZ_HAND = [
             <span class="chip" aria-hidden="true"></span>
             <span class="pick-k">Quiz me</span>
             <span class="pick-t">Test what you've learned</span>
-            <span class="pick-d">Thousands of questions at Level A, AA and AAA, from basic to advanced: real audit findings, mock screenshots, code to review and fixes to recommend.</span>
+            <span class="pick-d">Type-your-answer questions at Level A, AA and AAA, from basic to advanced: real audit findings, mock screenshots, code to review, APG keys and ARIA.</span>
           </a></li>
         </ul>
         <p class="land-more"><a href="#/audit">Read the audit guide</a>: how to plan, run and report an accessibility audit.</p>
