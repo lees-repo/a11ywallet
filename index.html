@@ -898,6 +898,11 @@ footer p{max-width:70ch}
 .qz-right{color:var(--pass)}
 .qz-perfect{display:flex;gap:.4rem;align-items:center;font-weight:700;margin-top:1.25rem}
 @media (forced-colors:active){.qz-chip:has(input:checked){border-width:4px;forced-color-adjust:none;background:Highlight;color:HighlightText}.qz-bar span,.qz-mini span,.qz-dots li.ok,.qz-dots li.now{background:Highlight}.qz-dots li.no{background:Mark}}
+.qz-review li{padding-left:.9rem;border-left:4px solid var(--line)}
+.qz-review li.is-ok{border-left-color:var(--pass)}
+.qz-review li.is-no{border-left-color:var(--fail)}
+.qz-review .qz-kind span{display:inline-flex;gap:.25rem;align-items:center;text-transform:none;letter-spacing:0}
+.qz-review .qz-kind svg{width:.95rem;height:.95rem}
 </style>
 </head>
 <body>
@@ -18220,10 +18225,6 @@ const QUIZ_HAND = [
  code:`<label for="email">Work email</label><input id="email">\n<label for="email">Personal email</label><input id="email">`,
  o:["The second label points to the first input, so the second field has no label","Nothing; ids can repeat","Only an HTML validity warning with no user impact","The page title breaks"],
  e:"for/id associations (and aria-labelledby/describedby) resolve to the first matching id. The second input ends up unlabelled (1.3.1 / 4.1.2). 4.1.1 Parsing is obsolete in WCAG 2.2, but the real-world impact still fails other criteria."},
-{id:"parsing-obsolete", sc:"4.1.2", d:1, k:"WCAG 2.2 change",
- q:"In WCAG 2.2, what happened to 4.1.1 Parsing?",
- o:["It was made obsolete and removed; it's always considered satisfied","It moved to Level AA","It merged into 1.3.1","It now requires HTML validation on every page"],
- e:"WCAG 2.2 marks 4.1.1 Parsing obsolete because modern browsers and assistive tech handle parsing consistently. Real issues like duplicate ids are caught under 1.3.1 or 4.1.2."},
 {id:"autofill-email", sc:"1.3.5", lv:"AA", d:1, k:"Spot the issue in code",
  q:"A checkout's shipping name, email and phone fields have no autocomplete attributes. Which criterion and level?",
  code:`<input id="email" type="email">\n<input id="tel" type="tel">`,
@@ -18495,19 +18496,62 @@ const QUIZ_HAND = [
  o:["2.5.6 Concurrent Input Mechanisms","2.1.1 Keyboard","2.5.1 Pointer Gestures","2.1.3 Keyboard (No Exception)"],
  e:"Content shouldn't restrict use of input methods available on a platform, unless essential, for security, or to respect user settings."},
 
+
+/* ---------------- APG as the fix ---------------- */
+{id:"apg-faq", sc:"4.1.2", d:1, k:"Fix it with APG", q:"An FAQ page shows questions as bold paragraphs; clicking one reveals the answer below it, and several can be open at once. Screen readers don't announce that anything can expand and the questions aren't keyboard operable. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["accordion","disclosure"]}, o:["Accordion (or a set of Disclosures)"], e:"A stack of headings that each reveal a section is the Accordion pattern: a button inside each heading with aria-expanded and aria-controls. A set of independent Disclosures is also fine."},
+{id:"apg-filters", sc:"4.1.2", d:1, k:"Fix it with APG", q:"A “Show more filters” link reveals an extra block of filters but nothing tells screen reader users whether it's open or closed. Which APG pattern fixes this?", ans:{t:"pattern", slugs:["disclosure"]}, o:["Disclosure (Show/Hide)"], e:"One control showing and hiding one section is a Disclosure: a <button> with aria-expanded (and optionally aria-controls), or native <details>/<summary>."},
+{id:"apg-settings-tabs", sc:"4.1.2", d:1, k:"Fix it with APG", q:"An account page has “Profile, Billing, Security” as styled links that swap the content below without reloading. Screen readers hear three links and nothing about which one is current; arrow keys do nothing. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["tabs"]}, o:["Tabs"], e:"Panels swapping in the same space are Tabs: role=tablist/tab/tabpanel, aria-selected, aria-controls, and arrow-key navigation between tabs with one tab stop."},
+{id:"apg-delete-confirm", sc:"4.1.2", d:1, k:"Fix it with APG", q:"Clicking “Delete project” shows a styled div asking “Are you sure?” with Cancel and Delete. Focus stays on the page behind and screen readers never hear the question. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["alertdialog","dialog-modal"]}, o:["Alert and Message Dialogs (alertdialog)"], e:"A confirmation that interrupts the user is an alert dialog: role=alertdialog, aria-modal, labelled and described, focus moved inside and returned on close. A modal dialog is also acceptable."},
+{id:"apg-signup-modal", sc:"2.4.3", d:1, k:"Fix it with APG", q:"A newsletter signup form opens in an overlay. Tab moves to links behind it, Escape doesn't close it, and it has no name. Which APG pattern should the overlay follow?", ans:{t:"pattern", slugs:["dialog-modal"]}, o:["Dialog (Modal)"], e:"Use the modal dialog pattern (ideally native <dialog> with showModal()): focus moves in, Tab is contained, Escape closes, focus returns to the trigger, and the dialog has an accessible name."},
+{id:"apg-cart-toast", sc:"4.1.3", d:1, k:"Fix it with APG", q:"After saving settings, a green “Saved” toast appears for 3 seconds. Screen reader users never hear it. Focus should stay where it is. Which APG pattern covers this?", ans:{t:"pattern", slugs:["alert"]}, o:["Alert (or a role=\"status\" live region)"], e:"Messages announced without moving focus use the Alert pattern (role=alert) for important, time-sensitive messages, or role=status for polite confirmations like “Saved”."},
+{id:"apg-country", sc:"4.1.2", d:2, k:"Fix it with APG", q:"A custom country picker lets you type to filter a popup list of 200 countries. It's built from an input and a div list; screen readers don't announce the suggestions and arrow keys don't move through them. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["combobox"]}, o:["Combobox"], e:"An input with a popup of suggestions is a Combobox: role=combobox, aria-expanded, aria-controls, aria-activedescendant on the input, and a listbox popup with options."},
+{id:"apg-actions-menu", sc:"4.1.2", d:1, k:"Fix it with APG", q:"Each row in an orders table has a “⋯” icon that opens Edit, Duplicate and Delete. The icon is a span, and the options can't be reached with the keyboard. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["menu-button"]}, o:["Menu Button"], e:"A button that opens a list of actions is the Menu Button pattern: a named <button> with aria-haspopup and aria-expanded, a role=menu with menuitems, arrow keys inside, Escape closes."},
+{id:"apg-dark-toggle", sc:"4.1.2", d:0, k:"Fix it with APG", q:"A “Dark mode” on/off toggle is a styled div that slides left and right. It isn't focusable and screen readers don't hear its state. Which APG pattern fixes it?", ans:{t:"pattern", slugs:["switch","checkbox","button"]}, o:["Switch (or a checkbox / toggle button)"], e:"An on/off setting is a Switch: role=switch with aria-checked (or <input type=checkbox role=switch>). A checkbox or a button with aria-pressed is also acceptable."},
+{id:"apg-price-range", sc:"2.1.1", d:2, k:"Fix it with APG", q:"A price filter has two draggable handles for minimum and maximum price. It only works by mouse dragging and screen readers announce nothing. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["slider-multithumb"]}, o:["Slider (Multi-Thumb)"], e:"Two handles setting a range is the multi-thumb slider: each thumb role=slider with aria-valuenow/min/max, a label, and arrow/Home/End/Page keys. Also offer a non-dragging alternative for 2.5.7."},
+{id:"apg-volume", sc:"2.1.1", d:1, k:"Fix it with APG", q:"A custom volume control can only be dragged with the mouse and reads as “group” in a screen reader. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["slider"]}, o:["Slider"], e:"Use the Slider pattern (or native <input type=range>): role=slider, aria-valuenow/min/max, aria-valuetext where helpful, arrow keys to change value."},
+{id:"apg-qty", sc:"4.1.2", d:1, k:"Fix it with APG", q:"A cart quantity field is a div showing “2” with tiny + and − icons that aren't focusable. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["spinbutton"]}, o:["Spinbutton"], e:"A number you step up and down is a Spinbutton (or native <input type=number>): role=spinbutton with aria-valuenow/min/max, Up/Down arrows, plus labelled increment/decrement buttons."},
+{id:"apg-storage", sc:"1.1.1", d:1, k:"Fix it with APG", q:"A dashboard shows “Storage used” as a coloured bar only. Screen readers hear nothing about how full it is. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["meter"]}, o:["Meter"], e:"A measurement within a known range is a Meter: native <meter> or role=meter with aria-valuenow/min/max and an accessible name, ideally with the value in visible text too."},
+{id:"apg-folders", sc:"4.1.2", d:2, k:"Fix it with APG", q:"A file manager sidebar shows nested folders that expand and collapse. It's a set of nested divs with click handlers; screen readers hear a flat list of text and arrow keys don't work. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["treeview"]}, o:["Tree View"], e:"A hierarchy of expandable items is a Tree View: role=tree/treeitem/group, aria-expanded, one tab stop, arrow keys to move, expand and collapse."},
+{id:"apg-editor-toolbar", sc:"2.1.1", d:2, k:"Fix it with APG", q:"A text editor has 14 formatting buttons in a row. Keyboard users must press Tab 14 times to get past them. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["toolbar"]}, o:["Toolbar"], e:"Group the controls in role=toolbar with a label, make it a single tab stop, and move between buttons with arrow keys (roving tabindex)."},
+{id:"apg-promo", sc:"2.2.2", d:1, k:"Fix it with APG", q:"A homepage promo slider auto-rotates, its slides aren't labelled and the previous/next arrows are unnamed icons. Which APG pattern should the fix follow?", ans:{t:"pattern", slugs:["carousel"]}, o:["Carousel"], e:"The Carousel pattern adds a rotation control (pause), stops rotation on focus/hover, labels slides (“3 of 5”), and names the previous/next buttons."},
+{id:"apg-crumbs", sc:"2.4.8", d:0, k:"Fix it with APG", q:"A page shows “Home > Shoes > Running” as plain text spans at the top. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["breadcrumb"]}, o:["Breadcrumb"], e:"Use a <nav aria-label=\"Breadcrumb\"> with an ordered list of links, and aria-current=\"page\" on the current page."},
+{id:"apg-regions", sc:"2.4.1", d:1, k:"Fix it with APG", q:"A screen reader user's landmarks list is empty on every page: the header, navigation, main content and footer are all plain divs. Which APG guidance do you point the developer to?", ans:{t:"pattern", slugs:["landmarks"]}, o:["Landmarks (landmark regions)"], e:"Use <header>, <nav>, <main>, <aside> and <footer> (or landmark roles), label repeated landmarks, and make sure all content sits inside a landmark."},
+{id:"apg-info-tip", sc:"1.4.13", d:1, k:"Fix it with APG", q:"An info icon shows a hint only on mouse hover. Keyboard users never see it and screen readers don't read it. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["tooltip"]}, o:["Tooltip"], e:"The Tooltip pattern: role=tooltip, linked with aria-describedby, shown on focus and hover, dismissed with Escape. It must also meet 1.4.13."},
+{id:"apg-spreadsheet", sc:"4.1.2", d:2, k:"Fix it with APG", q:"An interactive timesheet lets users move between cells with the arrow keys and edit them, but it's built from divs and screen readers hear no rows, columns or headers. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["grid"]}, o:["Grid"], e:"Interactive rows and cells are the Grid pattern: role=grid/row/gridcell/columnheader, one tab stop, arrow-key cell navigation."},
+{id:"apg-inbox", sc:"4.1.2", d:2, k:"Fix it with APG", q:"An email client lists threads in rows with columns (From, Subject, Date); threads expand to show replies. Which APG pattern fits?", ans:{t:"pattern", slugs:["treegrid"]}, o:["Treegrid"], e:"Rows that expand into child rows, with columns, is a Treegrid."},
+{id:"apg-infinite", sc:"2.1.1", d:2, k:"Fix it with APG", q:"A news site loads more articles as you scroll. Screen reader users get lost as content shifts and can't jump between articles. Which APG pattern do you recommend?", ans:{t:"pattern", slugs:["feed"]}, o:["Feed"], e:"The Feed pattern: role=feed containing role=article items with aria-setsize/aria-posinset, aria-busy while loading, and Page Up/Down between articles."},
+{id:"apg-size-picker", sc:"4.1.2", d:1, k:"Fix it with APG", q:"A product's size selector (S, M, L, XL) is four styled divs; only one can be chosen. Screen readers don't know it's a choice or which is selected. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["radio"]}, o:["Radio Group"], e:"Pick-one-of-a-few is a Radio Group: native radios in a fieldset with legend, or role=radiogroup/radio with aria-checked and arrow keys."},
+{id:"apg-terms-check", sc:"4.1.2", d:0, k:"Fix it with APG", q:"An “I agree to the terms” tick box is an icon inside a span. Space does nothing and screen readers hear just “I agree to the terms”. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["checkbox"]}, o:["Checkbox"], e:"Use a native <input type=checkbox> with a label, or role=checkbox with aria-checked, tabindex=0 and Space to toggle."},
+{id:"apg-split", sc:"2.1.1", d:2, k:"Fix it with APG", q:"A code playground lets users drag a bar to resize the editor and preview panes. It can only be dragged with a mouse. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["windowsplitter"]}, o:["Window Splitter"], e:"A focusable role=separator with aria-valuenow/min/max and arrow keys to move it (Enter to collapse/restore)."},
+{id:"apg-app-menu", sc:"2.1.1", d:2, k:"Fix it with APG", q:"A web-based design tool has a top bar with File, Edit and View menus that open on hover only. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["menubar"]}, o:["Menu and Menubar"], e:"Application menus are a Menubar: role=menubar with menuitems that open role=menu submenus, arrow-key navigation, Escape to close."},
+{id:"apg-data-table", sc:"1.3.1", d:0, k:"Fix it with APG", q:"A static comparison of plan prices is built with CSS grid divs, so screen readers can't announce row and column headers. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["table"]}, o:["Table"], e:"Static tabular data belongs in a <table> with <th> headers (or role=table/row/cell/columnheader)."},
+{id:"apg-fake-button", sc:"4.1.2", d:0, k:"Fix it with APG", q:"“Add to cart” is a styled <div> with a click handler. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["button"]}, o:["Button"], e:"Actions use the Button pattern, ideally a native <button>: focusable, Enter and Space activate it, and it's announced as a button."},
+{id:"apg-fake-link", sc:"4.1.2", d:0, k:"Fix it with APG", q:"A “View order” item is a span that navigates to another page with JavaScript. It isn't focusable. Which APG pattern should it follow?", ans:{t:"pattern", slugs:["link"]}, o:["Link"], e:"Navigation uses the Link pattern: a real <a href>, so it's focusable, works with Enter, and shows in the links list."},
+
+/* ---------------- recommendations ---------------- */
+{id:"rec-alt-product", sc:"1.1.1", d:1, k:"Recommended fix", q:"Product images in a shop have alt=\"product-image-1.jpg\". What do you recommend?", ans:{t:"kw", groups:[["describe","name","meaningful","descriptive","product name","what it shows","alternative"]]}, o:["Replace the file name with alt text that describes the product, e.g. alt=\"Blue cotton hoodie, front view\""], e:"Alt must convey the image's meaning. File names fail (F30)."},
+{id:"rec-headings", sc:"1.3.1", d:1, k:"Recommended fix", q:"Section titles on a pricing page are styled <div>s and the screen reader headings list is empty. What do you recommend?", ans:{t:"kw", groups:[["h1","h2","h3","heading element","heading","role=\"heading\""]]}, o:["Mark them up as real headings (<h2>, <h3>…) in a logical order"], e:"Visual structure must be in code (1.3.1)."},
+{id:"rec-labels", sc:"1.3.1", d:2, k:"Recommended fix", q:"A search field has visible text “Search products” beside it, but the text isn't connected to the input, so screen readers just say “edit text”. What do you recommend?", ans:{t:"kw", groups:[["label","for=","aria-labelledby","associat","connect","link"]]}, o:["Use <label for=\"id\"> (or aria-labelledby) to associate the visible text with the input"], e:"The visible label must be programmatically associated (1.3.1, 4.1.2)."},
+{id:"rec-keyboard", sc:"2.1.1", d:1, k:"Recommended fix", q:"A custom “Close” icon on a promo banner only responds to mouse clicks. What do you recommend?", ans:{t:"kw", groups:[["button","keyboard","focusable","tabindex","enter","space"]]}, o:["Use a native <button> with an accessible name (e.g. aria-label=\"Close\") so it's focusable and works with Enter and Space"], e:"Native buttons give keyboard support and the right role for free."},
+{id:"rec-nrv", sc:"4.1.2", d:2, k:"Recommended fix", q:"A custom checkbox (a span with a tick icon) toggles visually, but screen readers hear only its text, with no role or checked state. What do you recommend?", ans:{t:"kw", groups:[["checkbox","role","aria-checked","input"]]}, o:["Use <input type=\"checkbox\"> with a label, or add role=\"checkbox\", aria-checked that updates, tabindex=\"0\" and Space to toggle"], e:"Custom controls must expose name, role and state (4.1.2)."},
+
+/* ---------------- issue or not ---------------- */
+{id:"pf-decor-empty", sc:"1.1.1", d:0, k:"Issue or not?", q:"A purely decorative background flourish has alt=\"\". Pass or fail 1.1.1?", o:["Pass"], e:"Empty alt is the correct way to hide decorative images (H67)."},
+{id:"pf-logo-contrast", sc:"1.4.3", d:1, k:"Issue or not?", q:"A company logo uses light grey text at 2:1 contrast. Pass or fail 1.4.3?", o:["Pass"], e:"Text that's part of a logo or brand name has no contrast requirement."},
+{id:"pf-disabled-contrast", sc:"1.4.3", d:1, k:"Issue or not?", q:"A disabled “Submit” button (with the disabled attribute) has 2.5:1 text contrast. Pass or fail 1.4.3?", o:["Pass"], e:"Inactive user interface components are exempt. Many teams still improve it as a best practice."},
+{id:"pf-modal-trap", sc:"2.1.2", d:1, k:"Issue or not?", q:"In a modal dialog, Tab cycles only within the dialog, and Escape or the Close button closes it and returns focus. Pass or fail 2.1.2 No Keyboard Trap?", o:["Pass"], e:"Containing focus in a modal is expected; it's not a trap because users can leave with standard keys."},
+{id:"pf-skip-hidden", sc:"2.4.1", d:1, k:"Issue or not?", q:"The skip link is visually hidden until it receives focus, then appears at the top-left. Pass or fail 2.4.1?", o:["Pass"], e:"Skip links may be hidden until focused, as long as they become visible on focus (also helps 2.4.7)."},
+{id:"pf-new-tab-select", sc:"3.2.2", d:2, k:"Issue or not?", q:"A language select shows “Changing the language reloads the page” right above it, and the page reloads on change. Pass or fail 3.2.2?", o:["Pass"], e:"3.2.2 allows changes of context on input if the user is advised beforehand."},
+{id:"pf-caption-video-only", sc:"1.2.2", d:1, k:"Issue or not?", q:"A silent product animation (no audio track at all) has no captions. Pass or fail 1.2.2 Captions?", o:["Pass"], e:"1.2.2 applies to synchronised media with audio. Silent video falls under 1.2.1 instead."},
+{id:"pf-error-red-icon", sc:"1.4.1", d:1, k:"Issue or not?", q:"An invalid field turns red AND shows an error icon plus the text “Enter a valid email”. Pass or fail 1.4.1?", o:["Pass"], e:"Colour isn't the only cue: there's an icon and text."},
+{id:"pf-tooltip-esc", sc:"1.4.13", d:2, k:"Issue or not?", q:"A tooltip appears on hover and focus, stays while the pointer is over it, and Escape hides it without moving focus. Pass or fail 1.4.13?", o:["Pass"], e:"Dismissible, hoverable and persistent: all three conditions met."},
+{id:"pf-24px-spacing", sc:"2.5.8", d:2, k:"Issue or not?", q:"Icon buttons are 20×20 CSS px, but each is spaced so a 24 px circle centred on it doesn't overlap any other target. Pass or fail 2.5.8?", o:["Pass"], e:"Undersized targets pass with enough spacing (the spacing exception)."},
+
 /* ---------------- audit practice (mapped to related criteria) ---------------- */
 {id:"tool-limits", sc:"1.1.1", d:1, k:"Audit method",
  q:"axe reports zero image issues on a page. What can you conclude about 1.1.1?",
  o:["Only that every image has some alt; you still need to judge manually whether each alt is meaningful","1.1.1 passes completely","1.1.1 fails because axe is not a screen reader","Nothing; axe doesn't test images"],
  e:"Automated tools catch missing alt but can't judge quality (e.g. alt=\"image\" or a wrong description). Manual review in context is always needed."},
-{id:"nvda-graphics", sc:"1.1.1", d:1, k:"Audit method",
- q:"Which NVDA quick key jumps between graphics when checking alt text?",
- o:["G","H","F","K"],
- e:"In NVDA browse mode: G = graphics, H = headings, F = form fields, K = links. Use Shift with them to go backwards."},
-{id:"insert-f7", sc:"2.4.4", d:1, k:"Audit method",
- q:"You want to check every link's text out of context in NVDA. What do you open?",
- o:["The Elements List (NVDA+F7) set to Links","The NVDA Python console","Speech viewer only","The browser's history"],
- e:"NVDA+F7 lists links, headings, form fields, buttons and landmarks. Reviewing links out of context quickly reveals vague text like “click here”."},
 {id:"zoom-test", sc:"1.4.10", d:1, k:"Audit method",
  q:"How do you test 1.4.10 Reflow on a desktop browser?",
  o:["Set the viewport to 1280px wide and zoom to 400% (or resize to 320 CSS px), then check for two-dimensional scrolling and lost content","Zoom to 200% and check text only","Use a screen reader","Run axe; it detects reflow issues automatically"],
@@ -18685,31 +18729,41 @@ const QUIZ_HAND = [
     }
     const scQ = (id, c, d, k, q, e, r, extra) => add(Object.assign({id, lv:c.level, d, k, q, ans:{t:"sc", ids:[c.id]}, model:scModel(c), e, r:r || scRef(c)}, extra || {}));
 
+    /* key ideas in each recommended fix: words that are rare across all recommendations */
+    const REC_STOP = new Set("make sure that with every content user users page provide should which their them this when where have from into such example text pages each also more than only must need needs instead other they them your what without before after other same using used uses there about these those does doesn't don't across within still give gives like keep true false next either alone never check clearly element elements information remove states file".split(" "));
+    const recTok = s => [...new Set(String(s).toLowerCase().replace(/[^a-z0-9\-<>=]+/g, " ").split(" ").map(w => w.replace(/^[<]|[>]$/g, "")).filter(w => w.length >= 4 && !REC_STOP.has(w) && !/^\d/.test(w)))];
+    const recDf = {}; Object.values(COMMON_RECS).forEach(r => recTok(r).forEach(w => recDf[w] = (recDf[w] || 0) + 1));
+    const recKw = id => { const r = COMMON_RECS[id]; if (!r) return null; const k = recTok(r).filter(w => recDf[w] <= 8).slice(0, 14).concat(String(r).match(/\d+(\.\d+)?:1/g) || []); return k.length >= 3 ? k : null; };
+
     /* ---- per criterion ---- */
     ALL.forEach(c => {
       const R = qzRng("sc" + c.id);
       const L = c.level;
 
-      // basic: level, number, description, pass condition
-      add({id:`lvl-${c.id}`, lv:L, d:0, k:"Conformance level", q:`What conformance level is ${c.title}?`, ans:{t:"lv", lv:L}, model:`Level ${L} (${c.id})`, e:`${scName(c)} is Level ${L}. ${clean(c.s)}`, r:scRef(c)});
-      add({id:`num-${c.id}`, lv:L, d:0, k:"Criterion number", q:`What is the number of the success criterion “${c.title}”?`, ans:{t:"sc", ids:[c.id], numOnly:true}, model:scModel(c), e:`“${c.title}” is ${c.id}, under ${c._g.id} ${c._g.name}. ${clean(c.s)}`, r:scRef(c)});
-      scQ(`desc-${c.id}`, c, 0, "Name the criterion", `Which success criterion requires this? “${clean(c.s)}”`, `${scModel(c)}. ${clean(c.intent || "").slice(0, 400)}`);
-      if (EXPECTED_RESULTS[c.id]) scQ(`exp-${c.id}`, c, 0, "Pass condition", `You record this as the expected result in your test case. Which criterion are you testing? “${clean(EXPECTED_RESULTS[c.id])}”`, `This is the pass condition for ${scModel(c)}.`);
 
       // medium: scenario -> criterion; advanced: scenario -> criterion + level
       (c.scenarios || []).forEach((s, i) => {
         scQ(`scen-${c.id}-${i}`, c, 1, "Real-world issue", `Audit finding: ${clean(s[1])} Which success criterion does this fail?`, `${s[0]}. This fails ${scModel(c)}. ${clean(c.s)}`);
         add({id:`scenlv-${c.id}-${i}`, lv:L, d:2, k:"Criterion and level", q:`You're logging this bug: “${s[0]}”. ${clean(s[1])} Which criterion and level do you log it against?`,
           ans:{t:"sclv", ids:[c.id], lv:L}, model:scModel(c), e:`Log it against ${scModel(c)}. ${clean(c.s)}`, r:scRef(c)});
+        const rk = recKw(c.id);
+        if (rk) add({id:`fix-${c.id}-${i}`, lv:L, d:2, k:"Recommended fix", q:`You've logged this against ${c.id}: ${clean(s[1])} What do you recommend the developer does?`,
+          ans:{t:"kw", groups:[rk]}, model:clean(COMMON_RECS[c.id]), e:`Recommendation for ${scModel(c)}. Key ideas: ${rk.slice(0, 6).join(", ")}.`, r:scRef(c)});
       });
 
       // medium: what you check -> criterion
-      qzShuffle(c.check || [], R).slice(0, 4).forEach((ch, i) => {
+      qzShuffle((c.check || []).filter(x => !/^(fix|use|test|try|run|check|open|press|zoom|turn|set|for |if )/i.test(x)), R).slice(0, 3).forEach((ch, i) => {
         const masked = clean(ch).replace(/\b\d\.\d\.\d{1,2}\b/g, "another criterion");
-        scQ(`chk-${c.id}-${i}`, c, 1, "What am I testing?", `During an audit you check: “${masked}” Which success criterion is this check for?`, `This is one of the checks for ${scModel(c)}. ${clean(c.s)}`);
+        scQ(`chk-${c.id}-${i}`, c, 0, "Real-world issue", `While testing a page you find this is NOT true: “${masked}” Which success criterion fails?`, `This is one of the checks for ${scModel(c)}. ${clean(c.s)}`);
       });
 
       // advanced: failing code
+      if (c.ex && c.ex.bad && c.ex.good){
+        add({id:`cpf-bad-${c.id}`, lv:L, d:1, k:"Issue or not?", q:`You're testing this markup against ${scName(c)}. Does it pass or fail?`, ans:{t:"pf", v:"fail"}, model:"Fail", code:c.ex.bad, fix:c.ex.good,
+          e:`Fail. ${clean(c.ex.badNote || "")} ${c.ex.goodNote ? "Passing version: " + clean(c.ex.goodNote) : ""}`, r:scRef(c)});
+        add({id:`cpf-good-${c.id}`, lv:L, d:1, k:"Issue or not?", q:`A developer says they fixed the ${c.id} issue with this markup. Does it pass or fail ${scName(c)}?`, ans:{t:"pf", v:"pass"}, model:"Pass", code:c.ex.good,
+          e:`Pass. ${clean(c.ex.goodNote || "")}`, r:scRef(c)});
+      }
       if (c.ex && c.ex.bad)
         scQ(`code-${c.id}`, c, 2, "Spot the issue in code", `Review this markup. Which success criterion does it fail?`,
           `${clean(c.ex.badNote || "")} It fails ${scModel(c)}. ${c.ex.goodNote ? "The fix: " + clean(c.ex.goodNote) : ""}`, null, {code:c.ex.bad, fix:c.ex.good});
@@ -18724,12 +18778,12 @@ const QUIZ_HAND = [
 
       // basic/medium: requirement or best practice?
       (BEST_PRACTICES[c.id] || []).slice(0, 2).forEach((bp, i) => {
-        add({id:`bp-${c.id}-${i}`, lv:L, d:i ? 1 : 0, k:"Failure or best practice?", q:`While auditing, you notice a page ignores this advice: “${clean(bp)}” Everything else is fine. Do you log a WCAG failure or a best-practice recommendation?`,
+        add({id:`bp-${c.id}-${i}`, lv:L, d:0, k:"Failure or best practice?", q:`While auditing, you notice a page ignores this advice: “${clean(bp)}” Everything else is fine. Do you log a WCAG failure or a best-practice recommendation?`,
           ans:{t:"bp", v:"bp"}, model:"Best practice (recommendation, not a WCAG failure)", e:`This is a best practice listed beside ${scName(c)}, not a requirement. Keep failures and advice apart in the report.`, r:scRef(c)});
       });
       const reqs = qzShuffle((c.check || []).filter(x => !/\b\d\.\d\.\d/.test(x)), qzRng("req" + c.id));
       if (reqs.length > 4){
-        add({id:`req-${c.id}`, lv:L, d:1, k:"Failure or best practice?", q:`A page doesn't meet this: “${clean(reqs[reqs.length - 1])}” Do you log a WCAG failure or a best-practice recommendation?`,
+        add({id:`req-${c.id}`, lv:L, d:0, k:"Failure or best practice?", q:`A page doesn't meet this: “${clean(reqs[reqs.length - 1])}” Do you log a WCAG failure or a best-practice recommendation?`,
           ans:{t:"bp", v:"req"}, model:`WCAG failure (${scName(c)})`, e:`This is a required check for ${scModel(c)}, so not meeting it is a failure.`, r:scRef(c)});
       }
     });
@@ -18748,20 +18802,11 @@ const QUIZ_HAND = [
       const txt = (MEET_TECH[code] && MEET_TECH[code][0]) || (own && own.fails.find(f => f[0] === code)[1]);
       if (!txt) return;
       const c = byId[ids[0]];
-      add({id:`f-${code}`, lv:c.level, d:1, k:"Documented failure", q:`WCAG documents this failure: “${clean(txt)}” Which success criterion does it fail?`,
+      add({id:`f-${code}`, lv:c.level, d:0, k:"Real-world issue", q:`Audit finding: ${clean(txt).replace(/^Fails when /, "")} Which success criterion does this fail?`,
         ans:{t:"sc", ids:[c.id], any:ids}, model:ids.map(id => scModel(byId[id])).join(" or "),
         e:`This is failure ${code}, documented for ${ids.map(id => scName(byId[id])).join(", ")}. Any of them counts.`, r:scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []),
         code:MEET_TECH[code] && MEET_TECH[code][1] || undefined});
     });
-    Object.keys(sufSC).forEach(code => {
-      const ids = [...sufSC[code]].filter(id => byId[id]);
-      if (ids.length !== 1 || !MEET_TECH[code] || /^F/.test(code)) return;
-      const c = byId[ids[0]];
-      add({id:`t-${code}`, lv:c.level, d:2, k:"Technique", q:`A developer applies technique ${code}: “${clean(MEET_TECH[code][0])}” Which success criterion is this a sufficient technique for?`,
-        ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${code} is a sufficient technique for ${scModel(c)}.`,
-        r:scRef(c).concat(techUrl(code) ? [[techUrl(code), `${code} at W3C`]] : []), code:MEET_TECH[code][1] || undefined});
-    });
-
     /* ---- APG patterns ---- */
     const pats = Object.keys(APG_PATTERNS);
     const compact = s => String(s).toLowerCase().replace(/pattern/g, "").replace(/[^a-z0-9]/g, "").replace(/s$/, "");
@@ -18770,7 +18815,7 @@ const QUIZ_HAND = [
       const v = [compact(n), compact(slug), compact(n.replace(/[()]/g, ""))];
       if (par){ v.push(compact(par + " " + base)); }
       if (!pats.some(x => x !== slug && compact(APG_PATTERNS[x].name.replace(/\s*\(.*\)/, "")) === compact(base))) v.push(compact(base));
-      if (slug === "alertdialog") v.push("alertdialog", "messagedialog");
+      if (slug === "alertdialog") v.push("alertdialog", "messagedialog", "confirmdialog", "confirmationdialog");
       if (slug === "menubar") v.push("menubar", "menu");
       if (slug === "radio") v.push("radio", "radiobutton");
       if (slug === "disclosure") v.push("showhide");
@@ -18781,35 +18826,11 @@ const QUIZ_HAND = [
       const ref = [[`#/apg/${slug}`, `Study the ${p.name} pattern`], [p.apg, `${p.name} at W3C APG`]];
       const plv = lvOf((p.wcag && p.wcag[0] && p.wcag[0][0]) || "4.1.2");
       const hide = s => clean(s).replace(new RegExp(p.name.replace(/[()]/g, "").split(/\s+/).filter(w => w.length > 3).join("|") || "$^", "gi"), "____");
-      add({id:`apgsum-${slug}`, lv:plv, d:0, k:"Name the pattern", q:`Which APG pattern is this? “${hide(p.summary)}”`, ans:{t:"pattern", vals:patAnswers(slug)}, model:p.name, e:`${p.name}: ${clean(p.what || p.summary)}`, r:ref});
-      if (p.what) add({id:`apgwhat-${slug}`, lv:plv, d:1, k:"Name the pattern", q:`A designer describes a component like this. Which APG pattern should you audit it against? “${hide(p.what).slice(0, 420)}”`, ans:{t:"pattern", vals:patAnswers(slug)}, model:p.name, e:`${p.name}. ${clean(p.summary)}`, r:ref});
-      const meta = APG_META[slug];
-      if (meta && meta[2] && /</.test(meta[2])){
-        const alts = meta[2].split(/\bor\b/).map(x => ((/<(\w+)/.exec(x) || /(\w+)/.exec(x)) || [])[1]).filter(Boolean);
-        if (slug === "landmarks") alts.push(...(meta[2].match(/<(\w+)/g) || []).map(x => x.slice(1)));
-        add({id:`apgnat-${slug}`, lv:plv, d:0, k:"Native HTML first", q:`Before reaching for ARIA, which native HTML element gets you closest to the ${p.name} pattern?`, ans:{t:"tag", vals:[...new Set(alts)]}, model:meta[2], e:`For ${p.name}, start with ${meta[2]}. Native elements bring keyboard support, roles and states for free.`, r:ref});
-      }
-      (p.keyboard || []).filter(k => k[1] && !/^(not applicable|none|on open)/i.test(k[0])).forEach((k, i) => {
-        const keys = qzKeyList(k[0]);
-        if (!keys.length) return;
-        add({id:`apgkb-${slug}-${i}`, lv:plv, d:1, k:`Keyboard: ${p.name}`, q:`In the APG ${p.name} pattern, which key does this? “${clean(k[1])}”`, ans:{t:"key", keys, label:k[0]}, model:k[0], e:`${clean(k[0])}: ${clean(k[1])}`, r:ref});
-      });
-      (p.roles || []).filter(r => r[3] && (r[0] || r[1])).forEach((r, i) => {
-        const vals = [];
-        if (/^[a-z]+$/.test(r[0])) vals.push(r[0]);
-        (String(r[1]).match(/aria-[a-z]+|tabindex|role="[a-z]+"/g) || []).forEach(x => vals.push(x.replace(/role=|"/g, "")));
-        if (/^role=/.test(r[1])) (String(r[1]).match(/"[a-z]+"/g) || []).forEach(x => vals.push(x.replace(/"/g, "")));
-        if (!vals.length) return;
-        let usage = clean(r[3]);
-        vals.forEach(v => { usage = usage.replace(new RegExp(v.replace(/-/g, "\\-"), "gi"), "____"); });
-        add({id:`apgro-${slug}-${i}`, lv:plv, d:2, k:`ARIA: ${p.name}`, q:`In the APG ${p.name} example, which role or attribute does this${r[2] ? ` (on the ${r[2]} element)` : ""}? “${usage}”`,
-          ans:{t:"attr", vals}, model:[r[0] && /^[a-z]+$/.test(r[0]) ? `role="${r[0]}"` : r[0], r[1]].filter(Boolean).join(" + "), e:`${[r[0], r[1]].filter(Boolean).join(" ")}: ${clean(r[3])}`, r:ref});
-      });
-      (p.wcag || []).forEach((w, i) => {
-        const c = byId[w[0]]; if (!c) return;
-        add({id:`apgwc-${slug}-${i}`, lv:c.level, d:1, k:`WCAG in ${p.name}`, q:`You audit ${an(p.name.toLowerCase())}: “${clean(w[1]).replace(/\b\d\.\d\.\d{1,2}\b/g, "this criterion")}” Which success criterion are you checking?`,
-          ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${scModel(c)}. ${clean(w[1])}`, r:ref.concat([[scHref(c), `Study ${c.id}`]])});
-      });
+      const fixQ = (id, d, q, e) => add({id, lv:plv, d, k:"Fix it with APG", q, ans:{t:"pattern", vals:patAnswers(slug)}, model:`The ${p.name} pattern`, e, r:ref});
+      fixQ(`apgsum-${slug}`, 1, `Audit finding: a custom component (“${hide(p.summary)}”) is built from plain divs and click handlers. Keyboard users can't operate it and screen readers announce no role or state. Which APG pattern should the developers follow to fix it?`,
+        `Follow the ${p.name} pattern. ${clean(p.summary)} It gives you the keyboard model, roles and states that fix 2.1.1 and 4.1.2 issues.`);
+      if (p.what) fixQ(`apgwhat-${slug}`, 2, `You're writing the recommendation for a component that fails 4.1.2 Name, Role, Value. The designer describes it like this: “${hide(p.what).slice(0, 420)}” Which APG pattern do you point the developer to?`,
+        `Point them to the ${p.name} pattern. ${clean(p.summary)}`);
       (p.mistakes || []).forEach((m, i) => {
         const ids = (String(m[1]).match(/\b\d\.\d\.\d{1,2}\b/g) || []).filter(id => byId[id]);
         if (!ids.length) return;
@@ -18819,37 +18840,36 @@ const QUIZ_HAND = [
       });
     });
 
+    /* ---- APG as the fix: "which pattern solves this?" ---- */
+    APG_CHOOSER.forEach((row, i) => {
+      const slugs = row.slice(1).filter(x => APG_PATTERNS[x]); if (!slugs.length) return;
+      const p = APG_PATTERNS[slugs[0]];
+      const plv = lvOf((p.wcag && p.wcag[0] && p.wcag[0][0]) || "4.1.2");
+      add({id:`apgch-${i}`, lv:plv, d:0, k:"Fix it with APG", q:`A team needs a custom control to “${row[0].toLowerCase()}”. Their current version fails keyboard and screen reader testing. Which APG pattern should they follow?`,
+        ans:{t:"pattern", vals:slugs.flatMap(patAnswers)}, model:slugs.map(x => APG_PATTERNS[x].name).join(" or "),
+        e:`Use ${slugs.map(x => APG_PATTERNS[x].name).join(" or ")}. Before building it custom, check whether a native HTML element already does the job.`,
+        r:slugs.map(x => [`#/apg/${x}`, `Study the ${APG_PATTERNS[x].name} pattern`])});
+    });
+
     /* ---- APG practices ---- */
     PRAC_ORDER.forEach(slug => {
       const pr = PRACTICES[slug]; if (!pr) return;
       const ref = [[`#/practices/${slug}`, `Study ${pr.name}`]];
       const plv = lvOf((pr.wcag && pr.wcag[0] && pr.wcag[0][0]) || "1.3.1");
-      (pr.wcag || []).forEach((w, i) => {
-        const c = byId[w[0]]; if (!c) return;
-        add({id:`prwc-${slug}-${i}`, lv:c.level, d:1, k:`Practice: ${pr.name}`, q:`${pr.name}: “${clean(w[1])}” Which success criterion is this about?`, ans:{t:"sc", ids:[c.id]}, model:scModel(c), e:`${scModel(c)}.`, r:ref.concat([[scHref(c), `Study ${c.id}`]])});
-      });
       (pr.mistakes || []).forEach((m, i) => {
         const ids = (String(m[1]).match(/\b\d\.\d\.\d{1,2}\b/g) || []).filter(id => byId[id]);
         if (!ids.length) return;
         const c = byId[ids[0]];
         add({id:`prmi-${slug}-${i}`, lv:c.level, d:2, k:`Practice: ${pr.name}`, q:`${pr.name}: you find “${clean(m[0])}”. ${clean(m[1]).replace(/\b\d\.\d\.\d{1,2}\b/g, "____")} Which success criterion fails?`, ans:{t:"sc", ids:[c.id], any:ids}, model:scModel(c), e:`${clean(m[0])}: ${clean(m[1])}`, r:ref});
       });
-      (pr.sections || []).forEach(sec => {
-        const t = sec.table; if (!t || !t.rows || t.head.length !== 2 || t.rows.length < 3) return;
-        t.rows.forEach((row, i) => {
-          const right = strip(row[1]).replace(/\.$/, "");
-          if (!right || right.length > 30 || /^(yes|no)$/i.test(right)) return;
-          add({id:`prtb-${slug}-${sec.id}-${i}`, lv:plv, d:0, k:`Practice: ${pr.name}`, q:`${strip(t.caption)}: for “${strip(row[0])}”, what is the ${strip(t.head[1]).toLowerCase()}?`,
-            ans:{t:"text", vals:right.split(/\s*\/\s*|\s+or\s+|,\s*/).filter(Boolean)}, model:right, e:`${strip(row[0])} → ${right}. (${strip(t.caption)})`, r:ref});
-        });
-      });
     });
 
     /* ---- hand-written, real-world questions ---- */
     (typeof QUIZ_HAND !== "undefined" ? QUIZ_HAND : []).forEach((h, i) => {
       const c = byId[h.sc];
-      const ans = h.ans || qzDeriveAns(h);
+      let ans = h.ans || qzDeriveAns(h);
       if (!ans) return;
+      if (ans.t === "pattern" && ans.slugs) ans = {t:"pattern", vals:ans.slugs.flatMap(patAnswers)};
       add({id:"h-" + (h.id || i), lv:h.lv || (c ? c.level : "A"), d:h.d, k:h.k, q:h.q, shot:h.shot, code:h.code, ans, model:h.o[0], e:h.e, hand:true,
         r: h.r || (c ? scRef(c) : [])});
     });
@@ -19000,8 +19020,10 @@ const QUIZ_HAND = [
       return a.vals.some(v => new RegExp(`(^|[^a-z])${v}([^a-z]|$)`).test(ans)) ? {ok:true} : {ok:false};
     }
     if (a.t === "pattern"){
-      const c = qzCompact(ans);
-      return a.vals.some(v => c === v || (v.length > 4 && c.includes(v))) ? {ok:true} : {ok:false};
+      const w = ans.replace(/[^a-z0-9 ]+/g, " ").split(/\s+/).filter(x => x && !/^(the|a|an|pattern|apg|use|follow|it|component|widget)$/.test(x));
+      const subs = new Set();
+      for (let i = 0; i < w.length; i++) for (let j = i + 1; j <= Math.min(w.length, i + 5); j++) subs.add(qzCompact(w.slice(i, j).join("")));
+      return a.vals.some(v => subs.has(v)) ? {ok:true} : {ok:false};
     }
     if (a.t === "text"){
       const c = qzCompact(ans);
@@ -19060,7 +19082,7 @@ const QUIZ_HAND = [
   const qzSave = s => store.set("quiz2", s);
   const qzTrackState = (s, key) => {
     const t = s.tracks[key] = s.tracks[key] || {};
-    t.passed = t.passed || {}; t.best = t.best || {}; t.runs = t.runs || {};
+    t.passed = t.passed || {}; t.best = t.best || {}; t.runs = t.runs || {}; t.done = t.done || {};
     if (t.seed == null) t.seed = Math.floor(Math.random() * 1e9);
     return t;
   };
@@ -19077,7 +19099,7 @@ const QUIZ_HAND = [
     app.innerHTML = `<div class="wrap qz">
       <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="#/">Home</a></li><li><span aria-current="page">Quiz me</span></li></ol></nav>
       <h1 id="p-h1" tabindex="-1" class="mt-ph2">Quiz me</h1>
-      <p class="qz-lead">${QZ_BANK.length.toLocaleString()} questions drawn from everything in a11ywallet: WCAG 2.2 criteria, documented failures, techniques, APG patterns, practices and real audit findings. Type your answers; they're checked sensibly, so a criterion number like <b>1.4.3</b> or its name is enough. Each section has ${QZ_SIZE} questions: score ${QZ_PASS} or more to unlock the next one. Passed sections stay open for revisiting.</p>
+      <p class="qz-lead">${QZ_BANK.length.toLocaleString()} type-your-answer questions. Answers are checked sensibly: a criterion number like <b>1.4.3</b> or its name is enough, and written answers are checked for the key idea, not exact wording. The questions are about WCAG criteria: real issues to map to a criterion and level, fixes to recommend, pass or fail calls, failures versus best practice, and which APG pattern fixes a broken component. Each section has ${QZ_SIZE} questions; score ${QZ_PASS} or more to unlock the next one. Opening a finished section shows all its answers again; retake it only when you want to.</p>
       <div class="qz-filters">
         <fieldset class="qz-chips"><legend>WCAG level</legend>
           ${QZ_LEVELS.map(lv => `<label class="qz-chip lvc-${lv}"><input type="radio" name="qz-lv" value="${lv}"><span>Level ${lv}</span><small>${nSec(lv)} sections</small></label>`).join("")}
@@ -19119,8 +19141,8 @@ const QUIZ_HAND = [
           const right = run.log.filter(x => x.ok).length;
           status = `In progress: ${run.log.length}/${QZ_SIZE} answered, ${right} right`;
           meter = qzMeter(run.log.length, QZ_SIZE, `${run.log.length} of ${QZ_SIZE} answered`);
-        } else if (passed){ status = `Passed · best ${best}/${QZ_SIZE}`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
-        else if (best != null){ status = `Not passed yet · best ${best}/${QZ_SIZE}`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
+        } else if (passed){ status = `Passed · best ${best}/${QZ_SIZE} · open to review`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
+        else if (best != null){ status = `Not passed yet · last ${tst.done[n] ? tst.done[n].score : best}/${QZ_SIZE}`; meter = qzMeter(best, QZ_SIZE, `Best score ${best} of ${QZ_SIZE}`); }
         else { status = "Ready to start"; meter = qzMeter(0, QZ_SIZE, "Not started"); }
         return `<li class="qz-sec${passed ? " passed" : ""}${run ? " inprog" : ""}${!passed && !run ? " current" : ""}"><a href="${qzRunHref(lv, df, n)}"><span class="qz-sec-n">${passed ? I.ok : ""} Section ${n}</span><span class="qz-sec-s">${status}</span>${meter}</a></li>`;
       }).join("");
@@ -19187,21 +19209,29 @@ const QUIZ_HAND = [
       const go = qzNext(st, secs.length) || 1;
       app.innerHTML = `<div class="wrap qz">${crumbs}<h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n} is locked</h1><p>Pass Section ${n - 1} with ${QZ_PASS} or more out of ${QZ_SIZE} to open it.</p><div class="btn-row"><a class="btn" href="${qzRunHref(lv, df, go)}">Go to Section ${go}</a><a class="btn ghost" href="#/quiz">Back to Quiz me</a></div></div>`; return;
     }
-    // resume a saved attempt, or start a new one with the questions in a fresh order
-    let run = st.runs[n];
     const byId = {}; secs[n - 1].forEach(q => byId[q.id] = q);
-    if (!run || !run.order || run.order.some(id => !byId[id])){
-      run = st.runs[n] = {order: qzShuffle(secs[n - 1].map(q => q.id), qzRng(Date.now())), log: []};
-      qzSave(s);
-    }
-    qzCtx = {lv, df, n, key, qs: run.order.map(id => byId[id])};
+    const valid = r => r && r.order && r.order.length === secs[n - 1].length && r.order.every(id => byId[id]);
+    if (st.runs[n] && !valid(st.runs[n])) delete st.runs[n];
+    if (st.done[n] && !valid(st.done[n])) delete st.done[n];
+    qzSave(s);
+    qzCtx = {lv, df, n, key, byId};
     app.innerHTML = `<div class="wrap qz">${crumbs}
       <h1 id="p-h1" tabindex="-1" class="mt-ph2">Section ${n}</h1>
       <p class="qz-meta"><span class="badge lvl-${lv}">Level ${lv}</span> <span>${qzDiffName(df)}</span> <span id="qz-count"></span></p>
       <ol class="qz-dots" id="qz-dots" aria-label="Progress in this section"></ol>
       <div id="qz-stage"></div>
     </div>`;
-    if (run.log.length >= qzCtx.qs.length) finishRun(); else showQuestion(false);
+    if (st.runs[n]){ qzCtx.qs = st.runs[n].order.map(id => byId[id]); showQuestion(false); }
+    else if (st.done[n]) showReview(false);
+    else startRun(false);
+  }
+  /* a fresh attempt: questions in a new order */
+  function startRun(focus){
+    const {s, st} = qzRunState(), ids = Object.keys(qzCtx.byId);
+    st.runs[qzCtx.n] = {order: qzShuffle(ids, qzRng(Date.now())), log: []};
+    qzSave(s);
+    qzCtx.qs = st.runs[qzCtx.n].order.map(id => qzCtx.byId[id]);
+    showQuestion(focus);
   }
   const qzRunState = () => { const s = qzLoad(); return {s, st: qzTrackState(s, qzCtx.key)}; };
 
@@ -19277,37 +19307,49 @@ const QUIZ_HAND = [
   }
 
   function finishRun(){
-    const {lv, df, n, key, qs} = qzCtx;
+    const {n} = qzCtx;
     const {s, st} = qzRunState(), run = st.runs[n];
-    const score = run.log.filter(x => x.ok).length, passed = score >= QZ_PASS, firstPass = passed && !st.passed[n];
+    const score = run.log.filter(x => x.ok).length, passed = score >= QZ_PASS;
+    const firstPass = passed && !st.passed[n];
     st.best[n] = Math.max(st.best[n] || 0, score);
     if (passed) st.passed[n] = true;
-    const log = run.log;
+    st.done[n] = {order: run.order, log: run.log, score};
     delete st.runs[n];
     qzSave(s);
+    showReview(true, firstPass);
+  }
+
+  /* the last finished attempt: every question with your answer and the explanation */
+  function showReview(focus, firstPass){
+    const {lv, df, n, key, byId} = qzCtx;
+    const {st} = qzRunState(), done = st.done[n];
+    const qs = done.order.map(id => byId[id]); qzCtx.qs = qs;
+    const log = done.log, score = done.score, passed = score >= QZ_PASS;
     paintProgress(log, qs.length);
     const total = qzSections(key, st.seed).length, hasNext = n < total;
-    const wrong = qs.map((q, i) => ({q, l: log[i]})).filter(x => !x.l.ok);
+    const everPassed = !!st.passed[n];
     document.getElementById("qz-stage").innerHTML = `<section class="qz-result ${passed ? "ok" : "no"}" aria-labelledby="qz-rh">
         <h2 id="qz-rh" tabindex="-1">${passed ? "Passed" : "Not passed yet"}: ${score} out of ${qs.length}</h2>
-        <p>${passed ? (firstPass && hasNext ? `Section ${n + 1} is now unlocked.` : hasNext ? "This section stays open for revisiting." : "That was the last section in this track.") : `You need ${QZ_PASS} or more to pass. Review the answers below and try again; the questions come back in a new order.`}</p>
+        <p>${passed ? (firstPass && hasNext ? `Section ${n + 1} is now unlocked. ` : "") + "Go through every answer below to lock in what you learned." : `You need ${QZ_PASS} or more to pass. Read through the answers below, then retake the section; the questions come back in a new order.`}${everPassed && !passed ? ` You passed this section before (best ${st.best[n]}/${QZ_SIZE}), so the next section stays open.` : ""}</p>
         <div class="btn-row">
-          ${passed && hasNext ? `<a class="btn" href="${qzRunHref(lv, df, n + 1)}">Go to Section ${n + 1}</a>` : ""}
-          <button type="button" class="btn${passed && hasNext ? " ghost" : ""}" id="qz-retry">Retake Section ${n}</button>
+          ${everPassed && hasNext ? `<a class="btn" href="${qzRunHref(lv, df, n + 1)}">Go to Section ${n + 1}</a>` : ""}
+          <button type="button" class="btn${everPassed && hasNext ? " ghost" : ""}" id="qz-retry">Retake this section</button>
           <a class="btn ghost" href="#/quiz">Back to Quiz me</a>
         </div>
       </section>
-      ${wrong.length ? `<section class="qz-review" aria-labelledby="qz-rvh"><h2 id="qz-rvh">Review: ${plural(wrong.length, "question", "questions")} to revisit</h2><ol>${wrong.map(x => `<li>
-          <p class="qz-kind">${esc(x.q.k)}</p>
-          <h3>${esc(x.q.q)}</h3>
-          ${x.q.code ? qzCode(x.q.code, "Code sample") : ""}
-          <p class="qz-yours">${I.x} <b>You said:</b> ${x.l.a ? esc(x.l.a) : "<i>no answer (shown)</i>"}</p>
-          <p class="qz-right">${I.ok} <b>Answer:</b> ${esc(x.q.model)}</p>
-          <p>${esc(x.q.e)}</p>
-          ${qzRefs(x.q)}
-        </li>`).join("")}</ol></section>` : `<p class="qz-perfect">${I.star} A perfect score. Nothing to review.</p>`}`;
-    document.getElementById("qz-rh").focus(); window.scrollTo(0, 0);
-    document.getElementById("qz-retry").addEventListener("click", () => { renderQuizRun(lv, df, n); document.getElementById("p-h1").focus(); });
+      <section class="qz-review" aria-labelledby="qz-rvh"><h2 id="qz-rvh">All ${qs.length} questions and answers</h2><ol>${qs.map((q, i) => { const l = log[i]; return `<li class="${l.ok ? "is-ok" : "is-no"}">
+          <p class="qz-kind">${esc(q.k)} · <span class="${l.ok ? "qz-right" : "qz-yours"}">${l.ok ? I.ok + " Right" : I.x + " Wrong"}${l.self ? " (counted by you)" : ""}</span></p>
+          <h3>${esc(q.q)}</h3>
+          ${qzShot(q)}
+          ${q.code ? qzCode(q.code, "Code sample") : ""}
+          <p><b>You said:</b> ${l.a ? esc(l.a) : "<i>no answer (you chose Show answer)</i>"}</p>
+          <p class="qz-right">${I.ok} <b>Answer:</b> ${esc(q.model)}</p>
+          <p>${esc(q.e)}</p>
+          ${q.fix ? `<p class="qz-fixh"><b>Passing version</b></p>${qzCode(q.fix, "Passing version of the code")}` : ""}
+          ${qzRefs(q)}
+        </li>`; }).join("")}</ol></section>`;
+    if (focus){ document.getElementById("qz-rh").focus(); window.scrollTo(0, 0); }
+    document.getElementById("qz-retry").addEventListener("click", () => startRun(true));
   }
 
   /* ---------- nav ---------- */
